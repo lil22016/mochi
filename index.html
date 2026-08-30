@@ -329,7 +329,28 @@ padding:0 18px 18px;
 html.ios-vv-fit:not(.ios-pwa-standalone) .phone,
 html.tablet.ios-vv-fit:not(.ios-pwa-standalone) .phone { height:var(--mochi-ios-h, 100dvh); }
 .ios-pwa-standalone .phone,
-html.tablet.ios-pwa-standalone .phone { height:100vh; }
+html.tablet.ios-pwa-standalone .phone {
+position:fixed;
+inset:auto;
+top:0;
+left:0;
+width:100vw;
+max-width:none;
+height:100vh;
+margin:0;
+border-radius:0;
+box-shadow:none;
+}
+html.ios-pwa-standalone,
+html.ios-pwa-standalone body {
+width:100%;
+height:100vh;
+min-height:100vh;
+margin:0;
+padding:0;
+overflow:hidden;
+display:block;
+}
 html.ios-pwa-standalone,
 html.ios-pwa-standalone body { background: var(--bg-b); }
 @media (display-mode: standalone) {
@@ -8225,39 +8246,6 @@ font-size: 15px; color: #c0566b; padding: 2px 4px; line-height: 1.4;
 [data-theme="dark"] .dl-row { border-color: rgba(255,255,255,.07); background: rgba(40,40,48,.5); }
 [data-theme="dark"] .dl-empty { border-color: rgba(255,255,255,.14); background: rgba(40,40,48,.4); }
 [data-theme="dark"] .do-coin { color: #d9a83e; border-color: rgba(217,168,62,.35); }
-
-/* ===== iOS 主屏幕模式视口修复 =====
-   WebKit Bug 254868：standalone + viewport-fit=cover 时，inset:0、svh、
-   visualViewport.height 可能扣掉 safe-area；但 100vh 会包含完整屏幕。
-   因此只固定 top/left，明确使用 100vh，不再用受影响的 bottom/inset。 */
-@supports (-webkit-touch-callout: none) {
-  html.ios-pwa-standalone,
-  html.ios-pwa-standalone body {
-    width: 100%;
-    height: 100vh;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    display: block;
-  }
-
-  html.ios-pwa-standalone .phone,
-  html.tablet.ios-pwa-standalone .phone {
-    position: fixed;
-    inset: auto;
-    top: 0;
-    left: 0;
-    width: 100%;
-    max-width: none;
-    height: 100vh !important;
-    min-height: 100vh;
-    margin: 0;
-    border-radius: 0;
-    box-shadow: none;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
 #page-drift *,
 #page-drift *::before,
@@ -8439,9 +8427,9 @@ transition-duration: .01ms !important;
     <!-- v3.8.y：底部统一装进一个卡片框（版本/加载/提示/按钮成一整体，与顶部品牌卡片呼应） -->
     <div class="splash-footcard">
       <!-- v3.8.y：底部版本块——两行：名称+版本 / 部署时间+实时秒数（实时秒写入 #splash-ver-live） -->
-      <div class="splash-ver" id="splash-ver" data-build-ts="1788017728668">
-        <span class="sv-app">Mochi 字卡传讯 <b>v3.26.356</b></span>
-        <span class="sv-deploy">部署于 2026-08-29 23:35<span id="splash-ver-live"></span></span>
+      <div class="splash-ver" id="splash-ver" data-build-ts="1788052409628">
+        <span class="sv-app">Mochi 字卡传讯 <b>v3.26.359</b></span>
+        <span class="sv-deploy">部署于 2026-08-29 18:13<span id="splash-ver-live"></span></span>
       </div>
       <!-- v3.5.120：数据（IndexedDB 回填）加载完成前不显示「点击进入」按钮，
            只显示加载提示；就绪后按钮才出现（clock.js 控制显隐） -->
@@ -9531,7 +9519,7 @@ transition-duration: .01ms !important;
           <div class="txt">清除本地数据</div>
         </div>
       </div>
-      <div class="ver">Mochi 字卡传讯 v3.26.356</div>
+      <div class="ver">Mochi 字卡传讯 v3.26.359</div>
       <div class="ver-credit">原版小红书@言序（1842523578）</div>
     </div>
 
@@ -9739,7 +9727,7 @@ transition-duration: .01ms !important;
             <div class="lic-hero-top">
               <div class="lic-title">Mochi 字卡传讯</div>
               <span class="lic-badge">原版</span>
-              <span class="lic-ver">v3.26.356</span>
+              <span class="lic-ver">v3.26.359</span>
             </div>
             <div class="lic-p">原创极简风情侣聊天模拟器：黑白灰简约设计，数据全部保存在本地、无需联网；所有内容均为代码触发、按概率运行，联系方可主动发送聊天消息。代码从零编写并完全开源——本作即原版。</div>
             <div class="lic-pills">
