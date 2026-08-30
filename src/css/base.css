@@ -432,7 +432,16 @@ html.tablet.ios-pwa-standalone .phone {
   margin:0;
   border-radius:0;
   box-shadow:none;
+  /* v3.26.x 真机复核：外壳已经完整占满 874px，剩余「底部死带」并非高度问题，
+     而是手机规则的 padding-bottom:18px 与 tabbar 的 safe-area margin（约34px）
+     叠加成 52px。standalone 下清掉外壳底部预留，让导航栏本体触底；顶部只额外
+     下移 10px，现有 statusbar/全屏页头仍各自负责刘海安全区，不重复叠加整段 env。 */
+  padding-top:10px;
+  padding-bottom:0;
 }
+/* iOS 主屏幕模式中 Home 指示条属于系统手势区，网页不能令其可点击；导航栏本体
+   贴到屏幕底边后，图标点击区仍位于指示条上方，且不再留下独立的 34px 空白带。 */
+html.ios-pwa-standalone .tabbar { margin-bottom:0; }
 html.ios-pwa-standalone,
 html.ios-pwa-standalone body {
   width:100%;
