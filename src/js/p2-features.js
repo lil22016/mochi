@@ -468,65 +468,27 @@
 
 // ================= 寻踪（TA 的日常）=================
 const DEF_PLACES = [
-  "At home",
-  "At the company",
-  "In a coffee shop",
-  "In the park",
-  "in the library",
-  "On the way",
-  "At a friend’s house",
-  "In the gym",
-  "In the supermarket",
-  "In the cinema",
-  "In a convenience store",
-  "In the bookstore",
-  "On the subway",
-  "On the balcony",
-  "by the river",
-  "Downstairs in the community",
-  "In the bakery",
-  "At the station",
-  "In the study room"
+  "At home", "At the TVA", "At a quiet café", "In the park", "In the library",
+  "On my way somewhere interesting", "Somewhere I was not invited", "At the gym",
+  "At the market", "At the cinema", "In a bookshop", "On the train",
+  "On the balcony", "By the river", "In the bakery", "At the station", "In my study"
 ];
 const DEF_ACTIONS = [
-  "Flash your phone",
-  "Read a book",
-  "In a daze",
-  "Listen to songs",
-  "Write something",
-  "Eat snacks",
-  "Drink milk tea",
-  "Take a walk",
-  "Play games",
-  "Miss you",
-  "Watch a movie",
-  "Chasing dramas",
-  "Brush videos",
-  "Waiting for express delivery",
-  "Clean up the room",
-  "Doing laundry",
-  "Cooking",
-  "Making tea",
-  "Eat fruit",
-  "Take photos"
+  "Checking my phone", "Reading", "Plotting", "Listening to music", "Writing",
+  "Stealing a snack", "Having tea", "Taking a walk", "Playing a game",
+  "Thinking about you", "Watching a film", "Watching something terribly undignified",
+  "Scrolling aimlessly", "Waiting for a delivery", "Putting the room in order",
+  "Doing laundry", "Cooking", "Making tea", "Eating fruit", "Taking photographs"
 ];
 const DEF_CHECK_MSGS = [
-  "Miss you",
-  "Remember to eat on time",
-  "I like you very much today too",
-  "Go to bed early",
-  "Reply me a message when you have time",
-  "Don’t be too tired",
-  "Did you drink water?",
-  "Are you happy today?",
-  "I'm a little tired today",
-  "I am very happy today",
-  "I miss you a little today",
-  "I'm a little bored today",
-  "How are you doing today?",
-  "Remember to wear more clothes",
-  "Pay attention to safety on the road",
-  "Good night"
+  "I miss you. There, I admitted it.", "Eat something at a reasonable hour.",
+  "You have occupied rather too much of my mind today.", "Sleep before I have to order you.",
+  "Send me a message when you are free.", "Do not exhaust yourself, darling.",
+  "Have you had any water?", "Tell me—how are you, really?", "I could use your company.",
+  "I am in an excellent mood. You may take some credit.", "I miss you. Only a little. Allegedly.",
+  "I am bored. Come entertain me.", "How has your day treated you?",
+  "Dress warmly. I refuse to have you freezing.", "Be careful on your way back.",
+  "Good night. Dream of me if you have any taste."
 ];
 // 寻踪日常字卡（可自定义，localStorage 持久化；空则用默认）
 // v3.6.x：是否使用系统预设字卡（默认开启；关闭后寻踪只从用户添加的字卡里抽）
@@ -2426,31 +2388,34 @@ if (ckRefresh) {
   const SS_FEEL = [
   {
     "label": "Warm",
+    "group": "触感·温热",
     "vib": [
       80
     ],
     "cls": "hot",
     "cards": [
-      "So warm",
-      "Yes, in",
-      "Lean on you",
-      "Body temperature"
+      "Warm, is it?",
+      "There. You can feel me now.",
+      "Come closer; I will keep you warm.",
+      "My warmth beneath your fingertips."
     ]
   },
   {
     "label": "Slightly cool",
+    "group": "触感·微凉",
     "vib": [
       30
     ],
     "cls": "cold",
     "cards": [
-      "A bit cold",
-      "The wind just blew",
-      "Fingertips are cold"
+      "A little cold. Warm my hands for me.",
+      "The air followed me in.",
+      "Cold fingertips—hold them a moment longer."
     ]
   },
   {
     "label": "Hair",
+    "group": "触感·发丝",
     "vib": [
       10,
       20,
@@ -2458,9 +2423,9 @@ if (ckRefresh) {
     ],
     "cls": "soft",
     "cards": [
-      "Itchy",
-      "Hair brushed",
-      "Gently"
+      "My hair caught against your fingers.",
+      "Careful with the hair, darling.",
+      "Gentler. Unless you meant to get my attention."
     ]
   }
 ];
@@ -2473,7 +2438,8 @@ if (ckRefresh) {
       if (glow) glow.classList.remove('reach');
       if (Math.random() < 0.55) {
         const feel = SS_FEEL[Math.floor(Math.random() * SS_FEEL.length)];
-        const cards = libPool('reach', '触感·' + feel.label, feel.cards).concat(ssCards());
+        // 触感结果只从对应触感组取句；不再混入「悄悄话」，避免 Hair · “Yes, in” 这类错配。
+        const cards = libPool('reach', feel.group, feel.cards);
         const txt = cards[Math.floor(Math.random() * cards.length)];
         vibrate(feel.vib);
         if (glow) { glow.classList.add('on'); glow.classList.add(feel.cls); }

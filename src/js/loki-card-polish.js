@@ -1,0 +1,101 @@
+// ===== Loki voice polish for literal machine translations =====
+(function () {
+  const exact = new Map(Object.entries({
+    'Real or fake?': 'Is that so? Go on—convince me.',
+    'We just had a fight.': 'We may have fought, but I am still here.',
+    'I will not forget what you told me casually.': 'You may have said it carelessly. I did not hear it carelessly.',
+    'Maybe this gap also has its meaning.': 'Perhaps even this distance is trying to tell us something.',
+    'If you also think of me at that moment.': 'And if you thought of me too, then the distance failed rather spectacularly.',
+    'Yes, in': 'Yes. I am here.',
+    'Cease me.': 'Indulge me.',
+    'Touch.': 'Come closer. You may touch me.',
+    'and so on.': 'Go on.',
+    'is back.': 'I am back. Try not to look too pleased.',
+    'Unexpected at all.': 'Well. That was not what I expected.',
+    'This development is wrong.': 'That took a remarkably foolish turn.',
+    'I’m convinced.': 'Astounding. Truly.',
+    'Please give me some advice today.': 'Do try to keep up with me today.',
+    'I have worked very hard today.': 'You have done enough for one day.',
+    'Cover yourself with the quilt.': 'Get under the blankets. That was not a suggestion.',
+    'The first thing I want to say to you in the morning.': 'You were my first thought this morning. Satisfied?',
+    'The battery is almost running out today.': 'I am running out of patience—and consciousness.',
+    'Give me a moment. Restore immediately.': 'Give me a moment. Even gods require time to wake.',
+    'Finished eating. Feeling strong.': 'I have eaten. You may stop worrying now.',
+    'I want to be pampered by you today.': 'I have decided you may spoil me today.',
+    'Can you please let me do whatever you want?': 'Let me have my way for once. You know you enjoy it.',
+    'It’s okay to let me be weak.': 'Allow me one moment of weakness. Do not grow smug about it.',
+    'It’s not that I can’t live without you. I want to be close to you.': 'I can survive without you. I simply have no desire to.',
+    'decided to move forward.': 'I have decided we move forward.',
+    'Sorry. real.': 'I am sorry. Genuinely.',
+    'Glib tongue.': 'That clever tongue of yours will be your undoing.',
+    'Those who commit the crime again will not be treated lightly.': 'Try that again and I shall be considerably less merciful.',
+    'This word card is my mood: Good.': 'There. You have improved my mood. Proud of yourself?',
+    'No distinction between top and bottom.': 'A draw. How irritatingly well matched we are.',
+    'bumped into each other.': 'A perfect collision. Shall we try again?',
+    'The wind here is very soft, please give me a break.': 'The wind is gentle here. Come and be still with me for a moment.',
+    'Hands out. (seems to be being held)': 'Give me your hand. There—much better.',
+    'Sleep. Here I look at the time.': 'Sleep. I will keep watch over the hours.',
+    'I kept the bottle. So do people.': 'I kept the bottle. I intend to keep you as well.',
+    'Read. And hugged her from afar.': 'Read—and answered with an embrace across the distance.',
+    'The inspection is successful and you will be rewarded with a kiss.': 'Inspection complete. Your reward is a kiss. Try not to become insufferable.',
+    'Check it, check it, my heart is yours.': 'Search all you like. You already know who has my heart.',
+    'You found it in your heart.': 'There you are. You found me exactly where you left me.',
+    'The inspection was successful, congratulations on officially owning me.': 'Inspection complete. Congratulations—you have confirmed what was already yours.',
+    'The feeling of being watched by you is very reassuring.': 'Your attention is rather difficult not to enjoy.',
+    'Stop listening to the song and stay with me for a while': 'Enough music. Give me your attention for a moment.',
+    '(you pressed the pause button)': '(Loki pauses the music without asking.)',
+    '(you pressed the play button again)': '(Loki allows the music to continue.)',
+    'I’ve finished saying what I want to say, let’s continue listening to the music.': 'I have said what I wanted. You may have your music back now.',
+    'Gudududu~ Did you hear that? Go and drink water.': 'That was the sound of your water calling. Do not make me ask twice.',
+    'The water is cold, take a sip?': 'Your water is waiting. Take a sip for me.',
+    'Forget it, take a sip': 'Enough excuses. Drink.',
+    'Well, how about you go take a sip?': 'Go on. One sip. I am watching.',
+    'It’s time to drink water, I’m looking at you': 'Time to drink some water. Yes, I am watching.',
+    'Take a sip and pretend that I drank it too': 'Take a sip. Consider it a toast to me.',
+    'The water is at hand, you can reach it by stretching out your hand': 'The glass is within reach, darling. So reach for it.',
+    'you said: {m}': 'A reminder from yours truly: {m}',
+    'you Let me remind you: {m}': 'I am here to remind you: {m}',
+    'you is saying: {m}': 'Listen carefully: {m}',
+    'you asked me to bring you a sentence: {m}': 'I brought you a message: {m}'
+  }));
+  function polish(value) {
+    if (typeof value === 'string') return exact.get(value) || value;
+    if (Array.isArray(value)) { for (let i = 0; i < value.length; i++) value[i] = polish(value[i]); return value; }
+    if (value && typeof value === 'object') for (const k of Object.keys(value)) value[k] = polish(value[k]);
+    return value;
+  }
+  polish(window.DEFAULT_CARD_DATA);
+  polish(window.MOOD_FOLLOWUP_DATA);
+  polish(window.TA_MOOD_DATA);
+  function setGroup(section, name, cards) {
+    const groups = window.DEFAULT_CARD_DATA && window.DEFAULT_CARD_DATA[section];
+    const group = Array.isArray(groups) && groups.find(g => g && g[0] === name);
+    if (group) group[1] = cards;
+  }
+  setGroup('reach', '悄悄话', [
+    'Found me.', 'Yes, darling. I am here.', 'You reached for me. How could I resist?',
+    'Closer.', 'Not so far away now, am I?', 'Careful. I may decide not to let go.'
+  ]);
+  setGroup('reach', '触感·温热', [
+    'Warm, is it?', 'There. You can feel me now.', 'Come closer; I will keep you warm.',
+    'My warmth beneath your fingertips.'
+  ]);
+  setGroup('reach', '触感·微凉', [
+    'A little cold. Warm my hands for me.', 'The air followed me in.',
+    'Cold fingertips—hold them a moment longer.'
+  ]);
+  setGroup('reach', '触感·发丝', [
+    'My hair caught against your fingers.', 'Careful with the hair, darling.',
+    'Gentler. Unless you meant to get my attention.'
+  ]);
+  setGroup('water', '梦角催喝水', [
+    'Drink some water. Yes, now.', 'Your glass is waiting, and so am I.',
+    'One sip for me. I promise to be suitably impressed.',
+    'You have been ignoring that glass long enough, darling.',
+    'Hydrate before I resort to more persuasive methods.',
+    'That throat of yours needs water. Do take care of what belongs to me.',
+    'Go drink. I will still be here when you return.',
+    'The glass is within reach. I expect results.',
+    'That was the sound of your water calling. Do not make me ask twice.'
+  ]);
+})();

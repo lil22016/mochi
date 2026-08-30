@@ -4046,7 +4046,15 @@ document.addEventListener('mochi-fg-resume', function () {
 try { if (!sameCid()) return; setTimeout(function () { trySystemAskMochi(); }, randInt(2000, 6000)); } catch (e) {}
 });
 function rpThanksMsg() {
-return pick(['谢谢亲爱的～', '收到啦❤', '嘿嘿谢谢宝宝', '爱你哟', '🥰 谢谢', '开心！谢谢～', '么么哒']);
+return pick([
+  'A gift for me? You do know how to keep a god pleased.',
+  'Accepted. And yes, you may have a kiss for it.',
+  'How thoughtful. I might even reward you later.',
+  'Mine now. Much like you.',
+  'You are spoiling me, darling. Continue.',
+  'Thank you. Try not to look so proud of yourself.',
+  'Mm. Consider me suitably pleased.'
+]);
 }
 function rpCollectFeedback() {
 const myCid = window.__activeCid || 'default';
