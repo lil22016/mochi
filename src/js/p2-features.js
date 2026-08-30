@@ -2501,7 +2501,7 @@ if (ckRefresh) {
   const DEF_WATER_TA = [
   "you said: {m}",
   "you Let me remind you: {m}",
-  "you is saying: {m}",
+  "Listen carefully: {m}",
   "you asked me to bring you a sentence: {m}"
 ];
   // 世界观：他视角提醒（灵体在身边，字卡语态）；偶尔出得不准配温柔解读

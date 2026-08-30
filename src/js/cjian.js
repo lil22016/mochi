@@ -252,7 +252,7 @@
   },
   "gone": {
     "label": "Leave",
-    "desc": "you is not nearby at the moment"
+    "desc": "You do not seem to be nearby."
   }
 };
   const ACTIVITY = {
@@ -262,7 +262,7 @@
   },
   "busy": {
     "label": "Something's wrong",
-    "desc": "you is doing her own thing"
+    "desc": "You seem occupied with something of your own."
   },
   "rushed": {
     "label": "Busy",
@@ -270,11 +270,11 @@
   },
   "rest": {
     "label": "Rest",
-    "desc": "you is resting"
+    "desc": "You seem to be resting."
   },
   "sleep": {
     "label": "Sleep",
-    "desc": "you has fallen asleep over there"
+    "desc": "You may have fallen asleep over there."
   },
   "unknown": {
     "label": "Unknown",

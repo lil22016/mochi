@@ -3087,9 +3087,9 @@ const TC_DEFAULT = [
         "t": "I will send you word cards all day long",
         "reply": [
           "Then you know how difficult it is to control the word card.",
-          "Issue a character card for me? Then don't mess up your hair.",
+          "Choosing a card for me? Careful—you may reveal more than you intended.",
           "Then you understand what I think about choosing word cards every day.",
-          "What style is your hair style? I teach."
+          "And what would you choose for me? I am curious about your taste."
         ],
         "liked": false
       },
@@ -4241,7 +4241,7 @@ const TC_DEFAULT = [
           "I will post it from now on.",
           "Good morning? Then I will post it later.",
           "Send it out from now on and guard it.",
-          "What is the appropriate time to send hair?"
+          "What time would you like me to send it?"
         ],
         "liked": true
       },
@@ -7377,7 +7377,7 @@ window.openTCPanel = openTCPanel;
   {
     "id": "cd7",
     "cat": "daily",
-    "text": "What is the most recent photo in your mobile phone album?",
+    "text": "What is the most recent photo in your camera roll?",
     "quick": [
       "A screenshot",
       "Landscape",
@@ -7607,13 +7607,13 @@ window.openTCPanel = openTCPanel;
     "cat": "you",
     "text": "What small animal do you most resemble when you are angry?",
     "quick": [
-      "A cat with fried hair",
+      "A cat with its fur standing on end",
       "Inflated pufferfish",
       "The quiet hedgehog",
       "I’m not angry"
     ],
     "replies": [
-      "The fried hair is also very cute.",
+      "All bristled up and still adorable. How inconvenient for your dignity.",
       "When I inflate, I move farther away and then get closer.",
       "I can also hold a hedgehog, just be careful.",
       "It’s best not to be angry. If you are angry, I will continue to do so."

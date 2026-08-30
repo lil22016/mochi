@@ -57,6 +57,17 @@
     'you Let me remind you: {m}': 'I am here to remind you: {m}',
     'you is saying: {m}': 'Listen carefully: {m}',
     'you asked me to bring you a sentence: {m}': 'I brought you a message: {m}'
+    ,'(Step on breasts.)': '(Kneading contentedly against you.)'
+    ,'Don’t forget your mobile phone.': 'Do not forget your phone.'
+    ,'I don’t want to be reasonable. Want to be coaxed.': 'I have no intention of being reasonable. Indulge me.'
+    ,'I want you to coax me.': 'I want your attention—and I intend to have it.'
+    ,'I want to be coaxed by you.': 'Indulge me for a moment.'
+    ,'Let me act like a baby.': 'Let me be shamelessly demanding for a moment.'
+    ,'is not the text in the word card.': 'What I mean is larger than the words on the card.'
+    ,'There is only a limit to what can be written on the word card.': 'A card can only hold so much of what I want to say.'
+    ,'Each word card.': 'Every card carries something I meant for you.'
+    ,'You come to check the post, I just miss you too.': 'Checking up on me? Convenient—I was thinking about you.'
+    ,'Welcome to check the post, I have confessed to you a long time ago.': 'Come and investigate, darling. I surrendered to you long ago.'
   }));
   function polish(value) {
     if (typeof value === 'string') return exact.get(value) || value;
@@ -97,5 +108,54 @@
     'Go drink. I will still be here when you return.',
     'The glass is within reach. I expect results.',
     'That was the sound of your water calling. Do not make me ask twice.'
+  ]);
+  setGroup('kaomoji', '猫猫感', [
+    '(=^･ω･^=)', '(=①ω①=)', '(=^･ｪ･^=)', '(ฅ\'ω\'ฅ)', '(ฅ´ω`ฅ)',
+    '(A quiet little meow.)', '(Nuzzling against you.)', '(My tail curls around your wrist.)',
+    '(Purring—do not look so pleased.)', '(Kneading contentedly against you.)',
+    '(Settling beside you.)', '(Tail flicking with suspicious dignity.)',
+    '(Apparently I am a cat today. Do not question it.)'
+  ]);
+  setGroup('kaomoji', '狗狗感', [
+    '(U・x・U)', '(U｡･ｪ･｡U)', '▽・ω・▽', '(A pleased little wag.)',
+    '(Circling you once before settling close.)', '(Waiting faithfully for your return.)',
+    '(Nuzzling into your hand.)', '(Sitting very properly. For now.)',
+    '(Following you home.)', '(Still here. Always.)'
+  ]);
+  setGroup('main', '轻微撒娇', [
+    'Stay with me a little longer.', 'Do not leave just yet.', 'Look at me.',
+    'Indulge me.', 'Come closer.', 'Give me your attention.',
+    'I want a kiss. You may pretend it was your idea.',
+    'Hold me for a moment.', 'Tell me something flattering.',
+    'I have decided I require your company.'
+  ]);
+  setGroup('main', '撒娇', [
+    'Pay attention to me, darling.', 'Come here. I want you close.',
+    'Stay. That was very nearly an order.', 'I want to hear your voice.',
+    'You may spoil me for a while.', 'I miss you. Do not make a spectacle of it.',
+    'I require affection. Yours, specifically.', 'Let me have you to myself for a moment.',
+    'You are busy? Tragic. I shall wait—impatiently.',
+    'Look at me before I resort to mischief.', 'I want your arms around me.',
+    'Come closer. Closer than that.', 'Say something sweet. Impress me.',
+    'I have been good enough to deserve a reward.',
+    'Nothing is wrong. I simply wanted you.'
+  ]);
+  setGroup('period', '经期关心', [
+    'How are you feeling? Tell me properly—do not minimise it for my sake.',
+    'Something warm to drink, then rest. Yes, I am being insistent.',
+    'You are allowed to do less today. The world will survive.',
+    'Come here. Let me keep you warm.',
+    'If the pain is severe or unusual, I want you to take it seriously.',
+    'Eat something warm and take care of yourself for me.',
+    'Your mood is not a moral failing. Be gentler with yourself.',
+    'A heating pad, blankets, and my undivided attention. A reasonable prescription.',
+    'Do not stay awake suffering in silence. Tell me.',
+    'Is your back aching? Lie down and let yourself rest.',
+    'You need not be brave for me today.',
+    'If you need to complain, complain. I can take it.',
+    'Take appropriate pain relief if you normally can, and do not wait until you are miserable.',
+    'No icy drinks today. Choose something warm.',
+    'You may spend the day doing absolutely nothing. I grant permission.',
+    'Be kind to yourself—or I shall have to do it for you.'
   ]);
 })();
