@@ -9,16 +9,72 @@
   // v3.13.x：新增「方位感知」四组——direct(方向)/rangef(距离感)/power(感知强度)/touch(触碰)，
   //   并入同一管理页；感知词是「你感觉到TA在哪」的模糊感知，不是发卡文案
   const LIB = {
-    dir: ['在你左边', '在你右边', '在你身后', '在你前面', '离你两步', '抬头就能看到', '在你看不到的地方偷看你'],
-    dist: ['再近一点', '再远一点', '就停这儿', '马上到你身边', '一直在原地等你'],
-    state: ['跟在你后面', '陪你走着', '停下来等你', '绕着你转圈', '在你身边'],
-    sense: ['在你看不到的地方', '隔着世界在你身边', '感觉到了吗', '能摸到我吗', '一直没走远', '隐约在你身旁'],
-    egg: ['在你心里'],
-    direct: ['正前方', '右前方', '右侧', '右后方', '后方', '左后方', '左侧', '左前方', '身边', '无法判断'],
-    rangef: ['很近', '近', '稍远', '很远', '无法判断'],
-    power: ['明显', '微弱', '若有若无', '消失'],
-    touch: ['好像碰到了你的手', '有什么轻轻碰了一下你的肩', '耳边好像有气息拂过', '衣角被轻轻拉了一下']
-  };
+  "dir": [
+    "on your left",
+    "on your right",
+    "Behind you",
+    "in front of you",
+    "Two steps away from you",
+    "You can see it when you look up",
+    "Peeping at you where you can’t see it"
+  ],
+  "dist": [
+    "A little closer",
+    "A little further",
+    "Stop here",
+    "I will be with you immediately",
+    "I’ve been waiting for you where you are"
+  ],
+  "state": [
+    "Follow you",
+    "Walking with you",
+    "Stop and wait for you",
+    "Run around you",
+    "by your side"
+  ],
+  "sense": [
+    "Where you can’t see it",
+    "Beside you across the world",
+    "Do you feel it?",
+    "Can you touch me?",
+    "Never gone far",
+    "looming beside you"
+  ],
+  "egg": [
+    "In your heart"
+  ],
+  "direct": [
+    "Directly ahead",
+    "Right front",
+    "Right",
+    "Right rear",
+    "Rear",
+    "Rear left",
+    "Left side",
+    "Left front",
+    "around you",
+    "Unable to determine"
+  ],
+  "rangef": [
+    "Very close",
+    "Near",
+    "Slightly further",
+    "Very far",
+    "Unable to determine"
+  ],
+  "power": [
+    "obvious",
+    "Weak",
+    "If there is nothing",
+    "disappears"
+  ],
+  "touch": [
+    "seems to have touched your hand",
+    "Something touched your shoulder lightly",
+    "There seems to be a breath blowing against my ears.",
+    "The corner of the clothes was gently pulled"
+  ]
+};
   const LABEL = { dir: '方位', dist: '距离', state: '状态', sense: '感知', egg: '彩蛋', custom: '自定义', combo: '组合', direct: '方向', rangef: '距离感', power: '感知强度', touch: '触碰' };
   const CATS = ['dir', 'dist', 'state', 'sense', 'egg', 'direct', 'rangef', 'power', 'touch'];
   // ---- 存储 ----

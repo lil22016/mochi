@@ -3456,8 +3456,16 @@
   //   ② 互动后进入冷却（cooldownMs，默认 10 分钟）——连续切歌/下一首也不会每首都触发；
   //   ③ 互动进行中全局 taPauseActive 重入保护；
   //   ④ 音乐设置「联系人可暂停你的播放」总开关（taPauseEn，关闭=彻底不触发）。
-  const DEF_TA_PAUSE_CARDS = ['先暂停一下，听我说句话', '嘘——让音乐停一会儿', '（TA 按下了暂停键）'];
-  const DEF_TA_RESUME_CARDS = ['好啦，继续听吧', '又帮你按了播放，接着听', '（TA 又按下了播放键）'];
+  const DEF_TA_PAUSE_CARDS = [
+  "Pause for a moment and listen to what I have to say.",
+  "Shhh - let the music stop for a moment",
+  "(you pressed the pause button)"
+];
+  const DEF_TA_RESUME_CARDS = [
+  "Okay, continue listening.",
+  "Press play for you again and continue listening",
+  "(you pressed the play button again)"
+];
   let taPauseActive = false;      // TA 暂停进行中（禁止后台补播/手势补播打扰）
   let taPauseTimer = null;        // 掷骰子命中后的延迟触发定时器
   let taPauseResumeTimer = null;  // TA 恢复播放定时器

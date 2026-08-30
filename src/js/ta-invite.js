@@ -17,27 +17,147 @@
   // 措辞甜而安稳，贴合两个世界设定（平时看不见但偶尔能碰到、有体感），无游戏半框，
   // 同意后 TA 回应一句贴贴的话（回应文案在 chat.js CUDDLE_REPLIES）。
   const DEFAULT_QUESTIONS = [
-    { id: 'iv_r1', cat: 'rps', kind: 'rps', text: '想和你猜拳，来一局？', enabled: true },
-    { id: 'iv_r2', cat: 'rps', kind: 'rps', text: '来猜拳呀，输的人答应一件事！', enabled: true },
-    { id: 'iv_r3', cat: 'rps', kind: 'rps', text: '手痒了，陪我猜拳好不好？', enabled: true },
-    { id: 'iv_r4', cat: 'rps', kind: 'rps', text: '三局两胜的猜拳，敢不敢？', enabled: true },
-    { id: 'iv_p1', cat: 'pong', kind: 'pong', text: '想和你玩一局 Pong，来吗？', enabled: true },
-    { id: 'iv_p2', cat: 'pong', kind: 'pong', text: '敢不敢来一局 Pong？我可是很强的。', enabled: true },
-    { id: 'iv_p3', cat: 'pong', kind: 'pong', text: 'Pong 桌子摆好了，就等你了。', enabled: true },
-    { id: 'iv_s1', cat: 'snake', kind: 'snake', text: '想和你玩双人贪吃蛇，来吗？', enabled: true },
-    { id: 'iv_s2', cat: 'snake', kind: 'snake', text: '来盘贪吃蛇？看谁吃得多！', enabled: true },
-    { id: 'iv_s3', cat: 'snake', kind: 'snake', text: '双人贪吃蛇开一局？这次我不撞你。', enabled: true },
-    { id: 'iv_c1', cat: 'cuddle', kind: 'cuddle', text: '想贴贴了，你可以过来一点吗？', enabled: true },
-    { id: 'iv_c2', cat: 'cuddle', kind: 'cuddle', text: '抱一下再忙别的嘛，就一下下。', enabled: true },
-    { id: 'iv_c3', cat: 'cuddle', kind: 'cuddle', text: '手伸过来，我想牵一会儿。', enabled: true },
-    { id: 'iv_c4', cat: 'cuddle', kind: 'cuddle', text: '靠着你坐一会儿吧，什么都不做的那种。', enabled: true },
-    { id: 'iv_c5', cat: 'cuddle', kind: 'cuddle', text: '想把脑袋搁在你肩上，借我五分钟。', enabled: true },
-    { id: 'iv_c6', cat: 'cuddle', kind: 'cuddle', text: '刚才好像碰到你的手了？再来一次，这次牵住不放。', enabled: true },
-    { id: 'iv_c7', cat: 'cuddle', kind: 'cuddle', text: '隔着世界也想贴贴你，感觉到了就不要躲。', enabled: true },
-    { id: 'iv_c8', cat: 'cuddle', kind: 'cuddle', text: '今天很想你，想到想蹭蹭你。', enabled: true },
-    { id: 'iv_c9', cat: 'cuddle', kind: 'cuddle', text: '晚上早点休息，我来抱着你睡。', enabled: true },
-    { id: 'iv_c10', cat: 'cuddle', kind: 'cuddle', text: '心情很好，这种时候最适合亲亲了。', enabled: true }
-  ];
+  {
+    "id": "iv_r1",
+    "cat": "rps",
+    "kind": "rps",
+    "text": "Want to have a game of guessing with you?",
+    "enabled": true
+  },
+  {
+    "id": "iv_r2",
+    "cat": "rps",
+    "kind": "rps",
+    "text": "Come and guess the game, the loser promises one thing!",
+    "enabled": true
+  },
+  {
+    "id": "iv_r3",
+    "cat": "rps",
+    "kind": "rps",
+    "text": "My hands are itchy, would you like to play guessing with me?",
+    "enabled": true
+  },
+  {
+    "id": "iv_r4",
+    "cat": "rps",
+    "kind": "rps",
+    "text": "Winning out of three rounds of guessing, do you dare?",
+    "enabled": true
+  },
+  {
+    "id": "iv_p1",
+    "cat": "pong",
+    "kind": "pong",
+    "text": "I want to play a game of Pong with you, come?",
+    "enabled": true
+  },
+  {
+    "id": "iv_p2",
+    "cat": "pong",
+    "kind": "pong",
+    "text": "Do you dare to have a game of Pong? I'm very strong.",
+    "enabled": true
+  },
+  {
+    "id": "iv_p3",
+    "cat": "pong",
+    "kind": "pong",
+    "text": "Pong The table is set and waiting for you.",
+    "enabled": true
+  },
+  {
+    "id": "iv_s1",
+    "cat": "snake",
+    "kind": "snake",
+    "text": "I want to play double snake with you, come?",
+    "enabled": true
+  },
+  {
+    "id": "iv_s2",
+    "cat": "snake",
+    "kind": "snake",
+    "text": "How about a greedy snake? See who eats more!",
+    "enabled": true
+  },
+  {
+    "id": "iv_s3",
+    "cat": "snake",
+    "kind": "snake",
+    "text": "A game between two snakes? I won't hit you this time.",
+    "enabled": true
+  },
+  {
+    "id": "iv_c1",
+    "cat": "cuddle",
+    "kind": "cuddle",
+    "text": "I want to post something, can you come over here?",
+    "enabled": true
+  },
+  {
+    "id": "iv_c2",
+    "cat": "cuddle",
+    "kind": "cuddle",
+    "text": "Just give me a hug before I do anything else.",
+    "enabled": true
+  },
+  {
+    "id": "iv_c3",
+    "cat": "cuddle",
+    "kind": "cuddle",
+    "text": "Hand over, I want to hold it for a while.",
+    "enabled": true
+  },
+  {
+    "id": "iv_c4",
+    "cat": "cuddle",
+    "kind": "cuddle",
+    "text": "Just sit next to you for a while and do nothing.",
+    "enabled": true
+  },
+  {
+    "id": "iv_c5",
+    "cat": "cuddle",
+    "kind": "cuddle",
+    "text": "I want to put my head on your shoulder, please lend me five minutes.",
+    "enabled": true
+  },
+  {
+    "id": "iv_c6",
+    "cat": "cuddle",
+    "kind": "cuddle",
+    "text": "I think I touched your hand just now? Do it again, this time hold on tight.",
+    "enabled": true
+  },
+  {
+    "id": "iv_c7",
+    "cat": "cuddle",
+    "kind": "cuddle",
+    "text": "I want to touch you even though I am across the world. If you feel it, don’t hide.",
+    "enabled": true
+  },
+  {
+    "id": "iv_c8",
+    "cat": "cuddle",
+    "kind": "cuddle",
+    "text": "I miss you very much today, and I want to nuzzle you when I think about it.",
+    "enabled": true
+  },
+  {
+    "id": "iv_c9",
+    "cat": "cuddle",
+    "kind": "cuddle",
+    "text": "Go to bed early at night and I will hold you to sleep.",
+    "enabled": true
+  },
+  {
+    "id": "iv_c10",
+    "cat": "cuddle",
+    "kind": "cuddle",
+    "text": "I'm in a good mood, and this is the best time to kiss.",
+    "enabled": true
+  }
+];
   const CATS_TI = [['rps', '猜拳邀请'], ['pong', 'Pong 邀请'], ['snake', '贪吃蛇邀请'], ['cuddle', '贴贴邀请']];
   const KIND_OF = {};
   CATS_TI.forEach(([k]) => { KIND_OF[k] = k; });

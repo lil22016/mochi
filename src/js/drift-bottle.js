@@ -157,10 +157,25 @@
 
   // ---- 字卡池（与字卡库【漂流瓶】tab 同源；逐张开关过滤；全关回退内置兜底） ----
   const FB = {
-    ta: ['过来一点。', '我在。', '今天也陪着你。', '别急，慢慢来。'],
-    reply: ['看到了。', '好。等我。', '嗯，收到了。', '我也想你。这句是回礼。'],
-    sea: ['今天有没有好好休息？', '慢慢来，海不催任何人。', '你已经做得很好了。', '想见的人，总会再见的。']
-  };
+  "ta": [
+    "Come here.",
+    "I am here.",
+    "I’ll be with you today too.",
+    "Don't rush, take your time."
+  ],
+  "reply": [
+    "I saw it.",
+    "Okay. wait for me.",
+    "Yes, I got it.",
+    "I miss you too. This sentence is a return gift."
+  ],
+  "sea": [
+    "Did you have a good rest today?",
+    "Take your time, the sea will not rush anyone.",
+    "You have done a great job.",
+    "The people you want to see will always meet again."
+  ]
+};
   function poolLine(group, fbKey, fit) {
     let arr = null;
     try { arr = window.getLibPool ? window.getLibPool('drift', group, FB[fbKey] || []) : null; } catch (e) {}
@@ -178,16 +193,16 @@
     { e: '⭐', n: '一颗星星贴纸' }, { e: '🍬', n: '一颗没化掉的糖' }, { e: '🧸', n: '一只迷你小熊' }
   ];
   const EMPTY_LINES = [
-    '瓶子里什么都没有，只有一点海的味道。',
-    '空瓶子。软木塞倒是雕了一朵小花。',
-    '只有一张被海水晕开的白纸。',
-    '瓶底躺着两粒沙，亮晶晶的。'
-  ];
+  "There is nothing in the bottle, just a little taste of the sea.",
+  "Empty bottle. The cork has a small flower carved on it.",
+  "There is only a piece of white paper blurred by the sea water.",
+  "There are two grains of sand lying at the bottom of the bottle, shining brightly."
+];
   const ITEM_LINES = [
-    '瓶子里装着{g}，还有一张小纸条：「给捡到它的人。」',
-    '摇晃的声响很轻——里面是{g}。',
-    '{g}躺在瓶底，像特意留下的。'
-  ];
+  "The bottle contains {g}, and a small note: \"For the person who picked it up.\"",
+  "The shaking sound is very soft - there is {g} inside.",
+  "{g} lies at the bottom of the bottle, as if it was left on purpose."
+];
 
   // ---- 数据 ----
   const MINE_CAP = 50, GOT_CAP = 120, THEIRS_CAP = 60, PICK_CD = 20000;

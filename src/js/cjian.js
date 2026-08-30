@@ -234,20 +234,53 @@
 
   // ---- 状态定义 ----
   const PRESENCE = {
-    near:   { label: '很近',     desc: '感觉就在身边' },
-    nearby: { label: '附近',     desc: 'TA可能就在附近' },
-    far:    { label: '遥远',     desc: '能感觉到，但距离很远' },
-    unfelt: { label: '感觉不到', desc: '暂时无法感知TA' },
-    gone:   { label: '离开',     desc: 'TA暂时不在附近' }
-  };
+  "near": {
+    "label": "Very close",
+    "desc": "I feel like I’m by my side"
+  },
+  "nearby": {
+    "label": "Nearby",
+    "desc": "you may be nearby"
+  },
+  "far": {
+    "label": "Far away",
+    "desc": "Can feel it, but far away"
+  },
+  "unfelt": {
+    "label": "Can’t feel it",
+    "desc": "Cannot sense you temporarily"
+  },
+  "gone": {
+    "label": "Leave",
+    "desc": "you is not nearby at the moment"
+  }
+};
   const ACTIVITY = {
-    free:    { label: '有空', desc: '现在比较适合交流' },
-    busy:    { label: '有事', desc: 'TA正在做自己的事情' },
-    rushed:  { label: '忙着', desc: '暂时不太方便' },
-    rest:    { label: '休息', desc: 'TA正在休息' },
-    sleep:   { label: '睡着', desc: 'TA那边已经入睡' },
-    unknown: { label: '未知', desc: '暂时不知道TA在做什么' }
-  };
+  "free": {
+    "label": "Available",
+    "desc": "Now is more suitable for communication"
+  },
+  "busy": {
+    "label": "Something's wrong",
+    "desc": "you is doing her own thing"
+  },
+  "rushed": {
+    "label": "Busy",
+    "desc": "It is temporarily inconvenient"
+  },
+  "rest": {
+    "label": "Rest",
+    "desc": "you is resting"
+  },
+  "sleep": {
+    "label": "Sleep",
+    "desc": "you has fallen asleep over there"
+  },
+  "unknown": {
+    "label": "Unknown",
+    "desc": "I don’t know what he is doing at the moment"
+  }
+};
 
   // ---- 存储（按桌面命名空间分离） ----
   function loadRoster(cid) {

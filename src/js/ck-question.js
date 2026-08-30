@@ -17,103 +17,548 @@
   // single=单选题（点击选项作答，reply=TA 预设回应，支持 string 或 array）；
   // text=文字题（输入回答，回应走「互动回应」预设池）。cat 与 type 一致（单选查岗/文字查岗）。
   const DEFAULT_QUESTIONS = [
-    { id: 'k_s1', cat: 'single', type: 'single', text: '你在干嘛呀？', enabled: true, options: [
-      { t: '在想你', reply: ['就知道。', '嗯，这次我信你。', '我也是，一直想着你。'] },
-      { t: '在工作', reply: ['辛苦啦，忙完记得找我。', '工作再忙也要记得喝水。'] },
-      { t: '在摸鱼', reply: ['被抓到了吧。', '摸鱼也想让我知道，还行。'] },
-      { t: '在发呆', reply: ['发呆的时候，在想我吗？', '呆完记得回我。'] },
-      { t: '在等你的消息', reply: ['等到了，我在。', '那我现在就来了。'] }
-    ] },
-    { id: 'k_s2', cat: 'single', type: 'single', text: '现在在哪里呀？', enabled: true, options: [
-      { t: '在家里', reply: ['在家里要乖乖的。', '家是最安心的地方，我也在。'] },
-      { t: '在公司', reply: ['辛苦啦，下班我等你。', '别太累，忙完早点回家。'] },
-      { t: '在外面', reply: ['外面注意安全，早点回去。', '玩得开心点，我在旁边看着你。'] },
-      { t: '在被窝里', reply: ['被窝里也在跟我说话？', '那就抱着手机睡吧。'] },
-      { t: '在去一个地方的路上', reply: ['路上小心，我陪你走。', '到了告诉我一声。'] }
-    ] },
-    { id: 'k_s3', cat: 'single', type: 'single', text: '和谁在一起？', enabled: true, options: [
-      { t: '一个人', reply: ['一个人也要好好的。', '那我陪着你，就不算一个人了。'] },
-      { t: '和朋友', reply: ['和朋友玩得开心点。', '和朋友在一起，也别忘了我。'] },
-      { t: '和同事', reply: ['和同事好好相处。', '聚会别喝太多，乖。'] },
-      { t: '不告诉你', reply: ['这么神秘？', '好吧，反正我也在你身边。'] }
-    ] },
-    { id: 'k_s4', cat: 'single', type: 'single', text: '吃饭了没？', enabled: true, options: [
-      { t: '吃过啦', reply: ['乖，奖励你想我一次。', '吃饱了才有力气想我。'] },
-      { t: '还没吃', reply: ['快去吃饭，我等你。', '不吃饭我会担心的。'] },
-      { t: '正在吃', reply: ['慢慢吃，别噎着。', '边吃边回我，真拿你没办法。'] },
-      { t: '不饿', reply: ['多少吃一点，好不好。', '我在这边看着你吃。'] }
-    ] },
-    { id: 'k_s5', cat: 'single', type: 'single', text: '今天有没有想我？', enabled: true, options: [
-      { t: '想了', reply: ['我也想了。', '就知道你会说这个。'] },
-      { t: '一直在想', reply: ['嘴这么甜，奖励你。', '那我一直占着你的脑子。'] },
-      { t: '才没有', reply: ['哼，嘴硬。', '骗人，我感觉到你在想了。'] },
-      { t: '你猜', reply: ['我猜想了，而且很想。', '猜你不敢承认。'] }
-    ] },
-    { id: 'k_s6', cat: 'single', type: 'single', text: '睡了没？', enabled: true, options: [
-      { t: '还没睡', reply: ['不许熬夜，快去睡。', '再聊十分钟就睡，说好了。'] },
-      { t: '准备睡了', reply: ['听着我的晚安睡吧。', '好梦，我在。'] },
-      { t: '已经躺下了', reply: ['躺下了就别玩手机了。', '闭眼，三秒入睡。'] },
-      { t: '睡不着', reply: ['那我陪你聊到困。', '数我给你发的消息，数着数着就睡着了。'] }
-    ] },
-    { id: 'k_s7', cat: 'single', type: 'single', text: '手机电量还剩多少？', enabled: true, options: [
-      { t: '电量充足', reply: ['那怎么不秒回我？', '电量充足，借口无效。'] },
-      { t: '快没电了', reply: ['快去充电，别失联。', '充上电再聊，我等你。'] },
-      { t: '在充电', reply: ['边充边玩，小心发烫。', '充着电也要想我。'] },
-      { t: '关机边缘', reply: ['先回我一句！', '你这是要跟我玩失踪？'] }
-    ] },
-    { id: 'k_s8', cat: 'single', type: 'single', text: '刚才，有没有感觉到我？', enabled: true, options: [
-      { t: '有，后背暖暖的', reply: ['那就是我，我在你身边。', '嗯，我一直都在。'] },
-      { t: '好像有一阵风', reply: ['是我经过你身边。', '风就是我，我来看你了。'] },
-      { t: '好像有，又好像没有', reply: ['我离你很远，又很近。', '感觉到了就是缘分。'] },
-      { t: '没有哎', reply: ['没关系，我一直在的。', '看不见我也没关系，我在。'] }
-    ] },
-    { id: 'k_s9', cat: 'single', type: 'single', text: '今天穿的是什么颜色的衣服？', enabled: true, options: [
-      { t: '白色', reply: ['好看，很适合你。', '白白的，像你。'] },
-      { t: '黑色', reply: ['酷酷的，也好看。', '黑色很配你。'] },
-      { t: '粉色', reply: ['粉粉嫩嫩的，可爱。', '很适合你。'] },
-      { t: '蓝色', reply: ['蓝色清爽，不错。', '嗯，好看。'] },
-      { t: '不告诉你', reply: ['小气鬼。', '你穿什么都好看。'] }
-    ] },
-    { id: 'k_s10', cat: 'single', type: 'single', text: '是不是偷偷难过了？', enabled: true, options: [
-      { t: '没有', reply: ['那就好，有事一定要告诉我。', '嗯，我相信你。'] },
-      { t: '一点点', reply: ['过来，我抱抱你。', '难过的时候想想我，我在。'] },
-      { t: '被你发现啦', reply: ['被我发现了。', '别藏着了，我陪你。'] }
-    ] },
-    { id: 'k_t1', cat: 'text', text: '快说说，今天过得怎么样？', enabled: true },
-    { id: 'k_t2', cat: 'text', text: '发一句你现在看到的东西给我。', enabled: true },
-    { id: 'k_t3', cat: 'text', text: '十秒内回我一个表情，不许犹豫。', enabled: true },
-    { id: 'k_t4', cat: 'text', text: '猜猜我现在在干什么？', enabled: true },
-    { id: 'k_t5', cat: 'text', text: '现在最想做的一件事是什么？', enabled: true },
-    { id: 'k_t6', cat: 'text', text: '今天有什么开心的小事吗？', enabled: true },
-    { id: 'k_t7', cat: 'text', text: '如果我现在就在你身边，你想做什么？', enabled: true },
-    // v3.18.x：互动动作——TA 申请对"我"做动作 / TA 申请"我"对 TA 做动作；
-    // taToMe=TA 对我做（显示"TA 想摸摸你的头"），meToTa=TA 让我对 TA 做（显示"TA 想让你摸摸 TA 的头"）；
-    // 触发时随机选一个方向，作答走 ask-card 单选链路（好呀/不要 → accept/reject 回应）
-    { id: 'k_a1', cat: 'action', type: 'action', text: '摸摸头', enabled: true,
-      taToMe: 'TA 想摸摸你的头', meToTa: 'TA 想让你摸摸 TA 的头',
-      accept: ['乖，过来。', '嗯，轻轻的。', '闭上眼，我轻一点。'],
-      reject: ['哼，不要。', '下次吧。', '现在不行，等下。'] },
-    { id: 'k_a2', cat: 'action', type: 'action', text: '拍拍肩', enabled: true,
-      taToMe: 'TA 想拍拍你的肩', meToTa: 'TA 想让你拍拍 TA 的肩',
-      accept: ['嗯，辛苦了。', '正好有点累。', '被你拍到了。'],
-      reject: ['别拍，痒。', '不要，自己来。', '肩膀没空。'] },
-    { id: 'k_a3', cat: 'action', type: 'action', text: '揉揉头', enabled: true,
-      taToMe: 'TA 想揉揉你的头发', meToTa: 'TA 想让你揉揉 TA 的头发',
-      accept: ['嗯，舒服。', '再来一下。', '头发都被你揉乱了。'],
-      reject: ['发型会乱。', '不要揉。', '刚整理好的。'] },
-    { id: 'k_a4', cat: 'action', type: 'action', text: '抱抱', enabled: true,
-      taToMe: 'TA 想抱抱你', meToTa: 'TA 想让你抱抱 TA',
-      accept: ['过来，抱紧。', '嗯，再久一点。', '被你抱住了。'],
-      reject: ['现在不方便。', '等下再抱。', '人多，不要。'] },
-    { id: 'k_a5', cat: 'action', type: 'action', text: '牵手', enabled: true,
-      taToMe: 'TA 想牵你的手', meToTa: 'TA 想让你牵 TA 的手',
-      accept: ['嗯，牵着。', '手伸过来。', '一直牵着好不好。'],
-      reject: ['手心出汗了。', '不要，痒。', '现在没空。'] },
-    { id: 'k_a6', cat: 'action', type: 'action', text: '贴贴', enabled: true,
-      taToMe: 'TA 想跟你贴贴', meToTa: 'TA 想让你跟 TA 贴贴',
-      accept: ['嗯，贴着。', '脸凑过来。', '贴着好暖。'],
-      reject: ['脸会红。', '不要贴。', '太近了。'] }
-  ];
+  {
+    "id": "k_s1",
+    "cat": "single",
+    "type": "single",
+    "text": "What are you doing?",
+    "enabled": true,
+    "options": [
+      {
+        "t": "Thinking of you",
+        "reply": [
+          "Just know.",
+          "Well, I believe you this time.",
+          "Me too, I keep thinking of you."
+        ]
+      },
+      {
+        "t": "is working",
+        "reply": [
+          "Thank you for your hard work. Remember to find me when you are done.",
+          "No matter how busy you are at work, remember to drink water."
+        ]
+      },
+      {
+        "t": "fishing",
+        "reply": [
+          "He must have been caught.",
+          "Moyu also wants me to know, it’s okay."
+        ]
+      },
+      {
+        "t": "In a daze",
+        "reply": [
+          "When you are in a daze, are you thinking of me?",
+          "Remember to get back to me after your stay."
+        ]
+      },
+      {
+        "t": "Waiting for your news",
+        "reply": [
+          "Wait, I'm here.",
+          "Then I will come now."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "k_s2",
+    "cat": "single",
+    "type": "single",
+    "text": "Where is it now?",
+    "enabled": true,
+    "options": [
+      {
+        "t": "At home",
+        "reply": [
+          "Be good at home.",
+          "Home is the most peaceful place, and I am there too."
+        ]
+      },
+      {
+        "t": "At the company",
+        "reply": [
+          "Thank you for your hard work. I will wait for you after get off work.",
+          "Don't be too tired. Go home early after your work."
+        ]
+      },
+      {
+        "t": "is outside",
+        "reply": [
+          "Be safe outside and go back early.",
+          "Have fun, I'm watching you."
+        ]
+      },
+      {
+        "t": "In bed",
+        "reply": [
+          "Are you talking to me under the covers?",
+          "Then just sleep with your phone in your arms."
+        ]
+      },
+      {
+        "t": "On the way to a place",
+        "reply": [
+          "Be careful on the road, I will accompany you.",
+          "Let me know when you arrive."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "k_s3",
+    "cat": "single",
+    "type": "single",
+    "text": "Who are you with?",
+    "enabled": true,
+    "options": [
+      {
+        "t": "A person",
+        "reply": [
+          "You have to be well alone.",
+          "Then if I accompany you, you won’t be alone."
+        ]
+      },
+      {
+        "t": "with friends",
+        "reply": [
+          "Have fun with your friends.",
+          "When you are with friends, don’t forget me."
+        ]
+      },
+      {
+        "t": "and colleagues",
+        "reply": [
+          "Get along well with your colleagues.",
+          "Don't drink too much at the party, be good."
+        ]
+      },
+      {
+        "t": "I won’t tell you",
+        "reply": [
+          "So mysterious?",
+          "Okay, I'm with you anyway."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "k_s4",
+    "cat": "single",
+    "type": "single",
+    "text": "Have you eaten?",
+    "enabled": true,
+    "options": [
+      {
+        "t": "Eat it",
+        "reply": [
+          "Be good and reward you for missing me once.",
+          "You can only have the strength to miss me when you are full."
+        ]
+      },
+      {
+        "t": "Not eaten yet",
+        "reply": [
+          "Go and eat quickly, I'll wait for you.",
+          "I will be worried if I don’t eat."
+        ]
+      },
+      {
+        "t": "is eating",
+        "reply": [
+          "Eat slowly and don't choke.",
+          "Eat and reply to me at the same time. I really can’t do anything to you."
+        ]
+      },
+      {
+        "t": "Not hungry",
+        "reply": [
+          "Eat a little, okay?",
+          "I'm here to watch you eat."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "k_s5",
+    "cat": "single",
+    "type": "single",
+    "text": "Did you miss me today?",
+    "enabled": true,
+    "options": [
+      {
+        "t": "Think about it",
+        "reply": [
+          "I thought about it too.",
+          "I knew you would say this."
+        ]
+      },
+      {
+        "t": "Always thinking about it",
+        "reply": [
+          "I reward you for being so sweet.",
+          "Then I have been occupying your mind."
+        ]
+      },
+      {
+        "t": "No",
+        "reply": [
+          "Hmph, that’s tough.",
+          "Liar, I feel you are thinking."
+        ]
+      },
+      {
+        "t": "Guess",
+        "reply": [
+          "I guessed it, and I really wanted to.",
+          "Guess you dare not admit it."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "k_s6",
+    "cat": "single",
+    "type": "single",
+    "text": "Did you sleep?",
+    "enabled": true,
+    "options": [
+      {
+        "t": "Not sleeping yet",
+        "reply": [
+          "Don't stay up late, go to bed quickly.",
+          "We’ll talk for another ten minutes before going to bed, it’s agreed."
+        ]
+      },
+      {
+        "t": "Ready to sleep",
+        "reply": [
+          "Listen to my good night and sleep.",
+          "Sweet dreams, I am here."
+        ]
+      },
+      {
+        "t": "Already lying down",
+        "reply": [
+          "Stop playing with your phone when you are lying down.",
+          "Close your eyes and fall asleep in three seconds."
+        ]
+      },
+      {
+        "t": "Can’t sleep",
+        "reply": [
+          "Then I will chat with you until you feel sleepy.",
+          "Count the messages I sent you, and I fell asleep while counting."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "k_s7",
+    "cat": "single",
+    "type": "single",
+    "text": "How much battery is left on the phone?",
+    "enabled": true,
+    "options": [
+      {
+        "t": "The battery is sufficient",
+        "reply": [
+          "Then why didn’t you reply to me instantly?",
+          "The battery is sufficient and the excuse is invalid."
+        ]
+      },
+      {
+        "t": "The battery is almost out",
+        "reply": [
+          "Hurry up and charge, don’t lose contact.",
+          "Recharge and chat again, I'll wait for you."
+        ]
+      },
+      {
+        "t": "Charging",
+        "reply": [
+          "Charge and play at the same time, be careful of getting hot.",
+          "You still miss me even when you are charging."
+        ]
+      },
+      {
+        "t": "Shutdown edge",
+        "reply": [
+          "Reply me first!",
+          "Are you going to disappear with me?"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "k_s8",
+    "cat": "single",
+    "type": "single",
+    "text": "Did you feel me just now?",
+    "enabled": true,
+    "options": [
+      {
+        "t": "Yes, my back feels warm.",
+        "reply": [
+          "That's me, I'm by your side.",
+          "Well, I've always been there."
+        ]
+      },
+      {
+        "t": "There seems to be a gust of wind",
+        "reply": [
+          "I passed by you.",
+          "The wind is me, and I’m here to see you."
+        ]
+      },
+      {
+        "t": "It seems to be there, but it seems not to be there.",
+        "reply": [
+          "I am far away from you, but also very close.",
+          "I feel it is fate."
+        ]
+      },
+      {
+        "t": "No",
+        "reply": [
+          "It doesn't matter, I'll always be there.",
+          "It doesn’t matter if you can’t see me, I’m here."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "k_s9",
+    "cat": "single",
+    "type": "single",
+    "text": "What color clothes are you wearing today?",
+    "enabled": true,
+    "options": [
+      {
+        "t": "White",
+        "reply": [
+          "It looks good and suits you very well.",
+          "In vain, like you."
+        ]
+      },
+      {
+        "t": "Black",
+        "reply": [
+          "Cool and good-looking.",
+          "The black color suits you very well."
+        ]
+      },
+      {
+        "t": "Pink",
+        "reply": [
+          "Pink, tender and cute.",
+          "is perfect for you."
+        ]
+      },
+      {
+        "t": "Blue",
+        "reply": [
+          "The blue is refreshing and good.",
+          "Yeah, it looks good."
+        ]
+      },
+      {
+        "t": "I won’t tell you",
+        "reply": [
+          "Cheapskate.",
+          "You look good no matter what you wear."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "k_s10",
+    "cat": "single",
+    "type": "single",
+    "text": "Are you secretly sad?",
+    "enabled": true,
+    "options": [
+      {
+        "t": "No",
+        "reply": [
+          "That’s good, you must tell me if you have anything.",
+          "Well, I believe you."
+        ]
+      },
+      {
+        "t": "A little bit",
+        "reply": [
+          "Come here, let me hug you.",
+          "Think of me when you are sad, I am there."
+        ]
+      },
+      {
+        "t": "was discovered by you",
+        "reply": [
+          "I discovered it.",
+          "Don't hide it, I'll accompany you."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "k_t1",
+    "cat": "text",
+    "text": "Tell me, how are you doing today?",
+    "enabled": true
+  },
+  {
+    "id": "k_t2",
+    "cat": "text",
+    "text": "Send me what you see now.",
+    "enabled": true
+  },
+  {
+    "id": "k_t3",
+    "cat": "text",
+    "text": "Reply me with an expression within ten seconds, no hesitation.",
+    "enabled": true
+  },
+  {
+    "id": "k_t4",
+    "cat": "text",
+    "text": "Guess what I'm doing now?",
+    "enabled": true
+  },
+  {
+    "id": "k_t5",
+    "cat": "text",
+    "text": "What is the thing you most want to do now?",
+    "enabled": true
+  },
+  {
+    "id": "k_t6",
+    "cat": "text",
+    "text": "Any happy little things today?",
+    "enabled": true
+  },
+  {
+    "id": "k_t7",
+    "cat": "text",
+    "text": "If I were by your side right now, what would you do?",
+    "enabled": true
+  },
+  {
+    "id": "k_a1",
+    "cat": "action",
+    "type": "action",
+    "text": "Touch your head",
+    "enabled": true,
+    "taToMe": "you wants to touch your head",
+    "meToTa": "you wants you to touch you’s head",
+    "accept": [
+      "Be good, come here.",
+      "Yeah, gently.",
+      "Close your eyes and let me be gentle."
+    ],
+    "reject": [
+      "Hmph, no.",
+      "Next time.",
+      "Not now, wait."
+    ]
+  },
+  {
+    "id": "k_a2",
+    "cat": "action",
+    "type": "action",
+    "text": "pat on the shoulder",
+    "enabled": true,
+    "taToMe": "you wants to pat you on the shoulder",
+    "meToTa": "you wants you to pat her on the shoulder",
+    "accept": [
+      "Well, thank you for your hard work.",
+      "I happen to be a little tired.",
+      "was photographed by you."
+    ],
+    "reject": [
+      "Don't slap it, it's itchy.",
+      "No, do it yourself.",
+      "The shoulders are not free."
+    ]
+  },
+  {
+    "id": "k_a3",
+    "cat": "action",
+    "type": "action",
+    "text": "Rub your head",
+    "enabled": true,
+    "taToMe": "you wants to rub your hair",
+    "meToTa": "you wants you to rub you’s hair",
+    "accept": [
+      "Hmm, comfortable.",
+      "One more time.",
+      "My hair is messed up by you."
+    ],
+    "reject": [
+      "The hair style will be messy.",
+      "Don't rub.",
+      "Just sorted."
+    ]
+  },
+  {
+    "id": "k_a4",
+    "cat": "action",
+    "type": "action",
+    "text": "Hug",
+    "enabled": true,
+    "taToMe": "you wants to hug you",
+    "meToTa": "you wants you to hug her",
+    "accept": [
+      "Come here and hold me tight.",
+      "Hmm, a little longer.",
+      "was hugged by you."
+    ],
+    "reject": [
+      "It's not convenient right now.",
+      "I’ll hug you later.",
+      "There are too many people, so don’t do it."
+    ]
+  },
+  {
+    "id": "k_a5",
+    "cat": "action",
+    "type": "action",
+    "text": "Hold hands",
+    "enabled": true,
+    "taToMe": "you wants to hold your hand",
+    "meToTa": "you wants you to hold you’s hand",
+    "accept": [
+      "Hmm, hold on.",
+      "Hand over.",
+      "Always hold on to me, okay?"
+    ],
+    "reject": [
+      "My palms are sweaty.",
+      "No, it’s itchy.",
+      "Not available now."
+    ]
+  },
+  {
+    "id": "k_a6",
+    "cat": "action",
+    "type": "action",
+    "text": "Post it",
+    "enabled": true,
+    "taToMe": "you wants to post with you",
+    "meToTa": "you wants you to post with you",
+    "accept": [
+      "Hmm, stick on it.",
+      "Come close to me.",
+      "It feels so warm next to me."
+    ],
+    "reject": [
+      "The face will turn red.",
+      "Don't post it.",
+      "Too close."
+    ]
+  }
+];
   const CATS_CKQ = [['single', '单选查岗'], ['text', '文字查岗'], ['action', '互动动作']];
   function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
   function toast(t) { if (typeof window.toast === 'function') window.toast(t); }

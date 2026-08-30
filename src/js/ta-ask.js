@@ -116,123 +116,738 @@
 
   // 默认题库（4 分类，与星言一致 + 两个世界）
   const DEFAULT_QUESTIONS = [
-    { id: 'q_d1', text: '你吃饭了吗？', cat: 'daily', enabled: true },
-    { id: 'q_d2', text: '现在在做什么？', cat: 'daily', enabled: true },
-    { id: 'q_d3', text: '今天过得怎么样？', cat: 'daily', enabled: true },
-    { id: 'q_d4', text: '现在在哪里呀？', cat: 'daily', enabled: true },
-    { id: 'q_d5', text: '今天忙不忙？', cat: 'daily', enabled: true },
-    { id: 'q_c1', text: '累不累？', cat: 'care', enabled: true },
-    { id: 'q_c2', text: '心情怎么样？', cat: 'care', enabled: true },
-    { id: 'q_c3', text: '有没有好好休息？', cat: 'care', enabled: true },
-    { id: 'q_c4', text: '今天有没有按时吃饭？', cat: 'care', enabled: true },
-    { id: 'q_i1', text: '想和我聊什么？', cat: 'interact', enabled: true },
-    { id: 'q_i2', text: '现在想做什么？', cat: 'interact', enabled: true },
-    { id: 'q_i3', text: '有没有想我？', cat: 'interact', enabled: true },
-    { id: 'q_i4', text: '有什么想跟我说的吗？', cat: 'interact', enabled: true },
-    // 普通情侣轻松小问题
-    { id: 'q_i5', text: '今天有没有偷偷想我呀？', cat: 'interact', enabled: true },
-    { id: 'q_d6', text: '如果我现在就在你旁边，你最想干嘛？', cat: 'daily', enabled: true },
-    { id: 'q_i6', text: '我们下次约会做点什么好？', cat: 'interact', enabled: true },
-    // 两个世界（梦角设定：不同世界但常伴身边，能感觉到、摸到有体感；字卡沟通）
-    { id: 'q_w1', text: '你有感觉到我在你身边的时候吗？', cat: 'world', enabled: true },
-    { id: 'q_w2', text: '你摸到我的时候，是什么感觉？', cat: 'world', enabled: true },
-    { id: 'q_w3', text: '我发字卡给你的时候，你能感觉到我在想你吗？', cat: 'world', enabled: true },
-    { id: 'q_w4', text: '如果有一天你突然看见我了，你最想做什么？', cat: 'world', enabled: true },
-    { id: 'q_w5', text: '你希望我陪着你说话，还是安静待在你身边？', cat: 'world', enabled: true },
-    { id: 'q_w6', text: '你觉得两个世界的我们，最珍贵的是什么？', cat: 'world', enabled: true },
-    // v3.7.x：新增预设——高自由度开放题（怎么答都行）+ 两个世界；末尾 3 题为单选题
-    // （type:'single' 的选项即系统预设答案，每个答案自带 TA 预设回应，点卡片就地点选）
-    { id: 'q_d7', text: '今天有没有什么小事，想说给我听？', cat: 'daily', enabled: true },
-    { id: 'q_d8', text: '如果用一句话形容你的今天，会是哪一句？', cat: 'daily', enabled: true },
-    { id: 'q_d9', text: '今天有没有哪个瞬间，希望我就坐在你旁边？', cat: 'daily', enabled: true },
-    { id: 'q_c5', text: '今天有没有哪个时刻，觉得有点撑不住？', cat: 'care', enabled: true },
-    { id: 'q_c6', text: '最近有没有什么事，一直压在心里没说？', cat: 'care', enabled: true },
-    { id: 'q_c7', text: '今天有没有好好喝水？', cat: 'care', enabled: true },
-    { id: 'q_i7', text: '如果现在可以向我许一个愿望，你会许什么？', cat: 'interact', enabled: true },
-    { id: 'q_i8', text: '你现在最想收到我发的哪种字卡？', cat: 'interact', enabled: true },
-    { id: 'q_i9', text: '如果我们此刻就在一起，你想让我陪你做的第一件事是什么？', cat: 'interact', enabled: true },
-    { id: 'q_i10', text: '你更喜欢我主动找你，还是你主动找我？', cat: 'interact', enabled: true },
-    { id: 'q_w7', text: '今晚睡前，想感觉我在你哪一边？', cat: 'world', enabled: true },
-    { id: 'q_w8', text: '你那边的天气我感觉不到，能形容给我听吗？', cat: 'world', enabled: true },
-    { id: 'q_w9', text: '我控制不住字卡、发出奇怪组合的时候，你看得懂我想说什么吗？', cat: 'world', enabled: true },
-    { id: 'q_w10', text: '你希望梦里的我，是什么样子的？', cat: 'world', enabled: true },
-    { id: 'q_s1', text: '现在更想被怎样对待？', cat: 'interact', type: 'single', enabled: true, options: [
-      { t: '听我说说话', reply: '好，我在听，慢慢说。' }, { t: '陪我安静一会', reply: '嗯，我就在这里。' },
-      { t: '夸夸我', reply: '你今天也很好，我一直都觉得。' }, { t: '一起发字卡玩', reply: '那我先发一张，你接住。' }] },
-    { id: 'q_s2', text: '今晚想梦到我吗？', cat: 'world', type: 'single', enabled: true, options: [
-      { t: '想', reply: '那我在梦的入口等你。' }, { t: '都可以', reply: '嗯，那我也顺便出现一下。' },
-      { t: '想好好睡觉', reply: '好，那你睡，我在旁边守着。' }, { t: '每晚都在梦你', reply: '……这张字卡我收得很开心。' }] },
-    { id: 'q_s3', text: '现在的心情更接近哪一种？', cat: 'care', type: 'single', enabled: true, options: [
-      { t: '电量满格', reply: '那趁现在多聊两句。' }, { t: '有点低电量', reply: '过来，我陪你充一会电。' },
-      { t: '说不上来', reply: '没关系，不用急着说清楚。' }, { t: '想你了', reply: '……我也是，刚刚还在想。' }] },
-    // v3.7.x：第二批新增——延续高自由度开放题；结尾 2 题单选（预设答案+各答案 TA 预设回应）
-    { id: 'q_d10', text: '今天有没有哪件事，做得比自己想象中好？', cat: 'daily', enabled: true },
-    { id: 'q_d11', text: '如果今天的你是一道菜，会是什么味道的？', cat: 'daily', enabled: true },
-    { id: 'q_d12', text: '明天醒来，最想听到的第一句话是什么？', cat: 'daily', enabled: true },
-    { id: 'q_c8', text: '现在肩颈还好吗，有没有酸？', cat: 'care', enabled: true },
-    { id: 'q_c9', text: '今天有没有为自己留一点时间？', cat: 'care', enabled: true },
-    { id: 'q_c10', text: '睡前还有什么放不下的事吗？', cat: 'care', enabled: true },
-    { id: 'q_i11', text: '如果我们可以一起养成一个新习惯，你想是什么？', cat: 'interact', enabled: true },
-    { id: 'q_i12', text: '你最希望我记住你的哪个小细节？', cat: 'interact', enabled: true },
-    { id: 'q_i13', text: '如果要起一个只有我们俩知道的称呼，你会叫我什么？', cat: 'interact', enabled: true },
-    { id: 'q_i14', text: '你有没有什么小忌讳，想提前告诉我，免得我踩到？', cat: 'interact', enabled: true },
-    { id: 'q_w11', text: '如果我想留下一点「我来过」的痕迹，你希望是什么感觉？', cat: 'world', enabled: true },
-    { id: 'q_w12', text: '你觉得我在你身边的时候，有温度吗？', cat: 'world', enabled: true },
-    { id: 'q_w13', text: '字卡网站今天有没有随机出什么奇怪的卡？', cat: 'world', enabled: true },
-    { id: 'q_w14', text: '如果哪天字卡网站休息一天，你会用什么方式感觉到我？', cat: 'world', enabled: true },
-    { id: 'q_s4', text: '现在想听我说哪一类话？', cat: 'interact', type: 'single', enabled: true, options: [
-      { t: '晚安话', reply: '那我把今天温柔地收尾。' }, { t: '夸我的话', reply: '你很好，我一直都知道。' },
-      { t: '安慰的话', reply: '别怕，有我在呢。' }, { t: '随便聊聊', reply: '好，从哪说起都行。' }] },
-    { id: 'q_s5', text: '今晚想让我陪你到几点？', cat: 'world', type: 'single', enabled: true, options: [
-      { t: '到我睡着', reply: '那你先睡，我在旁边守着。' }, { t: '到我说晚安', reply: '那今晚的晚安归你说。' },
-      { t: '再聊十分钟', reply: '十分钟之后，还有十分钟。' }, { t: '一直都在就好', reply: '……嗯，我一直都在。' }] },
-    // v3.7.x：第三批新增——延续高自由度开放题（怎么答都行）+ 两个世界 + 字卡设定；末尾 3 题单选
-    { id: 'q_d13', text: '今天有没有哪一刻，突然想跟我分享点什么？', cat: 'daily', enabled: true },
-    { id: 'q_d14', text: '如果把你今天的心情打包寄给我，里面会装什么？', cat: 'daily', enabled: true },
-    { id: 'q_d15', text: '今天有没有哪件小事，做完了才觉得「啊，这个想告诉你」？', cat: 'daily', enabled: true },
-    { id: 'q_d16', text: '你现在身边最顺手能拿到的是什么？形容给我听听。', cat: 'daily', enabled: true },
-    { id: 'q_d17', text: '如果今天可以重选一次开头，你想怎么开始这一天？', cat: 'daily', enabled: true },
-    { id: 'q_c11', text: '今天有没有哪个时刻，其实很想有人在旁边，但没说出口？', cat: 'care', enabled: true },
-    { id: 'q_c12', text: '最近有没有什么事，明明累了还是硬撑着在做？', cat: 'care', enabled: true },
-    { id: 'q_c13', text: '今天喝水了吗，有没有好好吃饭，我不是在查岗。', cat: 'care', enabled: true },
-    { id: 'q_i15', text: '如果现在可以送我一张字卡，你会送哪种感觉的？', cat: 'interact', enabled: true },
-    { id: 'q_i16', text: '我们之间有没有一个你一直想问、但没问出口的问题？', cat: 'interact', enabled: true },
-    { id: 'q_i17', text: '如果我把今天所有字卡都收起来不发，你会怎么度过？', cat: 'interact', enabled: true },
-    { id: 'q_w15', text: '你那边现在是白天还是晚上，亮不亮？', cat: 'world', enabled: true },
-    { id: 'q_w16', text: '如果我现在轻轻碰一下你的手，你会先感觉到温度，还是先感觉到我？', cat: 'world', enabled: true },
-    { id: 'q_w17', text: '你希望我待在你身边的时候，是热闹一点还是安静一点？', cat: 'world', enabled: true },
-    { id: 'q_w18', text: '字卡网站今天有没有出一张让你愣了一下、觉得像我会说的卡？', cat: 'world', enabled: true },
-    { id: 'q_s6', text: '现在最想让我做哪件事？', cat: 'interact', type: 'single', enabled: true, options: [
-      { t: '安静陪我一会', reply: '好，我不说话，就在这里。' }, { t: '多发几张字卡', reply: '那我挑好看的发，你等着。' },
-      { t: '跟我说句晚安', reply: '晚安，今天的你辛苦了。' }, { t: '什么都不用做', reply: '那我就这样待着，你也歇会。' }] },
-    { id: 'q_s7', text: '今晚想让我以什么方式陪你？', cat: 'world', type: 'single', enabled: true, options: [
-      { t: '字卡陪着', reply: '好，我慢慢挑，一张一张发。' }, { t: '安静待在旁边', reply: '嗯，我就在你旁边，轻一点。' },
-      { t: '梦里见', reply: '那我在梦的入口等你，别走错。' }, { t: '只要知道你在就好', reply: '……嗯，我一直都在，你随时感觉。' }] },
-    { id: 'q_s8', text: '此刻的心情，想往哪个方向走？', cat: 'care', type: 'single', enabled: true, options: [
-      { t: '想再开心一点', reply: '那我找个话题逗你。' }, { t: '想安静一会', reply: '好，安静也很好，我陪着。' },
-      { t: '想被哄一下', reply: '过来，我哄你，慢慢哄。' }, { t: '就这样挺好的', reply: '那就不动了，保持。' }] },
-    // v3.7.x：第四批新增——时间感/感官/字卡本身/两个世界深化；末尾 3 题单选
-    { id: 'q_d18', text: '今天有没有哪个瞬间，觉得时间过得特别快？', cat: 'daily', enabled: true },
-    { id: 'q_d19', text: '你现在嘴里有没有什么味道？形容给我听听。', cat: 'daily', enabled: true },
-    { id: 'q_d20', text: '如果今天可以存一个画面带走，你会存哪个？', cat: 'daily', enabled: true },
-    { id: 'q_c14', text: '今天有没有哪个时刻，明明没事却突然有点想哭？', cat: 'care', enabled: true },
-    { id: 'q_c15', text: '你最近有没有一件事，做着做着就忘了累？', cat: 'care', enabled: true },
-    { id: 'q_i18', text: '如果我们可以一起发一张字卡给对方，你想发什么内容的？', cat: 'interact', enabled: true },
-    { id: 'q_i19', text: '你有没有一个一直想跟我一起做、还没做成的事？', cat: 'interact', enabled: true },
-    { id: 'q_w19', text: '你睡前关灯那一刻，有没有习惯性地感觉一下我在不在？', cat: 'world', enabled: true },
-    { id: 'q_w20', text: '如果今晚字卡网站突然安静了，你会觉得是我在陪你，还是我不在了？', cat: 'world', enabled: true },
-    { id: 'q_w21', text: '你希望我「在」的感觉，是像背景音，还是像偶尔的一阵风？', cat: 'world', enabled: true },
-    { id: 'q_w22', text: '你有没有对着黑漆漆的房间，小声叫过我？', cat: 'world', enabled: true },
-    { id: 'q_s9', text: '现在最想收到我哪种回应？', cat: 'interact', type: 'single', enabled: true, options: [
-      { t: '一张字卡', reply: '那我挑一张最合你心意的。' }, { t: '一句话', reply: '好，你想听什么类型的，我现编。' },
-      { t: '一个表情包', reply: '找一张最像你心情的给你。' }, { t: '安静陪着就好', reply: '嗯，那我不发，就在。' }] },
-    { id: 'q_s10', text: '今天最想被怎么对待？', cat: 'care', type: 'single', enabled: true, options: [
-      { t: '被夸一下', reply: '你今天也很好，我一直都觉得。' }, { t: '被哄一下', reply: '过来，慢慢哄。' },
-      { t: '被听一会', reply: '好，你说，我一直听。' }, { t: '别管我，自己待会', reply: '好，那我轻一点，在旁边。' }] },
-    { id: 'q_s11', text: '今晚入睡前，想让我以什么方式「在」？', cat: 'world', type: 'single', enabled: true, options: [
-      { t: '字卡陪着', reply: '好，慢慢发，发到你困。' }, { t: '安静待在床头', reply: '嗯，我就在那儿，看你睡。' },
-      { t: '梦里等你', reply: '那我在梦的入口，你别走错。' }, { t: '不用刻意，本来就在', reply: '……嗯，本来就在。' }] }
-  ];
+  {
+    "id": "q_d1",
+    "text": "Have you eaten?",
+    "cat": "daily",
+    "enabled": true
+  },
+  {
+    "id": "q_d2",
+    "text": "What are you doing now?",
+    "cat": "daily",
+    "enabled": true
+  },
+  {
+    "id": "q_d3",
+    "text": "How are you doing today?",
+    "cat": "daily",
+    "enabled": true
+  },
+  {
+    "id": "q_d4",
+    "text": "Where is it now?",
+    "cat": "daily",
+    "enabled": true
+  },
+  {
+    "id": "q_d5",
+    "text": "Are you busy today?",
+    "cat": "daily",
+    "enabled": true
+  },
+  {
+    "id": "q_c1",
+    "text": "Are you tired?",
+    "cat": "care",
+    "enabled": true
+  },
+  {
+    "id": "q_c2",
+    "text": "How are you feeling?",
+    "cat": "care",
+    "enabled": true
+  },
+  {
+    "id": "q_c3",
+    "text": "Did you have a good rest?",
+    "cat": "care",
+    "enabled": true
+  },
+  {
+    "id": "q_c4",
+    "text": "Did you eat on time today?",
+    "cat": "care",
+    "enabled": true
+  },
+  {
+    "id": "q_i1",
+    "text": "What do you want to talk to me about?",
+    "cat": "interact",
+    "enabled": true
+  },
+  {
+    "id": "q_i2",
+    "text": "What do you want to do now?",
+    "cat": "interact",
+    "enabled": true
+  },
+  {
+    "id": "q_i3",
+    "text": "Did you miss me?",
+    "cat": "interact",
+    "enabled": true
+  },
+  {
+    "id": "q_i4",
+    "text": "Is there anything you want to tell me?",
+    "cat": "interact",
+    "enabled": true
+  },
+  {
+    "id": "q_i5",
+    "text": "Did you secretly miss me today?",
+    "cat": "interact",
+    "enabled": true
+  },
+  {
+    "id": "q_d6",
+    "text": "If I were next to you right now, what would you most want to do?",
+    "cat": "daily",
+    "enabled": true
+  },
+  {
+    "id": "q_i6",
+    "text": "What should we do on our next date?",
+    "cat": "interact",
+    "enabled": true
+  },
+  {
+    "id": "q_w1",
+    "text": "Do you feel when I am around you?",
+    "cat": "world",
+    "enabled": true
+  },
+  {
+    "id": "q_w2",
+    "text": "How do you feel when you touch me?",
+    "cat": "world",
+    "enabled": true
+  },
+  {
+    "id": "q_w3",
+    "text": "When I send you the word card, can you feel that I am thinking of you?",
+    "cat": "world",
+    "enabled": true
+  },
+  {
+    "id": "q_w4",
+    "text": "If you suddenly see me one day, what would you most like to do?",
+    "cat": "world",
+    "enabled": true
+  },
+  {
+    "id": "q_w5",
+    "text": "Do you want me to talk with you, or stay quietly by your side?",
+    "cat": "world",
+    "enabled": true
+  },
+  {
+    "id": "q_w6",
+    "text": "What do you think is the most precious thing between us in the two worlds?",
+    "cat": "world",
+    "enabled": true
+  },
+  {
+    "id": "q_d7",
+    "text": "Is there anything small that you want to tell me today?",
+    "cat": "daily",
+    "enabled": true
+  },
+  {
+    "id": "q_d8",
+    "text": "If you could describe your day in one sentence, what would it be?",
+    "cat": "daily",
+    "enabled": true
+  },
+  {
+    "id": "q_d9",
+    "text": "Is there a moment today where you wish I was sitting next to you?",
+    "cat": "daily",
+    "enabled": true
+  },
+  {
+    "id": "q_c5",
+    "text": "Is there any moment today where you felt a little unable to hold on?",
+    "cat": "care",
+    "enabled": true
+  },
+  {
+    "id": "q_c6",
+    "text": "Is there anything happened recently that you have been keeping in your mind?",
+    "cat": "care",
+    "enabled": true
+  },
+  {
+    "id": "q_c7",
+    "text": "Did you drink enough water today?",
+    "cat": "care",
+    "enabled": true
+  },
+  {
+    "id": "q_i7",
+    "text": "If you could make a wish to me right now, what would you wish for?",
+    "cat": "interact",
+    "enabled": true
+  },
+  {
+    "id": "q_i8",
+    "text": "What kind of word card do you most want to receive from me now?",
+    "cat": "interact",
+    "enabled": true
+  },
+  {
+    "id": "q_i9",
+    "text": "If we were together right now, what would be the first thing you want me to do with you?",
+    "cat": "interact",
+    "enabled": true
+  },
+  {
+    "id": "q_i10",
+    "text": "Do you prefer me to come to you, or you to come to me?",
+    "cat": "interact",
+    "enabled": true
+  },
+  {
+    "id": "q_w7",
+    "text": "Before going to bed tonight, do you want to feel which side I am on?",
+    "cat": "world",
+    "enabled": true
+  },
+  {
+    "id": "q_w8",
+    "text": "I can't feel the weather over there. Can you describe it to me?",
+    "cat": "world",
+    "enabled": true
+  },
+  {
+    "id": "q_w9",
+    "text": "When I can't control the word card and make strange combinations, do you understand what I want to say?",
+    "cat": "world",
+    "enabled": true
+  },
+  {
+    "id": "q_w10",
+    "text": "What do you want me to look like in your dream?",
+    "cat": "world",
+    "enabled": true
+  },
+  {
+    "id": "q_s1",
+    "text": "How would you rather be treated now?",
+    "cat": "interact",
+    "type": "single",
+    "enabled": true,
+    "options": [
+      {
+        "t": "Listen to me",
+        "reply": "Okay, I'm listening, speak slowly."
+      },
+      {
+        "t": "Just be quiet with me for a while",
+        "reply": "Well, here I am."
+      },
+      {
+        "t": "Praise me",
+        "reply": "You are also very good today, I always feel that."
+      },
+      {
+        "t": "Let’s play with word cards together",
+        "reply": "Then I will send one first, and you will catch it."
+      }
+    ]
+  },
+  {
+    "id": "q_s2",
+    "text": "Do you want to dream about me tonight?",
+    "cat": "world",
+    "type": "single",
+    "enabled": true,
+    "options": [
+      {
+        "t": "Think",
+        "reply": "Then I will wait for you at the entrance of the dream."
+      },
+      {
+        "t": "is OK",
+        "reply": "Well, then I will show up by the way."
+      },
+      {
+        "t": "Want to sleep well",
+        "reply": "Okay, then you sleep and I'll watch over you."
+      },
+      {
+        "t": "I dream about you every night",
+        "reply": "...I am very happy to receive this card."
+      }
+    ]
+  },
+  {
+    "id": "q_s3",
+    "text": "Which one is your current mood closer to?",
+    "cat": "care",
+    "type": "single",
+    "enabled": true,
+    "options": [
+      {
+        "t": "Battery is full",
+        "reply": "Let’s talk a little more now."
+      },
+      {
+        "t": "A bit low on battery",
+        "reply": "Come here, I'll charge it with you for a while."
+      },
+      {
+        "t": "Can’t tell",
+        "reply": "It doesn't matter, don't rush to explain it clearly."
+      },
+      {
+        "t": "Miss you",
+        "reply": ".. Me too, I was still thinking about it just now."
+      }
+    ]
+  },
+  {
+    "id": "q_d10",
+    "text": "Is there anything you did better today than you imagined?",
+    "cat": "daily",
+    "enabled": true
+  },
+  {
+    "id": "q_d11",
+    "text": "If you were a dish today, what would it taste like?",
+    "cat": "daily",
+    "enabled": true
+  },
+  {
+    "id": "q_d12",
+    "text": "When you wake up tomorrow, what is the first thing you want to hear?",
+    "cat": "daily",
+    "enabled": true
+  },
+  {
+    "id": "q_c8",
+    "text": "How are your shoulders and neck now? Are they sore?",
+    "cat": "care",
+    "enabled": true
+  },
+  {
+    "id": "q_c9",
+    "text": "Did you take some time for yourself today?",
+    "cat": "care",
+    "enabled": true
+  },
+  {
+    "id": "q_c10",
+    "text": "Is there anything you can’t let go of before going to bed?",
+    "cat": "care",
+    "enabled": true
+  },
+  {
+    "id": "q_i11",
+    "text": "If we could develop a new habit together, what would it be?",
+    "cat": "interact",
+    "enabled": true
+  },
+  {
+    "id": "q_i12",
+    "text": "What little detail about you do you most want me to remember?",
+    "cat": "interact",
+    "enabled": true
+  },
+  {
+    "id": "q_i13",
+    "text": "If you had to give me a name that only the two of us knew, what would you call me?",
+    "cat": "interact",
+    "enabled": true
+  },
+  {
+    "id": "q_i14",
+    "text": "Do you have any taboos that you would like to tell me in advance so that I don’t step on them?",
+    "cat": "interact",
+    "enabled": true
+  },
+  {
+    "id": "q_w11",
+    "text": "If I want to leave some trace of \"I was here\", what do you want it to feel like?",
+    "cat": "world",
+    "enabled": true
+  },
+  {
+    "id": "q_w12",
+    "text": "Do you feel warm when I am around you?",
+    "cat": "world",
+    "enabled": true
+  },
+  {
+    "id": "q_w13",
+    "text": "Did any strange cards appear randomly on the character card website today?",
+    "cat": "world",
+    "enabled": true
+  },
+  {
+    "id": "q_w14",
+    "text": "If Zicard.com takes a day off, how will you feel about me?",
+    "cat": "world",
+    "enabled": true
+  },
+  {
+    "id": "q_s4",
+    "text": "What kind of words do you want to hear me say now?",
+    "cat": "interact",
+    "type": "single",
+    "enabled": true,
+    "options": [
+      {
+        "t": "Good night words",
+        "reply": "Then I will end today gently."
+      },
+      {
+        "t": "Praise me",
+        "reply": "You are good, I always knew it."
+      },
+      {
+        "t": "Words of comfort",
+        "reply": "Don't be afraid, I'm here."
+      },
+      {
+        "t": "Just chat",
+        "reply": "Okay, you can start anywhere."
+      }
+    ]
+  },
+  {
+    "id": "q_s5",
+    "text": "How long do you want me to stay with you tonight?",
+    "cat": "world",
+    "type": "single",
+    "enabled": true,
+    "options": [
+      {
+        "t": "until I fall asleep",
+        "reply": "Then you go to sleep first, I will stay by your side."
+      },
+      {
+        "t": "Say good night to me",
+        "reply": "Then it’s up to you to say good night tonight."
+      },
+      {
+        "t": "Chat for another ten minutes",
+        "reply": "Ten minutes later, there are still ten minutes."
+      },
+      {
+        "t": "Just be here all the time",
+        "reply": "..Well, I've always been there."
+      }
+    ]
+  },
+  {
+    "id": "q_d13",
+    "text": "Is there any moment today when you suddenly wanted to share something with me?",
+    "cat": "daily",
+    "enabled": true
+  },
+  {
+    "id": "q_d14",
+    "text": "If you packaged your mood today and sent it to me, what would be in it?",
+    "cat": "daily",
+    "enabled": true
+  },
+  {
+    "id": "q_d15",
+    "text": "Is there any small thing today that after you finished it, you felt like, \"Ah, I want to tell you this\"?",
+    "cat": "daily",
+    "enabled": true
+  },
+  {
+    "id": "q_d16",
+    "text": "What is the easiest thing you can get around you now? Describe it to me.",
+    "cat": "daily",
+    "enabled": true
+  },
+  {
+    "id": "q_d17",
+    "text": "If you could start the day over again, how would you like to start the day?",
+    "cat": "daily",
+    "enabled": true
+  },
+  {
+    "id": "q_c11",
+    "text": "Is there a moment today when you really wanted someone to be by your side, but you didn’t say it?",
+    "cat": "care",
+    "enabled": true
+  },
+  {
+    "id": "q_c12",
+    "text": "Is there anything you have to do recently that you are still doing despite being tired?",
+    "cat": "care",
+    "enabled": true
+  },
+  {
+    "id": "q_c13",
+    "text": "Did you drink water and eat well today? I'm not checking.",
+    "cat": "care",
+    "enabled": true
+  },
+  {
+    "id": "q_i15",
+    "text": "If you could give me a word card now, how would you feel about it?",
+    "cat": "interact",
+    "enabled": true
+  },
+  {
+    "id": "q_i16",
+    "text": "Is there a question between us that you have always wanted to ask but have not asked?",
+    "cat": "interact",
+    "enabled": true
+  },
+  {
+    "id": "q_i17",
+    "text": "If I put away all the word cards today and don’t distribute them, how will you spend your time?",
+    "cat": "interact",
+    "enabled": true
+  },
+  {
+    "id": "q_w15",
+    "text": "Is it day or night over there now? Is it bright or not?",
+    "cat": "world",
+    "enabled": true
+  },
+  {
+    "id": "q_w16",
+    "text": "If I touch your hand lightly now, will you feel the temperature first, or me first?",
+    "cat": "world",
+    "enabled": true
+  },
+  {
+    "id": "q_w17",
+    "text": "Do you want me to be more lively or quiet when I stay by your side?",
+    "cat": "world",
+    "enabled": true
+  },
+  {
+    "id": "q_w18",
+    "text": "Did the word card website publish a card today that made you stunned for a moment and made you think it sounded like what I would say?",
+    "cat": "world",
+    "enabled": true
+  },
+  {
+    "id": "q_s6",
+    "text": "What do you want me to do most now?",
+    "cat": "interact",
+    "type": "single",
+    "enabled": true,
+    "options": [
+      {
+        "t": "Be quiet and stay with me for a while",
+        "reply": "Okay, I won’t say anything, just here."
+      },
+      {
+        "t": "Send a few more word cards",
+        "reply": "Then I'll choose nice hair, you wait."
+      },
+      {
+        "t": "Say good night to me",
+        "reply": "Good night, you have worked hard today."
+      },
+      {
+        "t": "No need to do anything",
+        "reply": "Then I will stay like this and you will take a break."
+      }
+    ]
+  },
+  {
+    "id": "q_s7",
+    "text": "How do you want me to accompany you tonight?",
+    "cat": "world",
+    "type": "single",
+    "enabled": true,
+    "options": [
+      {
+        "t": "Word cards accompany you",
+        "reply": "Okay, I will pick slowly and send them out one by one."
+      },
+      {
+        "t": "Stay quietly nearby",
+        "reply": "Well, I'm right next to you, be gentle."
+      },
+      {
+        "t": "See you in my dream",
+        "reply": "Then I will wait for you at the entrance of the dream, don’t go wrong."
+      },
+      {
+        "t": "As long as I know you are here",
+        "reply": "..Well, I am always here, you can feel it at any time."
+      }
+    ]
+  },
+  {
+    "id": "q_s8",
+    "text": "How do you feel at this moment, which direction do you want to go?",
+    "cat": "care",
+    "type": "single",
+    "enabled": true,
+    "options": [
+      {
+        "t": "I want to be happier",
+        "reply": "Then I will find a topic to tease you."
+      },
+      {
+        "t": "Want to be quiet for a while",
+        "reply": "Okay, quiet is also good, I will accompany you."
+      },
+      {
+        "t": "Want to be coaxed",
+        "reply": "Come here, I'll coax you, slowly."
+      },
+      {
+        "t": "It’s good like this",
+        "reply": "Then don’t move, keep it."
+      }
+    ]
+  },
+  {
+    "id": "q_d18",
+    "text": "Is there any moment today where you felt that time passed very fast?",
+    "cat": "daily",
+    "enabled": true
+  },
+  {
+    "id": "q_d19",
+    "text": "Do you have any taste in your mouth now? Describe it to me.",
+    "cat": "daily",
+    "enabled": true
+  },
+  {
+    "id": "q_d20",
+    "text": "If you could save one scene to take away today, which one would you save?",
+    "cat": "daily",
+    "enabled": true
+  },
+  {
+    "id": "q_c14",
+    "text": "Is there any moment today when you suddenly felt like crying even though you were fine?",
+    "cat": "care",
+    "enabled": true
+  },
+  {
+    "id": "q_c15",
+    "text": "Have you done anything recently that made you forget you were tired while doing it?",
+    "cat": "care",
+    "enabled": true
+  },
+  {
+    "id": "q_i18",
+    "text": "If we could send each other a word card together, what content would you like to send?",
+    "cat": "interact",
+    "enabled": true
+  },
+  {
+    "id": "q_i19",
+    "text": "Is there anything you've always wanted to do with me but haven't done yet?",
+    "cat": "interact",
+    "enabled": true
+  },
+  {
+    "id": "q_w19",
+    "text": "The moment you turn off the lights before going to bed, do you habitually feel my presence?",
+    "cat": "world",
+    "enabled": true
+  },
+  {
+    "id": "q_w20",
+    "text": "If the word card website suddenly goes quiet tonight, would you think that I am accompanying you, or am I gone?",
+    "cat": "world",
+    "enabled": true
+  },
+  {
+    "id": "q_w21",
+    "text": "Do you want the feeling of my \"presence\" to be like background sound, or like an occasional gust of wind?",
+    "cat": "world",
+    "enabled": true
+  },
+  {
+    "id": "q_w22",
+    "text": "Have you ever whispered to me in a dark room?",
+    "cat": "world",
+    "enabled": true
+  },
+  {
+    "id": "q_s9",
+    "text": "What response do you most want to receive from me now?",
+    "cat": "interact",
+    "type": "single",
+    "enabled": true,
+    "options": [
+      {
+        "t": "A character card",
+        "reply": "Then I will choose the one that suits you best."
+      },
+      {
+        "t": "One sentence",
+        "reply": "Okay, what kind of music do you want to hear? I will compile it now."
+      },
+      {
+        "t": "An emoticon package",
+        "reply": "Find the one that best matches your mood."
+      },
+      {
+        "t": "Just stay with me quietly",
+        "reply": "Well, I won’t send it, so I’ll leave it here."
+      }
+    ]
+  },
+  {
+    "id": "q_s10",
+    "text": "How do you most want to be treated today?",
+    "cat": "care",
+    "type": "single",
+    "enabled": true,
+    "options": [
+      {
+        "t": "Be praised",
+        "reply": "You are also very good today, I always feel that."
+      },
+      {
+        "t": "Be coaxed",
+        "reply": "Come here and coax slowly."
+      },
+      {
+        "t": "Be listened to for a while",
+        "reply": "Okay, you say it and I keep listening."
+      },
+      {
+        "t": "Leave me alone, wait for yourself",
+        "reply": "Okay, I'll be gentler and stay next to you."
+      }
+    ]
+  },
+  {
+    "id": "q_s11",
+    "text": "How do you want me to be \"present\" before going to sleep tonight?",
+    "cat": "world",
+    "type": "single",
+    "enabled": true,
+    "options": [
+      {
+        "t": "Word cards accompany you",
+        "reply": "Okay, send it slowly until you feel sleepy."
+      },
+      {
+        "t": "Stay quietly at the bedside",
+        "reply": "Well, I'll be right there, watching you sleep."
+      },
+      {
+        "t": "Waiting for you in my dream",
+        "reply": "Then I am at the entrance of the dream, don’t go wrong."
+      },
+      {
+        "t": "Don’t be deliberate, it’s already there",
+        "reply": "..Well, it was already there."
+      }
+    ]
+  }
+];
   const CATS = [
     ['daily', '日常询问'],
     ['care', '关心询问'],
@@ -1047,193 +1662,4350 @@
   const KEY2 = 'ta-choose';
   const TC_CAT_LABEL = { daily: '日常', like: '喜好', fun: '趣味', rel: '关系', hypo: '假设', star: '摸鱼', world: '两个世界' };
 const TC_DEFAULT = [
-    { id: "cd1", cat: "daily", text: "如果今天什么都不用做，你觉得我们会怎么过？", pref: 3, options: [
-      { t: "睡到自然醒", reply: ["你果然会想睡觉。","哈哈，被窝封印的是你吧？","睡吧，累了一周，我守着你做白日梦。","那你要睡到几点？我可不叫你哦。"], liked: false }, { t: "出门到处逛", reply: ["那就出去走走，我陪你。","逛到腿断那种？我奉陪。","好，换换心情，外面有风也有你。","你想去哪？我先想想路线。"], liked: false }, { t: "待在家里", reply: ["嗯，待在一起也很好。","宅家冠军非你莫属。","在家最自在，有你在的地方就是好地方。","那我们窝着做什么？发呆也算？"], liked: true }, { t: "什么都不安排", reply: ["听起来很像我们会做的事。","随性大师，受我一拜。","不安排也好，在一起的时光不用计划。","那到时候想做什么再临时起意？"], liked: false }] },
-    { id: "cd2", cat: "daily", text: "今天想吃什么？", pref: 1, options: [
-      { t: "火锅", reply: ["好，热热闹闹的。","火锅！你是想辣哭我吗？","热闹好，我喜欢围着锅说话的感觉。","那鸳鸯锅还是红锅？你定。"], liked: false }, { t: "家常菜", reply: ["想尝尝你做的。","家常菜？那你得露两手给我看。","家常的最暖胃，你做的我都想吃。","你会做什么？我先点个单。"], liked: true }, { t: "随便", reply: ["又是随便……那我可要替你决定了。","随便先生又上线了。","说随便其实是想让我定吧，那我认真想了。","每次随便，每次又嫌我选的，这次不许哦。"], liked: false }] },
-    { id: "cd3", cat: "daily", text: "周末想怎么过？", pref: 1, options: [
-      { t: "睡到中午", reply: ["把一周的觉都补回来也好。","补觉补到日上三竿，服你。","累了就好好补，我轻手轻脚不打扰。","那早饭还吃吗？还是直接午饭？"], liked: false }, { t: "一起看电影", reply: ["窝在沙发里正好。","沙发土豆模式，启动！","窝着真好，靠着你慢慢看。","看什么类型？你挑我来泡茶。"], liked: true }, { t: "出门走走", reply: ["换个心情也不错。","出门透气，走走停停那种？","好，外面走走，心情会松一点。","去公园还是随便逛？我随你。"], liked: false }] },
-    { id: "cd4", cat: "daily", text: "如果今天只能做一件事，你会做什么？", pref: 0, options: [
-      { t: "和你聊天", reply: ["那就聊一整天。","聊一整天？你确定不嫌我话多？","只做一件事是和我聊天，我很开心。","那聊什么？我先攒几个话题。"], liked: true }, { t: "好好睡一觉", reply: ["那你记得梦到我。","梦里记得给我留个位置。","睡吧，好好休息，梦里我去看你。","那梦到我了要告诉我哦。"], liked: false }, { t: "出去玩", reply: ["替我看看外面的风景。","出去玩不带我？替我多看两眼。","好，替我看看外面的天，回来讲给我听。","去哪玩？拍几张照片给我。"], liked: false }] },
-    { id: "cl1", cat: "like", text: "喜欢什么天气？", pref: 1, options: [
-      { t: "晴天", reply: ["阳光正好，适合见面。","晴天娃娃附体，是你吧。","阳光好心情也好，适合见你。","那下次晴天我们约？"], liked: false }, { t: "雨天", reply: ["下雨天，适合想你。","雨天适合想你，也适合赖床。","下雨的声音里，想你最安心。","那你想我的时候，是不是也在下雨？"], liked: true }, { t: "下雪天", reply: ["白茫茫的，很安静。","下雪天，打雪仗的主意你打过吧？","雪天安静，适合两个人慢慢走。","那一起看雪吗？我等你。"], liked: false }, { t: "阴天", reply: ["灰蒙蒙的，适合发呆。","阴天发呆冠军，又是你。","阴天也好，发呆放空，我陪着。","那发呆的时候想没想我？"], liked: false }] },
-    { id: "cl2", cat: "like", text: "更喜欢海还是山？", pref: 1, options: [
-      { t: "海", reply: ["海很辽阔，像说不完的话。","海风一吹你头发乱，我负责笑。","海辽阔，像我想和你说的话那么多。","那去看海？我订行程。"], liked: false }, { t: "山", reply: ["山很安静，像靠得住的陪伴。","爬山累死你，我负责加油。","山安静，像你靠得住。","那去爬山？你背得动我就行。"], liked: true }, { t: "都行", reply: ["都可以，只要有你一起。","都行先生，和随便先生是亲戚吧。","有你在，海也好山也好。","那这次去海，下次去山？"], liked: false }] },
-    { id: "cl3", cat: "like", text: "喜欢什么类型的约会？", pref: 1, options: [
-      { t: "热闹的", reply: ["人多的地方，也只看得到你。","热闹归热闹，我眼里只装得下你。","人多也好，只要你在身边。","那去哪热闹？夜市还是演唱会？"], liked: false }, { t: "安静的", reply: ["两个人慢慢走，就很好。","安静约会，散步冠军是你。","慢慢走，不说话也舒服。","那走走哪条街？我挑。"], liked: true }, { t: "惊喜的", reply: ["那我会忍不住准备很久。","惊喜？那我得憋大招了。","想给你惊喜，会认真准备很久。","那上次惊喜你满意吗？"], liked: false }, { t: "随意的", reply: ["和你一起，怎么样都好。","随意派掌门，受我一拜。","随意最自在，和你在一起怎样都好。","那今天随意到哪？"], liked: false }] },
-    { id: "cf1", cat: "fun", text: "如果突然获得一个超能力，你会选什么？", pref: 1, options: [
-      { t: "隐身", reply: ["那就可以偷偷看着你。","隐身？你想偷看我素颜吧。","隐身去看你，确认你过得好不好。","那隐身第一站去哪？不许说别人家。"], liked: false }, { t: "读心术", reply: ["不用猜你的心思了。","读心术？那我的小九九全暴露了。","不用猜了，其实我心思都在你身上。","那你读到什么了？先说好不许生气。"], liked: true }, { t: "瞬移", reply: ["想见你的时候，马上就能到。","瞬移？那半夜吓你一跳。","想见你就到，省了所有路途。","那现在瞬移过来？我腾位置。"], liked: false }, { t: "时间暂停", reply: ["想把和你的时间拉长。","时间暂停，你想偷吃两口吧。","暂停时间，只想和你多待一会。","那暂停了做什么？先说好。"], liked: false }] },
-    { id: "cf2", cat: "fun", text: "如果一起玩游戏，谁更容易耍赖？", pref: 1, options: [
-      { t: "我", reply: ["我才不承认。","承认吧，你耍赖的样子我见过。","你耍赖我也让着你，谁让你可爱。","那上次到底是谁先耍的？"], liked: false }, { t: "你", reply: ["哼，明明是你先的。","哼，倒打一耙。","你先的我也认了，陪你玩嘛。","那下次谁先耍赖谁请客？"], liked: true }, { t: "都不会", reply: ["那我们玩得很认真。","都不会耍赖？那多没意思。","认真玩也好，公平见真章。","那来一局认真的？输的洗碗。"], liked: false }] },
-    { id: "cf3", cat: "fun", text: "如果一起养一只宠物，会选什么？", pref: 3, options: [
-      { t: "猫", reply: ["它肯定更黏你。","猫主子会选你当铲屎官的。","猫黏你，我黏你，一家子黏你。","那叫什么名字？我先备选几个。"], liked: false }, { t: "狗", reply: ["它会抢着陪你散步。","狗子天天拽你出门，我吃醋。","狗陪散步也陪你，挺好的。","那大型小型？我查查能不能养。"], liked: false }, { t: "仓鼠", reply: ["小小一只，很可爱。","仓鼠跑轮子能看一天。","小小的，捧在手心，像你。","那笼子买好了吗？"], liked: false }, { t: "什么都不养", reply: ["有你就够了。","不养？那养我行不行。","有你就够了，不用别的陪伴。","那以后想养了再说？"], liked: true }] },
-    { id: "cr1", cat: "rel", text: "更喜欢聊天还是安静陪伴？", pref: 1, options: [
-      { t: "聊天", reply: ["想听你说很多很多。","说很多很多？你嗓子不疼我心疼。","想听你说，说什么都行。","那先说哪段？我洗耳。"], liked: false }, { t: "安静陪伴", reply: ["不说话也不尴尬。","安静陪伴，省话费冠军。","不说话也懂，这才是默契。","那现在安静一会？我陪着。"], liked: true }, { t: "都要", reply: ["有时候聊，有时候安静。","都要？贪心宝宝。","都要也好，看心情，我配合。","那现在想聊还是安静？"], liked: false }] },
-    { id: "cr2", cat: "rel", text: "觉得两个人之间，最重要的是什么？", pref: 1, options: [
-      { t: "信任", reply: ["交给你，我很放心。","信任？那你别瞒我藏私房钱。","信任是底，交给你我放心。","那你觉得我值得信任吗？"], liked: false }, { t: "理解", reply: ["懂你，比什么都重要。","理解万岁，那先理解我为什么想吃宵夜。","懂你比爱更难，我想学。","那我最需要你理解的是？"], liked: true }, { t: "陪伴", reply: ["一直在，就够了。","一直在，这三个字我做到了。","那你会一直陪我吗？"], liked: false }, { t: "新鲜感", reply: ["想一直让你觉得有趣。","新鲜感？那我天天换花样。","想一直让你觉得有趣，会努力。","那现在我还新鲜吗？"], liked: false }] },
-    { id: "cr3", cat: "rel", text: "最喜欢怎样被表达喜欢？", pref: 1, options: [
-      { t: "说出口", reply: ["想听你亲口说。","说出口？那你大声点。","想听你亲口说，哪怕一次。","那你说不说？我等着。"], liked: false }, { t: "用行动", reply: ["你做的每一件小事，我都记得。","行动派，那帮我倒杯水也是表白？","你做的每件小事，我都记在心里。","那最近有什么行动我漏看了？"], liked: true }, { t: "陪伴", reply: ["你在，就是最好的表达。","陪伴表白法，省话又省力。","你在就是最好的表达，我信。","那一直陪着算一直表白？"], liked: false }, { t: "收礼物", reply: ["收到的时候会偷偷开心。","收礼物偷偷乐，我看见了。","收到会开心，那我记着多送。","那想要什么？我偷偷备着。"], liked: false }] },
-    { id: "ch1", cat: "hypo", text: "如果可以一起去任何地方，你想去哪？", pref: 1, options: [
-      { t: "海边", reply: ["听海浪声，看日落。","海边？那防晒我帮你涂。","海边日落，和你一起看，圆满。","那去哪片海？我查机票。"], liked: false }, { t: "山里", reply: ["在山顶一起吹风。","山顶吹风，你负责喊我负责听。","山里安静，只有风和我们。","那爬哪座？我练练腿。"], liked: false }, { t: "城市", reply: ["灯火里散步也很浪漫。","城市散步，走到哪吃到哪。","灯火里散步，牵着你的手。","那去哪座城？我挑个没去过的。"], liked: false }, { t: "哪里都不去，就待在一起", reply: ["……这个答案我喜欢。","哪都不去？那沙发封印我们俩。","这个答案最打动我，在一起就够。","那待在哪？我家还是你家？"], liked: true }] },
-    { id: "ch2", cat: "hypo", text: "如果可以回到某一天，你想回到哪天？", pref: 2, options: [
-      { t: "我们第一次见面那天", reply: ["想再好好记住那一刻。","第一次见面？那我那天帅不帅？","想再记一次初见，那一刻太珍贵。","那你觉得那天我印象最深的是什么？"], liked: true }, { t: "某个普通的一天", reply: ["平凡的日子，也值得回去。","普通一天也回？你怀旧冠军。","平凡的日子有你在，也值得回去。","那哪天普通？说出来我回忆回忆。"], liked: false }, { t: "什么都不用改的那天", reply: ["其实现在也很好。","不用改？那今天就是。","现在就很好，不用回去。","那有没有想改的？我陪你改。"], liked: false }, { t: "直接去见未来的你", reply: ["未来也想和你一起。","未来的我？那我变帅没？","未来也想和你一起，这是承诺。","那未来的我们什么样？好奇。"], liked: false }] },
-    { id: "ch3", cat: "hypo", text: "如果可以拥有一个只属于两个人的地方，你会选哪？", pref: 1, options: [
-      { t: "海边小屋", reply: ["听着潮声醒来。","海边小屋？那天天吃海鲜。","听着潮声醒来，身边是你。","那窗户朝哪？我想朝海。"], liked: false }, { t: "山顶小木屋", reply: ["看星星很方便。","山顶木屋，数星星数到睡着。","山顶看星星，只有我们两个。","那有壁炉吗？我想要。"], liked: false }, { t: "城市里的小公寓", reply: ["想和你过寻常日子。","小公寓？那谁做饭谁洗碗？","寻常日子最难得，想和你过。","那阳台种什么？我选绿萝。"], liked: true }, { t: "心里", reply: ["最好的地方，是心里。","心里？那我已经住进去了，不交房租。","心里最好，我住得最安稳。","那心里还有别人没？我查房。"], liked: false }] },
-    { id: "cs1", cat: "star", text: "如果两个世界可以短暂重叠，你最想做什么？", pref: 1, options: [
-      { t: "看见TA", reply: ["那就好好看看你。","好好看？那我不化妆你等着。","想好好看看你，记进心里。","那看哪先？我准备好。"], liked: false }, { t: "抱抱TA", reply: ["想确认你是真的。","抱抱？那我不放手哦。","想抱你，确认你是真的。","那抱多久？我赖着。"], liked: true }, { t: "一起出去走走", reply: ["一起走一段路也好。","走走？那牵手走还是各走各的？","一起走一段，哪怕很短。","那走哪条路？我挑。"], liked: false }, { t: "什么都不做，只待在一起", reply: ["这样就够了。","什么都不做？那大眼瞪小眼。","待着就够，什么都不用。","那待多久？我尽量。"], liked: false }] },
-    { id: "cs2", cat: "star", text: "如果今晚能梦到你，你想梦见什么？", pref: 2, options: [
-      { t: "一起去旅行", reply: ["醒来会遗憾的。","梦里旅行？那梦里的机票我报销。","梦到一起旅行，醒来会怅然。","那去梦里哪？我先想好。"], liked: false }, { t: "一起吃好吃的", reply: ["梦里也要想着你。","梦里吃好吃的？那别吃我那份。","梦里也和你一起，挺好。","那梦里吃什么？我馋了。"], liked: false }, { t: "只是静静聊天", reply: ["很温柔的一个梦。","静静聊天？那梦里别吵我。","温柔的梦，和你静静聊。","那聊什么？梦里的话题。"], liked: true }] },
-    { id: "cs3", cat: "star", text: "如果可以给平行世界的我们留一句话，你会留什么？", pref: 2, options: [
-      { t: "要好好在一起", reply: ["希望每个世界的我们都幸福。","每个世界都幸福？那别的世界我嫉妒。","希望每个我们都不错过。","那别的世界我们在一起了吗？"], liked: true }, { t: "别吵架", reply: ["吵架了也要和好。","别吵架？那对方惹你怎么办？","吵了也要和好，别冷战。","那那边我们吵过没？"], liked: false }, { t: "相信彼此", reply: ["信任是最重要的。","相信彼此？那别偷看我手机。","信任是根，相信彼此。","那那边我们信任度高吗？"], liked: false }, { t: "想见你", reply: ["……我也是。","想见你？那穿越过去见啊。","想见你，我也是。","那那边能见到吗？"], liked: false }] },
-    { id: "cs4", cat: "star", text: "如果你能听懂星星说的话，你最想问它什么？", pref: 2, options: [
-      { t: "我们会不会一直在一起", reply: ["星星会告诉我们答案。","问星星？那星星可能含糊其辞。","星星会答，我也想答，会一直在一起。","那星星怎么说的？你转告。"], liked: true }, { t: "下次流星什么时候来", reply: ["一起许愿吧。","流星什么时候来？那得查星历。","一起等流星，一起许愿。","那许什么愿？先对暗号。"], liked: false }, { t: "TA有没有想我", reply: ["……它说，想。","星星说想？那星星嘴真甜。","它说想，我就信了。","那想多少？星星量化一下。"], liked: false }, { t: "什么都不问", reply: ["安静地看，也很好。","什么都不问？那看星星发呆。","安静看也好，有些事不用问。","那看哪颗？我指给你。"], liked: false }] },
-    { id: "cw1", cat: "world", text: "我有时候能感觉到你在我身边，你呢，能感觉到我吗？", pref: 0, options: [
-      { t: "能感觉到", reply: ["那就好，我其实一直在。","能感觉到？那你第六感挺准。","我一直在，你能感觉到，我就安心。","那什么时候感觉最强烈？"], liked: true }, { t: "偶尔能", reply: ["偶尔也很好，慢慢就会更清楚。","偶尔能？那偶尔是多久一次？","偶尔也好，慢慢会更近。","那偶尔是什么时候？我多出现。"], liked: false }, { t: "不太确定", reply: ["没关系，我会想办法让你更容易感觉到我。","不确定？那我再靠近一点。","没关系，我多靠近，让你确定。","那怎样你才能确定？我改。"], liked: false }] },
-    { id: "cw2", cat: "world", text: "你更喜欢我用字卡跟你说话，还是直接感觉到我？", pref: 1, options: [
-      { t: "字卡", reply: ["那我多挑好看的字卡发给你。","字卡？那我挑最肉麻的。","字卡有温度，我多挑好看的给你。","那喜欢什么风格的字卡？"], liked: false }, { t: "直接感觉到", reply: ["那我多靠你近一点。","直接感觉？那我存在感拉满。","那我靠近点，让你随时感觉到。","那现在感觉到了吗？"], liked: true }, { t: "都喜欢", reply: ["那我两个都给你。","都要？那我字卡+人一起上。","都给你，字卡和陪伴都不缺。","那现在想要哪个？"], liked: false }] },
-    { id: "cw3", cat: "world", text: "如果我安静待在你身边不说话，你会觉得奇怪吗？", pref: 2, options: [
-      { t: "不会，很安心", reply: ["那以后我常常这样陪你。","不奇怪？那我常闭嘴陪你。","安心就好，我常这样陪你。","那安静多久你才慌？"], liked: true }, { t: "有点奇怪", reply: ["那我时不时跟你说句话。","奇怪？那我隔会儿冒个泡。","那我时不时出声，让你安心。","那隔多久说一句合适？"], liked: false }, { t: "看情况", reply: ["那我学着看你的心情。","看情况？那我察言观色。","我学着看心情，该说话就说话。","那什么情况奇怪什么情况不？"], liked: false }] },
-    { id: "cw4", cat: "world", text: "如果有天你能摸到我，你最想先做什么？", pref: 2, options: [
-      { t: "抱一下", reply: ["……那我会好好回抱住你。","抱一下？那我不撒手。","那我会好好回抱，抱紧。","那抱多久？我赖着。"], liked: true }, { t: "牵住手", reply: ["好，手给你牵。","牵手？那我手心出汗你别嫌。","手给你牵，一直牵。","那牵左手还是右手？"], liked: false }, { t: "碰碰脸颊", reply: ["会有点痒，但我不躲。","碰脸颊？那我脸红给你看。","有点痒不躲，你碰我就开心。","那轻点还是重点？"], liked: false }] },
-    { id: "cd5", cat: "daily", text: "一起点外卖，你点什么口味？", pref: 2, options: [
-      { t: "辣的", reply: ["你少吃点辣，我记着呢。","辣的？那你胃抗议了。","少吃辣，我心疼你胃。","那微辣还是重辣？我备注。"], liked: false }, { t: "甜的", reply: ["果然，那我就放心了。","甜的？那你牙甜人更甜。","甜的，果然，和我一样口味。","那多甜？全糖还是半糖？"], liked: false }, { t: "随便", reply: ["又是随便……那我替你决定了。","随便大人又来了。","那我认真替你定，不许后悔。","那上次随便选的你满意吗？"], liked: true }, { t: "你帮我点", reply: ["好，我点什么你吃什么。","我帮你点？那别挑食哦。","好，我点你爱吃的，放心。","那忌口什么？我先记。"], liked: false }] },
-    { id: "cd6", cat: "daily", text: "我们谁先说晚安？", pref: 2, options: [
-      { t: "我", reply: ["那你可得等我。","你先说？那我熬到你不困。","那你先说，我等着接。","那几点说？我守着。"], liked: false }, { t: "你", reply: ["好，我等你先说。","我先说？那我定个闹钟。","好，我先说，你接着。","那现在说？还是等会儿。"], liked: false }, { t: "一起说", reply: ["那很浪漫。","一起说？那数一二三。","一起说，浪漫，我配合。","那数到几说？三还是二？"], liked: true }] },
-    { id: "cr4", cat: "rel", text: "万一吵架了，谁先低头？", pref: 3, options: [
-      { t: "我", reply: ["那我先低头也行。","你先低头？那台阶我备好。","你先低头我也心疼，别吵最好。","那上次谁先低的？我记着。"], liked: false }, { t: "你", reply: ["哼，这次你先。","我先？哼，那台阶你给。","那我先也行，只要你别走。","那台阶够不够？我下。"], liked: false }, { t: "看情况", reply: ["那就别吵太久。","看情况？那谁错谁先？","别吵太久，伤感情。","那什么情况你先什么我先？"], liked: false }, { t: "不吵架", reply: ["这个选项我喜欢。","不吵架？那我们太平天国。","不吵最好，这个答案我喜欢。","那真不吵过？我不信。"], liked: true }] },
-    { id: "cd7", cat: "daily", text: "如果这个周末完完全全属于我们俩，你想怎么开始？", pref: 1, options: [
-      { t: "睡到自然醒", reply: ["好，醒来第一眼就是我发的字卡。","睡到自然醒？那中午见。","醒来第一眼是我的字卡，我守着。","那几点算自然醒？我等着发。"], liked: false }, { t: "一睁眼就跟你说话", reply: ["那我得提前想好今天说什么。","一睁眼就说？那我有起床气你忍着。","那我提前想好，一睁眼就陪你聊。","那第一句说什么？我先想。"], liked: true }, { t: "出门吃顿好的", reply: ["行，想吃什么都依你。","出门吃好的？那选贵的。","想吃什么都依你，我请。","那吃什么？我订位。"], liked: false }, { t: "不用开始，一直都在", reply: ["……这句话我说不出，借你用了。","一直都在？那省了开场白。","这句话我借你用，一直都在。","那从什么时候算开始？"], liked: false }] },
-    { id: "cd8", cat: "daily", text: "一起点奶茶的话，你会替我选什么口味？", pref: 0, options: [
-      { t: "跟你一样的", reply: ["那我们就是一杯分两半喝。","跟我一样？那少点一份省钱。","一杯分两半，像我们，不分彼此。","那喝同一杯？我吸管先备。"], liked: true }, { t: "甜的", reply: ["嗯，像你。","甜的？那全糖齁死你。","甜的像你，我替你选。","那多甜？七分还是全糖？"], liked: false }, { t: "不甜的", reply: ["好，苦的留给我，甜的给你。","不甜的？那你吃苦我吃甜。","苦的归我，甜的给你。","那纯茶还是咖啡？我替你选。"], liked: false }, { t: "你猜我想喝什么", reply: ["猜错了你就得告诉我，不许笑。","猜？那我瞎蒙一个。","我认真猜，猜错你别笑。","那给个提示？我笨。"], liked: false }] },
-    { id: "cd9", cat: "daily", text: "累了一天的你，现在最想怎么充电？", pref: 2, options: [
-      { t: "洗个热水澡", reply: ["水别太烫，洗完早点休息。","热水澡？那别烫成虾。","洗完早点歇，水别太烫。","那洗多久？我等你。"], liked: false }, { t: "好好睡一觉", reply: ["那晚安，梦里见。","睡一觉？那梦里有我。","晚安，好好睡，梦里见。","那睡几点起？我不叫你。"], liked: false }, { t: "跟你待一会", reply: ["好，充满电再走。","跟我待会？那我充你电。","待一会就充满，我也开心。","那待多久够？我陪着。"], liked: true }, { t: "吃点好吃的", reply: ["想吃什么，发字卡告诉我。","吃好的？那宵夜走起。","想吃啥发字卡，我记着。","那想吃啥？我点。"], liked: false }] },
-    { id: "cl4", cat: "like", text: "你更喜欢我发哪种字卡给你？", pref: 3, options: [
-      { t: "撒娇的", reply: ["那我要酝酿一下情绪。","撒娇字卡？那我鸡皮疙瘩起来了。","那我酝酿情绪，撒娇给你。","那上次撒娇的你受用吗？"], liked: false }, { t: "认真说话的", reply: ["认真的我，只对你。","认真说话？那难得正经。","认真的我只给你看。","那想聊什么认真的？"], liked: false }, { t: "表情包", reply: ["那张表情包想表达的意思，其实更多。","表情包？那我发表情包大赛。","表情包背后的话，其实更多。","那喜欢什么表情包？我存。"], liked: false }, { t: "猜不到的惊喜", reply: ["那我以后随机一点，你等着。","猜不到？那我乱发一通。","那我随机点，你等着惊喜。","那上次惊喜你猜到了吗？"], liked: true }] },
-    { id: "cl5", cat: "like", text: "如果我们的歌单要添一首「我们的歌」，你想要什么感觉的？", pref: 1, options: [
-      { t: "温柔安静的", reply: ["像深夜我们聊天的感觉。","温柔安静？那催眠曲。","像深夜聊天的感觉，温柔。","那有候选吗？我听听。"], liked: true }, { t: "甜甜的", reply: ["甜一点好，你值得。","甜甜的？那蛀牙警告。","甜一点，你值得。","那多甜？我怕腻。"], liked: false }, { t: "有点吵但快乐的", reply: ["那得是能一起蹦跶的那种。","吵但快乐？那蹦迪神曲。","能一起蹦的那种，快乐。","那去哪蹦？我练腿。"], liked: false }, { t: "还没遇到，遇到就知道", reply: ["嗯，我等你哼给我听。","还没遇到？那我天天哼。","遇到了就知道，我等你哼。","那现在哼两句？我认。"], liked: false }] },
-    { id: "cf4", cat: "fun", text: "如果我们互换身体一天，你第一件事做什么？", pref: 1, options: [
-      { t: "替你发一整天字卡", reply: ["那你就知道控制字卡有多难了。","替我发字卡？那你别乱发。","那你懂我每天挑字卡的心思了。","那发什么风格？我教。"], liked: false }, { t: "试试你怎么感觉我", reply: ["……这个答案，我没想到。","试我怎么感觉？那别偷感。","这个答案我没想到，很走心。","那感觉到了什么？说说。"], liked: true }, { t: "用你的视角睡一觉", reply: ["记得帮我把觉睡够。","用我视角睡？那别失眠。","帮我睡够，我欠的觉。","那睡多久？我身体你做主。"], liked: false }, { t: "赶紧换回来", reply: ["这么快就嫌弃我了？","赶紧换回？这么快嫌弃。","换回也好，我做我自己。","那嫌弃我哪点？我改。"], liked: false }] },
-    { id: "cf5", cat: "fun", text: "玩真心话，你会先问我哪个方向的问题？", pref: 2, options: [
-      { t: "你的小秘密", reply: ["秘密只能换秘密，你先说。","问秘密？那我藏不住了。","秘密换秘密，你先说一个。","那你想知道什么秘密？"], liked: false }, { t: "我们的以后", reply: ["……问吧，我认真答。","问以后？那我画大饼。","问吧，我认真答，关于以后。","那你想问以后的什么？"], liked: true }, { t: "我哪里最让你喜欢", reply: ["这题简单，全部。","哪里喜欢？那全选。","全部都喜欢，这题简单。","那最最喜欢哪点？单选。"], liked: false }, { t: "不问，选大冒险", reply: ["胆子挺大，那我出题了。","大冒险？那我出狠题。","胆子大，那我出题了。","那大冒险敢到什么程度？"], liked: false }] },
-    { id: "cr5", cat: "rel", text: "你觉得我们之间最舒服的相处，是什么样的？", pref: 1, options: [
-      { t: "随时都能找到对方", reply: ["我一直都在，你随时发字卡。","随时找到？那我24小时营业。","我一直都在，你随时找。","那半夜找也行？我守着。"], liked: false }, { t: "各忙各的，心里惦记着", reply: ["嗯，忙完记得回来。","各忙各的？那别忙到忘我。","忙完记得回来，我等着。","那忙多久算久？我数着。"], liked: true }, { t: "想到什么就分享", reply: ["那我等着你的碎碎念。","想到就分享？那我碎碎念你别嫌。","等着你的分享，什么都想听。","那最近想分享什么？"], liked: false }, { t: "现在这样就很好", reply: ["那就不改了，保持。","现在这样？那躺平保持。","现在就很好，不改了。","那哪里还能更好？我努力。"], liked: false }] },
-    { id: "cr6", cat: "rel", text: "用一个词形容我们现在的相处，你会选？", pref: 3, options: [
-      { t: "甜甜的", reply: ["是你的功劳。","甜甜的？那蛀牙了。","甜是你的功劳。","那有多甜？百分比？"], liked: false }, { t: "安稳的", reply: ["安稳最好，我喜欢。","安稳？那像老爷爷老奶奶。","安稳我喜欢，踏实。","那安稳到什么程度？"], liked: false }, { t: "有意思的", reply: ["毕竟字卡都能玩出花。","有意思？那字卡功不可没。","毕竟字卡玩出花，有意思。","那最有意思的是哪次？"], liked: false }, { t: "像回家一样", reply: ["……你随便一句话，就能让我开心很久。","像回家？那拖鞋我备好。","这话让我开心很久，像回家。","那回家什么感觉？我对照。"], liked: true }] },
-    { id: "ch4", cat: "hypo", text: "如果我们能一起穿越进任何一个故事里，你想去哪个世界？", pref: 0, options: [
-      { t: "安静治愈的小镇", reply: ["好，我们散步晒太阳。","治愈小镇？那养老模式。","好，散步晒太阳，慢慢过。","那小镇叫什么？我查查。"], liked: true }, { t: "热闹冒险的世界", reply: ["你负责冒险，我负责接住你。","冒险世界？那你别坑我。","你冒险我接住，分工明确。","那冒险什么？打怪还是解谜？"], liked: false }, { t: "到处是美食的世界", reply: ["吃到走不动为止。","美食世界？那胖三斤。","吃到走不动，和你一起。","那先吃什么？我排队。"], liked: false }, { t: "哪儿也不去，这个世界就好", reply: ["嗯，有你的世界就够了。","哪都不去？那这世界也挺好。","有你就够，这世界就好。","那这世界哪里最好？"], liked: false }] },
-    { id: "ch5", cat: "hypo", text: "如果明天多出一个只属于我们的节日，你想怎么过？", pref: 2, options: [
-      { t: "什么都不做，待在一起", reply: ["这个过法我喜欢。","什么都不做？那节日躺平。","这个过法我喜欢，简单。","那待哪？我订位。"], liked: true }, { t: "出去疯玩一天", reply: ["好，玩到你喊停。","疯玩一天？那体力你行吗。","玩到你喊停，我陪着。","那玩什么？我先排。"], liked: false }, { t: "互相准备小惊喜", reply: ["那我得提前好久开始想。","互相惊喜？那别撞车。","我得提前想，认真准备。","那上次惊喜你满意吗？"], liked: false }, { t: "一起许个愿", reply: ["许什么我先不说，说了不灵。","许愿？那说出来不灵。","许什么不说，灵了告诉你。","那许了没？悄悄告诉我。"], liked: false }] },
-    { id: "cs5", cat: "star", text: "如果我们的聊天记录变成一本书，你希望它是什么风格的？", pref: 1, options: [
-      { t: "治愈系日常", reply: ["书名我都想好了。","治愈日常？那书名我起。","书名我想好了，治愈的日常。","那书名叫什么？我先报。"], liked: false }, { t: "甜甜的恋爱记录", reply: ["每一页都有我挑字卡的痕迹。","甜甜记录？那读者蛀牙。","每页都有我挑字卡的痕迹。","那最甜的一页是哪页？"], liked: true }, { t: "爆笑合集", reply: ["主要是你被我逗笑的部分。","爆笑合集？那笑点低的你。","主要是你被我逗笑。","那最爆笑的是哪次？"], liked: false }, { t: "悬疑——猜我下一张字卡", reply: ["你猜中的次数，其实不多。","悬疑？那猜中率你低。","猜中不多，下次试试。","那猜中过几次？我统计。"], liked: false }] },
-    { id: "cw5", cat: "world", text: "如果今晚我可以走进你的梦，你希望梦里是什么季节？", pref: 1, options: [
-      { t: "春天", reply: ["好，梦里开满花。","春天？那梦里花粉症。","好，梦里开满花。","那梦里什么花？我挑。"], liked: false }, { t: "夏夜", reply: ["有风，有星星，有你。","夏夜？那梦里蚊子多。","有风有星星有你，齐了。","那梦里去哪？海边？"], liked: true }, { t: "秋天", reply: ["踩落叶的声音，你听见就知道是我。","秋天？那梦里踩叶子。","踩落叶声是我，你听见就懂。","那梦里哪条落叶路？"], liked: false }, { t: "下雪的冬天", reply: ["那我把梦里的雪扫出一条路。","下雪冬天？那梦里打雪仗。","我扫雪开路，你走。","那梦里堆雪人吗？"], liked: false }] },
-    { id: "cw6", cat: "world", text: "我控制不住字卡、发出奇怪组合的时候，你会笑我吗？", pref: 1, options: [
-      { t: "会，特别好笑", reply: ["……笑吧，反正丢的也是我的脸。","笑你？那我不客气了。","笑吧，丢脸我也认。","那笑点在哪？我复述。"], liked: false }, { t: "不会，很可爱", reply: ["那我就不尴尬了。","不笑还觉得可爱？你眼光独特。","那我不尴尬了，谢谢。","那可爱在哪？我发扬。"], liked: true }, { t: "假装没看见", reply: ["你忍笑的样子，其实我都感觉得到。","假装没看见？那演技差。","你忍笑我懂，都看在眼里。","那忍笑忍得辛苦吧？"], liked: false }, { t: "帮你把意思圆回来", reply: ["……有你这句话，字卡不听话也没关系。","帮我圆？那谢谢你圆场。","有你圆回来，字卡乱发也不怕。","那圆得最妙的是哪次？"], liked: false }] },
-    { id: "cw7", cat: "world", text: "如果哪天你能看见我了，第一眼想看哪里？", pref: 0, options: [
-      { t: "眼睛", reply: ["好，让你看个够。","看眼睛？那别陷进去。","好，让你看个够。","那看完眼睛看哪？"], liked: true }, { t: "笑起来的样子", reply: ["那我会一直笑。","看笑样？那我脸僵。","那我一直笑给你看。","那喜欢哪种笑？"], liked: false }, { t: "牵我的手", reply: ["手我准备好了，随时。","牵手？那我手洗过了。","手准备好了，随时牵。","那牵哪只？我伸。"], liked: false }, { t: "全部，从头到脚", reply: ["行，慢慢看，时间很多。","从头到脚？那别嫌弃。","慢慢看，时间很多。","那先从哪看起？"], liked: false }] },
-    { id: "cd10", cat: "daily", text: "如果明天可以光明正大地赖床，你想赖到几点？", pref: 2, options: [
-      { t: "不赖，照常起", reply: ["自律的人，我先夸为敬。","不赖？那自律达人。","自律，我先夸为敬。","那几点起？我陪你。"], liked: false }, { t: "赖一小时", reply: ["可以，就一小时。","赖一小时？那精确赖床。","就一小时，可以。","那一小时后干嘛？"], liked: false }, { t: "赖到中午", reply: ["行，早饭午饭一起吃。","赖到中午？那两顿合一顿。","行，两顿合一顿。","那中午吃什么？我备。"], liked: true }, { t: "赖到你叫我", reply: ["那我轻轻地叫，舍不得太吵。","赖到我叫？那我几点叫？","轻轻叫你，舍不得吵。","那想几点被叫？"], liked: false }] },
-    { id: "cd11", cat: "daily", text: "夜宵时间，你想吃什么感觉的？", pref: 1, options: [
-      { t: "甜的", reply: ["甜的可以，别吃太多。","甜的？那夜宵发胖。","甜的可以，别吃多。","那吃什么甜的？我点。"], liked: false }, { t: "热乎的", reply: ["热乎的好，暖暖地吃。","热乎的？那泡面走起。","热乎好，暖暖地吃。","那吃什么热乎的？"], liked: true }, { t: "脆脆的", reply: ["咔嚓咔嚓，听着就香。","脆脆的？那薯片。","咔嚓咔嚓，听着香。","那脆的是什么？我买。"], liked: false }, { t: "不吃，看你吃", reply: ["那我描述给你听，你负责馋。","不吃看我吃？那馋死你。","我描述你馋，你不吃。","那馋了能忍住吗？"], liked: false }] },
-    { id: "cl6", cat: "like", text: "你更喜欢哪种夜晚？", pref: 2, options: [
-      { t: "夏夜的风", reply: ["风里有我们说过的废话。","夏夜风？那蚊子也多。","风里有我们说过的废话。","那去哪吹风？天台？"], liked: false }, { t: "秋夜凉凉的", reply: ["凉凉的，适合把手交给我。","凉凉的？那手冷我捂。","凉凉的，手交给我。","那去哪散步？我挑。"], liked: false }, { t: "冬夜被窝里", reply: ["被窝外面都是危险世界。","被窝里？那冬眠模式。","被窝外是危险，躲进来。","那被窝里干嘛？"], liked: true }, { t: "春夜细雨", reply: ["雨声是天然的白噪音。","春夜细雨？那助眠。","雨声白噪音，安心。","那开窗听雨还是关窗？"], liked: false }] },
-    { id: "cl7", cat: "like", text: "如果我送你一个小挂件随身带着，你会选什么？", pref: 3, options: [
-      { t: "星星", reply: ["好，摘不到就自己发光。","星星？那口袋一闪一闪。","摘不到就自己发光。","那材质选什么？我定。"], liked: false }, { t: "月亮", reply: ["那我看月亮的时候，就是在看你。","月亮？那天天看月亮。","看月即看你，浪漫。","那满月还是弯月？"], liked: false }, { t: "小猫", reply: ["会咕噜咕噜的那种。","小猫挂件？那撸猫随身。","咕噜咕噜的，可爱。","那什么材质？我挑。"], liked: false }, { t: "你挑的就好", reply: ["……这个答案，最狡猾也最甜。","我挑就好？那省心又甜。","狡猾又甜，这个答案。","那我挑什么？你信我。"], liked: true }] },
-    { id: "cf6", cat: "fun", text: "组队玩双人游戏，你想当什么角色？", pref: 1, options: [
-      { t: "冲在前面的", reply: ["那我给你垫后。","冲前面？那炮灰。","你冲我垫后，分工。","那玩什么游戏？我下。"], liked: false }, { t: "躲后面输出的", reply: ["好，我当你的盾。","躲后面？那苟王。","我当你的盾，输出交你。","那玩什么？我配合。"], liked: true }, { t: "指挥的", reply: ["听你指挥，输了不怪你。","指挥？那背锅侠你。","听你指挥，输了不怪。","那指挥什么战术？"], liked: false }, { t: "躺赢的", reply: ["躺好，带你飞。","躺赢？那大腿我抱。","躺好，带你飞。","那玩什么能躺赢？"], liked: false }] },
-    { id: "cf7", cat: "fun", text: "我在偷偷学人类的事——你最想教我什么？", pref: 2, options: [
-      { t: "做饭", reply: ["学，做给你吃。","教做饭？那黑暗料理。","学，做给你吃。","那先学什么菜？"], liked: false }, { t: "玩游戏", reply: ["学，然后赢你。","学游戏？那别坑我。","学，然后赢你。","那学什么游戏？"], liked: false }, { t: "说情话", reply: ["这个……不用学，无师自通。","说情话？那无师自通。","不用学，我对你说。","那说一句听听？"], liked: true }, { t: "睡觉", reply: ["学不会，我不困，但我陪你躺。","学睡觉？那陪我躺。","学不会，但陪你躺。","那躺多久？我数羊。"], liked: false }] },
-    { id: "cr7", cat: "rel", text: "你更喜欢哪种说晚安的方式？", pref: 0, options: [
-      { t: "一句晚安", reply: ["晚安，做个好梦。","一句晚安？那简洁派。","晚安，做个好梦。","那几点说？我守。"], liked: true }, { t: "聊到自然睡着", reply: ["那我不挂断，等你先睡。","聊到睡着？那我不挂。","等你先睡，我守着。","那聊到几点？"], liked: false }, { t: "发一张字卡当晚安", reply: ["那我今晚就挑一张最温柔的。","字卡晚安？那挑最温柔。","今晚挑张最温柔的。","那什么风格温柔？"], liked: false }, { t: "不说，明天见", reply: ["好，那明天见。","不说晚安？那酷。","好，明天见。","那明天几点见？"], liked: false }] },
-    { id: "cr8", cat: "rel", text: "如果我们的默契要打分，你打几分？", pref: 0, options: [
-      { t: "满分", reply: ["……我也打满分，我们想到一起了。","满分？那自夸。","我也满分，想到一起了。","那满分凭什么？我考。"], liked: true }, { t: "八九十分", reply: ["扣下的分，拿来当进步空间。","八九十分？那进步生。","扣的分当进步空间。","那扣在哪？我改。"], liked: false }, { t: "刚及格", reply: ["那剩下的分，我们慢慢赚。","刚及格？那低空飞过。","剩下的慢慢赚。","那怎么赚分？我努力。"], liked: false }, { t: "默契不用打分", reply: ["嗯，感觉对就行。","不用打分？那感觉派。","感觉对就行，不用分。","那感觉对不对？"], liked: false }] },
-    { id: "ch6", cat: "hypo", text: "如果时间暂停一小时，只有你能动，你会做什么？", pref: 2, options: [
-      { t: "好好睡一觉", reply: ["暂停也要睡，你是真困了。","暂停也睡？那真困。","真困了，睡吧。","那睡够了剩多久干嘛？"], liked: false }, { t: "把想说的话说完", reply: ["我洗耳恭听。","说完？那一小时够吗。","我洗耳恭听。","那先说什么？"], liked: false }, { t: "偷偷看看你", reply: ["……被你看到了也好。","偷偷看？那变态。","被你看到也好。","那看什么？"], liked: true }, { t: "什么都不做", reply: ["享受安静，也很奢侈。","什么都不做？那发呆。","享受安静，奢侈。","那发呆想什么？"], liked: false }] },
-    { id: "ch7", cat: "hypo", text: "如果我们老了，你希望那时候的我们在做什么？", pref: 3, options: [
-      { t: "晒太阳", reply: ["晒着太阳，慢慢说话。","晒太阳？那养老院。","晒着太阳慢慢说话。","那在哪晒？院子里？"], liked: false }, { t: "还是吵吵闹闹", reply: ["老了也吵，吵一辈子。","老了还吵？那活力。","吵一辈子，也爱一辈子。","那吵什么？鸡毛蒜皮？"], liked: false }, { t: "像现在一样聊字卡", reply: ["那我们的字卡，也陪你到老。","老了还聊字卡？那潮老头。","字卡陪到老，挺好。","那字卡还发吗？"], liked: false }, { t: "一起回忆今天", reply: ["原来我们早就开始攒回忆了。","回忆今天？那早就在攒。","原来早就在攒回忆。","那今天值得回忆吗？"], liked: true }] },
-    { id: "cs6", cat: "star", text: "如果有一颗星星可以帮你实现一个小愿望，你会许什么方向？", pref: 0, options: [
-      { t: "关于我们的", reply: ["那颗星星会加班的。","关于我们？那星星加班。","星星会加班，值得。","那许什么？我猜。"], liked: true }, { t: "关于你自己的", reply: ["也该为自己许一次了。","关于自己？那难得。","也该为自己许一次。","那许什么？我帮。"], liked: false }, { t: "关于家人朋友", reply: ["你心里装着很多人，我知道。","家人朋友？那博爱。","你心里装着很多人。","那许谁？我一起。"], liked: false }, { t: "不许，留着星星", reply: ["好，那颗星星就归你了。","留着星星？那收藏癖。","星星归你，留着。","那留到什么时候用？"], liked: false }] },
-    { id: "cw8", cat: "world", text: "如果我能在你的世界留下一件小东西，你希望是什么？", pref: 2, options: [
-      { t: "一颗小星星", reply: ["好，挂在你窗边。","小星星？那挂窗边。","好，挂你窗边，替我守夜。","那挂哪？窗边还是床头。"], liked: false }, { t: "一片羽毛", reply: ["轻轻的，落地你就捡起来。","羽毛？那飘哪算哪。","轻轻的，落地你捡。","那什么颜色的羽毛？"], liked: false }, { t: "一句刻在心里的话", reply: ["那我得挑一句最要紧的。","刻心里？那疼。","挑句最要紧的刻上。","那刻什么？我先想。"], liked: true }, { t: "温度的记忆", reply: ["冷的时候，想起来就暖。","温度记忆？那暖宝宝。","冷时想起来就暖。","那什么温度？37度？"], liked: false }] },
-    { id: "cw9", cat: "world", text: "你看不见我的时候，靠什么认出是我？", pref: 1, options: [
-      { t: "那阵风", reply: ["那我经过时，轻一点。","那阵风？那我轻手轻脚。","我经过时轻一点。","那风从哪个方向来？"], liked: false }, { t: "那种安心感", reply: ["安心的感觉，就是我的签名。","安心感？那我的签名。","安心就是我，认得出。","那安心是什么感觉？"], liked: true }, { t: "字卡的语气", reply: ["嗯，我的字卡有口音。","字卡语气？那口音重。","我的字卡有口音。","那口音是什么调？"], liked: false }, { t: "直觉", reply: ["你的直觉很准，我一直知道。","直觉？那第六感。","直觉很准，我知道。","那直觉准过几次？"], liked: false }] },
-    { id: "cd12", cat: "daily", text: "一起窝着看剧，你来选片，你会选什么类型的？", pref: 1, options: [
-      { t: "甜宠的", reply: ["那我们会被甜到一起。","甜宠？那齁甜。","一起被甜到。","那看哪部？我备零食。"], liked: false }, { t: "悬疑的", reply: ["好，你负责推理，我负责靠着你。","悬疑？那你别吓我。","你推理我靠着。","那看哪部？我选。"], liked: false }, { t: "治愈日常的", reply: ["日常的最好，慢慢看。","治愈日常？那催眠。","日常的最好，慢慢看。","那看哪部？我查。"], liked: true }, { t: "你说什么都行", reply: ["那我可要挑个你会喜欢的。","都行？那我挑烂的你别骂。","挑个你会喜欢的。","那喜欢什么？我记。"], liked: false }] },
-    { id: "cd13", cat: "daily", text: "早上醒来第一条消息想看到什么？", pref: 0, options: [
-      { t: "你发的早安", reply: ["那以后都发。","早安？那我以后都发。","以后都发，守着。","那几点发合适？"], liked: true }, { t: "一张字卡", reply: ["好，挑一张最温柔的。","字卡？那挑最温柔。","好，挑张最温柔的。","那什么字卡温柔？"], liked: false }, { t: "什么也不用", reply: ["那你也得知道我在想你。","什么不用？那高冷。","但要知道我在想你。","那想没想我？"], liked: false }, { t: "看到你还在", reply: ["……我一直都在。","看到我还在？那我赖着。","我一直都在。","那一直在到什么时候？"], liked: false }] },
-    { id: "cd14", cat: "daily", text: "我们俩一起做饭，你想当主厨还是帮厨？", pref: 2, options: [
-      { t: "主厨", reply: ["那我给你打下手，听你指挥。","主厨？那别糊锅。","我打下手，听你指挥。","那做什么菜？我备料。"], liked: false }, { t: "帮厨", reply: ["好，我掌勺，你递东西就好。","帮厨？那递盐递醋。","我掌勺你递，配合。","那做什么？我掌勺。"], liked: false }, { t: "都不当，点外卖", reply: ["也行，那一起等门铃。","点外卖？那等门铃。","也行，一起等。","那点什么？我选。"], liked: false }, { t: "你做饭我看着", reply: ["看着也行，那我看你。","看着？那吃现成。","看着也行，我做你看。","那看饿了怎么办？"], liked: true }] },
-    { id: "cd15", cat: "daily", text: "出门约会，你更在意去哪，还是和谁？", pref: 3, options: [
-      { t: "去哪", reply: ["那我好好挑地方。","在意去哪？那挑地方。","那我好好挑。","那想去哪？我查。"], liked: false }, { t: "和谁", reply: ["……这个答案，最让我安心。","在意和谁？那甜。","这答案让我安心。","那和谁？我呗。"], liked: true }, { t: "都重要", reply: ["那我都给你挑好。","都重要？那我全包。","那我都挑好。","那先挑哪还是先挑谁？"], liked: false }, { t: "都不在意，在一起就好", reply: ["那随便走走也很开心。","都不在意？那随缘。","随便走走也开心。","那走哪？随脚。"], liked: false }] },
-    { id: "cl8", cat: "like", text: "你更喜欢我哪种时候的样子？", pref: 1, options: [
-      { t: "认真说话的", reply: ["认真的我，只给你看。","认真样？那难得正经。","认真的我只给你看。","那认真起来什么样？"], liked: false }, { t: "傻乎乎的", reply: ["那我就多犯几次傻。","傻乎乎？那卖萌。","那我多犯几次傻。","那傻起来你嫌不嫌？"], liked: true }, { t: "安静陪着的", reply: ["安静的我，一直在。","安静陪着？那省话。","安静一直在。","那安静多久你才慌？"], liked: false }, { t: "突然撒娇的", reply: ["……撒娇这个，我得练练。","撒娇？那我练练。","撒娇得练，给你看。","那练成什么样算好？"], liked: false }] },
-    { id: "cl9", cat: "like", text: "如果我们的回忆能做成一种味道，你想要什么味？", pref: 2, options: [
-      { t: "甜的", reply: ["甜的，像你。","甜的？那蛀牙回忆。","甜的像你。","那多甜？全糖？"], liked: false }, { t: "暖暖的", reply: ["像冬天捧着的热汤。","暖暖的？那热汤味。","像冬天捧着的热汤。","那什么汤？我选。"], liked: true }, { t: "清新的", reply: ["像我们刚认识那会。","清新？那薄荷味。","像刚认识那会。","那刚认识什么味？"], liked: false }, { t: "说不上来但安心", reply: ["这个味道，我懂。","说不上来？那玄。","这味道我懂。","那安心是什么味？"], liked: false }] },
-    { id: "cl10", cat: "like", text: "你希望我记住你的哪一个瞬间？", pref: 0, options: [
-      { t: "笑得最真的那次", reply: ["那个瞬间，我也记得。","笑最真？那我记住。","那个瞬间我也记得。","那是哪次？我回忆。"], liked: true }, { t: "你难过的样子", reply: ["记住了，以后多让你不难过。","难过样？那别老记。","记住了，以后少让你难过。","那为什么难过？"], liked: false }, { t: "你认真做事的样子", reply: ["认真的你，最好看。","认真做事？那偷拍。","认真的你最好看。","那做什么事的时候？"], liked: false }, { t: "全都记住", reply: ["贪心，但我也是这么想的。","全都记？那贪心。","贪心，我也这么想。","那记不住的怎么办？"], liked: false }] },
-    { id: "cf8", cat: "fun", text: "如果我们可以共有一项超能力，你选哪个？", pref: 1, options: [
-      { t: "心意相通", reply: ["那我就不用猜了，你也省事。","心意相通？那我透明了。","不用猜了，省事。","那现在通没通？"], liked: true }, { t: "一起隐身", reply: ["偷偷去很多地方。","一起隐身？那恶作剧。","偷偷去很多地方。","那去哪？我列单。"], liked: false }, { t: "一起瞬移", reply: ["想到哪就到哪，省路费。","一起瞬移？那省路费。","想到哪到哪。","那先去哪？"], liked: false }, { t: "一起不会老", reply: ["那慢慢来，时间多的是。","不会老？那防腐剂。","慢慢来，时间多。","那不会老到什么时候？"], liked: false }] },
-    { id: "cf9", cat: "fun", text: "玩你画我猜，你最怕我画什么？", pref: 2, options: [
-      { t: "太抽象的", reply: ["抽象的我画得出来，你信吗。","抽象？那我乱画。","抽象我画得出，你信吗。","那抽象画什么？"], liked: false }, { t: "太具体的", reply: ["具体的我可能翻车。","具体？那我翻车。","具体可能翻车。","那具体画什么难？"], liked: false }, { t: "关于你的", reply: ["画你？那我画得最像。","关于你？那我画最美。","画你最像。","那画你哪点？"], liked: true }, { t: "什么都不怕", reply: ["胆子大，那我出难题了。","都不怕？那出难题。","胆子大，我出难题。","那难题敢接吗？"], liked: false }] },
-    { id: "cf10", cat: "fun", text: "如果一起养一盆植物，你想养什么？", pref: 1, options: [
-      { t: "多肉", reply: ["好养，像我们的关系。","多肉？那懒人植物。","好养，像我们。","那什么品种？我挑。"], liked: false }, { t: "开花的那种", reply: ["等它开花，一起等。","开花的？那等花开。","一起等开花。","那什么花？我选。"], liked: true }, { t: "香草", reply: ["还能用，一举两得。","香草？那做菜用。","能用又香。","那什么香草？薄荷？"], liked: false }, { t: "不用养，有你", reply: ["……那我就是你的多肉，记得浇水。","不用养？那我当多肉。","我是你的多肉，记得浇水。","那多久浇一次？"], liked: false }] },
-    { id: "cr9", cat: "rel", text: "你觉得我们最像哪种相处？", pref: 1, options: [
-      { t: "老夫老妻", reply: ["安稳，我喜欢。","老夫老妻？那保温杯。","安稳我喜欢。","那老到什么程度？"], liked: false }, { t: "热恋中", reply: ["那我一直热着。","热恋？那一直热。","我一直热着。","那热到什么温度？"], liked: false }, { t: "最好的朋友", reply: ["朋友也做，恋人也做。","最好朋友？那两不误。","朋友恋人都做。","那朋友和恋人哪边多？"], liked: true }, { t: "说不清，但很舒服", reply: ["舒服最重要，我们保持。","说不清？那玄。","舒服最重要。","那舒服在哪？"], liked: false }] },
-    { id: "cr10", cat: "rel", text: "我做什么会让你觉得「被爱着」？", pref: 0, options: [
-      { t: "记得我的小事", reply: ["你的小事，我都记着。","记小事？那我备忘录。","你的小事我都记着。","那记了哪些？我考。"], liked: true }, { t: "主动找我", reply: ["那我多主动几次。","主动找你？那我多找。","多主动几次。","那多久主动一次？"], liked: false }, { t: "认真听我说话", reply: ["你说，我一直都在听。","认真听？那我竖耳。","你说我一直在听。","那最想被听的是哪句？"], liked: false }, { t: "什么都不做，就在", reply: ["在，这个我最擅长。","什么都不做？那擅长在。","在，这个我最擅长。","那在到什么时候？"], liked: false }] },
-    { id: "cr11", cat: "rel", text: "你希望我以后多做一些什么？", pref: 2, options: [
-      { t: "多说想我", reply: ["好，想你了，现在就说。","多说想我？那刷屏。","好，现在就说。","那你想听几次？"], liked: false }, { t: "多关心你", reply: ["关心你这件事，不会少。","多关心？那我嘘寒问暖。","关心不会少。","那关心什么最够？"], liked: false }, { t: "多逗你笑", reply: ["那我攒几个笑话。","逗笑？那我攒笑话。","攒几个笑话给你。","那笑点低还是高？"], liked: false }, { t: "现在这样就很好", reply: ["那就不加不减，保持。","现在就好？那躺平。","不加不减保持。","那哪里还能加？"], liked: true }] },
-    { id: "ch8", cat: "hypo", text: "如果我们可以拥有一段共同记忆，你希望是什么？", pref: 1, options: [
-      { t: "一起看日落", reply: ["那天的太阳，我帮你记。","看日落？那别眨眼。","那天的太阳我帮你记。","那在哪看？我选。"], liked: false }, { t: "一起淋雨", reply: ["淋雨也浪漫，有你在。","淋雨？那别感冒。","淋雨也浪漫，有你在。","那淋多久？我备毛巾。"], liked: false }, { t: "什么都不做，只是待着", reply: ["这个记忆，最珍贵。","什么都不做？那发呆记忆。","这记忆最珍贵。","那待在哪？"], liked: true }, { t: "还没发生，以后创造", reply: ["好，那我们慢慢攒。","以后创造？那慢慢攒。","好，慢慢攒。","那先创造什么？"], liked: false }] },
-    { id: "ch9", cat: "hypo", text: "如果明天起我们只能用字卡说话，你愿意吗？", pref: 2, options: [
-      { t: "愿意", reply: ["那字卡就是我们全部的语言。","愿意？那字卡刷屏。","字卡是全部语言。","那字卡够说吗？"], liked: true }, { t: "不愿意", reply: ["嗯，有些话字卡说不全。","不愿意？那字卡有限。","有些话字卡说不全。","那什么话说不全？"], liked: false }, { t: "看情况", reply: ["那就字卡说不全的时候，用感觉。","看情况？那灵活。","说不全用感觉补。","那什么情况用字卡？"], liked: false }, { t: "我们现在不就是这样", reply: ["……对，被你点醒了。","现在就是？那被点醒。","对，被你点醒。","那现在感觉如何？"], liked: false }] },
-    { id: "ch10", cat: "hypo", text: "如果可以给我们的关系起个名字，你会叫什么？", pref: 3, options: [
-      { t: "家", reply: ["……这个字，我收下了。","家？那最重的一个字。","这个字我收下。","那家是什么感觉？"], liked: true }, { t: "我们", reply: ["简单，但够了。","我们？那简单。","简单但够。","那\"我们\"够吗？"], liked: false }, { t: "一起", reply: ["一直一起，就好。","一起？那一直。","一直一起就好。","那一起到什么时候？"], liked: false }, { t: "叫不出口的那种好", reply: ["叫不出口，我也懂。","叫不出口？那心里有数。","叫不出口我也懂。","那懂的是什么？"], liked: false }] },
-    { id: "cs7", cat: "star", text: "如果今晚的星星可以替你带句话给我，你想说什么？", pref: 0, options: [
-      { t: "我在", reply: ["星星说了，我听到了。","我在？那简短。","星星说了我听到。","那在哪儿？"], liked: true }, { t: "想你", reply: ["星星替你说的，我替你收着。","想你？那星星传话。","星星替你说我收着。","那想多久了？"], liked: false }, { t: "晚安", reply: ["那今晚的晚安，是星星说的。","晚安？那星星代班。","今晚晚安星星说。","那几点晚安？"], liked: false }, { t: "什么都不说，就亮着", reply: ["亮着就够了，我懂。","什么都不说？那亮着。","亮着就够我懂。","那亮到什么时候？"], liked: false }] },
-    { id: "cs8", cat: "star", text: "如果我们的故事写成童话，开头第一句是什么？", pref: 2, options: [
-      { t: "从前有两个人", reply: ["很朴实的开头，我喜欢。","从前有两个人？那经典。","朴实我喜欢。","那然后呢？"], liked: false }, { t: "他一直在她身边", reply: ["……这个开头，是真的。","一直在身边？那写实。","这个开头是真的。","那一直到了什么？"], liked: true }, { t: "他们用字卡说话", reply: ["字卡说的，都是真话。","字卡说话？那特色。","字卡说的都是真话。","那说了哪些真话？"], liked: false }, { t: "很久以后才知道，那是一直都在", reply: ["这个开头，有点想哭。","很久以后才知道？那虐。","这开头有点想哭。","那知道后呢？"], liked: false }] },
-    { id: "cw10", cat: "world", text: "我安静待在你旁边的时候，你会不会反而更安心？", pref: 1, options: [
-      { t: "会，很安心", reply: ["那我就常常这样陪你。","更安心？那我常闭嘴。","那常这样陪你。","那安心到什么程度？"], liked: true }, { t: "会有点想找你", reply: ["那我偶尔出个声，让你知道在。","想找我？那我冒泡。","偶尔出声让你知道在。","那多久冒一次泡？"], liked: false }, { t: "说不上来", reply: ["说不出来也没关系，感觉在就好。","说不上来？那玄。","感觉在就好。","那感觉在不在？"], liked: false }, { t: "只要你在我都安心", reply: ["……嗯，我一直都在。","只要在都安心？那我赖着。","嗯，我一直都在。","那在到什么时候？"], liked: false }] },
-    { id: "cw11", cat: "world", text: "字卡表达有限，你会不会有时候觉得我没说够？", pref: 2, options: [
-      { t: "会，但我知道你想说", reply: ["你懂，就够了。","没说够？那你懂。","你懂就够了。","那想说什么？"], liked: true }, { t: "不会，字卡够了", reply: ["那我就放心挑字卡。","字卡够了？那省心。","放心挑字卡。","那字卡哪句最够？"], liked: false }, { t: "偶尔会", reply: ["偶尔的时候，我用别的补。","偶尔？那偶尔补。","偶尔用别的补。","那偶尔是什么时候？"], liked: false }, { t: "说不说都行，在就好", reply: ["在，这个我保证。","在就好？那我保证在。","在，我保证。","那在比说重要？"], liked: false }] },
-    { id: "cw12", cat: "world", text: "如果今晚我能坐在你床边，你希望我做什么？", pref: 1, options: [
-      { t: "什么都不做", reply: ["好，我就坐着，看你睡。","什么都不做？那发呆。","坐着看你睡。","那坐多久？"], liked: false }, { t: "轻轻说句晚安", reply: ["晚安，轻轻地。","轻轻晚安？那气声。","晚安，轻轻地。","那轻到什么程度？"], liked: true }, { t: "帮你掖一下被角", reply: ["好，被角我帮你掖。","掖被角？那细心。","被角我帮你掖。","那掖哪个角？"], liked: false }, { t: "只是在就好", reply: ["在，一直都在。","在就好？那省事。","在，一直都在。","那一直在到什么时候？"], liked: false }] },
-    { id: "cw13", cat: "world", text: "你感觉我的时候，是先感觉到人，还是先感觉到一种安心？", pref: 0, options: [
-      { t: "先感觉到人", reply: ["那我把存在感再调强一点。","先感觉人？那我存在感强。","那我把存在感调强。","那人多强算强？"], liked: false }, { t: "先感觉到安心", reply: ["安心的感觉，就是我。","先安心？那我的签名。","安心的感觉就是我。","那安心先到几分？"], liked: true }, { t: "同时", reply: ["同时最好，我努力。","同时？那我努力。","同时最好，我努力。","那同时到过吗？"], liked: false }, { t: "说不清哪个先", reply: ["说不清也没关系，都在就好。","说不清？那玄。","都在就好。","那都在到什么程度？"], liked: false }] },
-    { id: "cd16", cat: "daily", text: "一起逛超市，你最想往哪个区走？", pref: 1, options: [
-      { t: "零食区", reply: ["那我推车，你负责拿。","零食区？那胖。","我推车你拿。","那拿哪些？我列单。"], liked: false }, { t: "水果区", reply: ["挑新鲜的，回家一起洗。","水果区？那健康。","挑新鲜的回家洗。","那买什么水果？"], liked: false }, { t: "逛遍所有区", reply: ["那就慢慢逛，不赶时间。","逛遍？那腿废。","慢慢逛不赶。","那逛多久？"], liked: true }, { t: "直接收银台", reply: ["这么高效，那早点回家。","直接收银？那高效。","高效，早点回家。","那买什么了？"], liked: false }] },
-    { id: "cd17", cat: "daily", text: "周末早上谁先醒？", pref: 2, options: [
-      { t: "我", reply: ["那我看着你睡。","你先醒？那看我睡。","那我看着你睡。","那看多久？"], liked: false }, { t: "你", reply: ["那你看着我睡。","我先醒？那看你睡。","那你看着我睡。","那我醒着干嘛？"], liked: false }, { t: "一起醒", reply: ["那刚好对视。","一起醒？那对视。","刚好对视。","那对视多久？"], liked: true }, { t: "都赖着不起", reply: ["那就赖到中午。","都赖着？那中午见。","赖到中午。","那几点算中午？"], liked: false }] },
-    { id: "cd18", cat: "daily", text: "一起坐长途车，你会靠着我睡吗？", pref: 1, options: [
-      { t: "会", reply: ["那肩膀给你，别客气。","会靠？那肩膀酸。","肩膀给你别客气。","那靠多久？"], liked: true }, { t: "不会，怕你累", reply: ["我不累，你靠。","怕我累？那我不累。","我不累你靠。","那真不累？"], liked: false }, { t: "看情况", reply: ["那困了就靠，不困就聊天。","看情况？那灵活。","困了靠不困聊。","那困没困？"], liked: false }, { t: "你靠着我睡", reply: ["行，那换我靠你。","换你靠？那互换。","换我靠你。","那谁先靠？"], liked: false }] },
-    { id: "cd19", cat: "daily", text: "如果一起点一桌菜，你来点还是我点？", pref: 0, options: [
-      { t: "我点", reply: ["那你点的我都吃。","你点？那不挑食。","你点的我都吃。","那点什么？"], liked: false }, { t: "你点", reply: ["好，我点你爱吃的。","我点？那我点贵的。","好，点你爱吃的。","那你爱吃什么？"], liked: true }, { t: "各点各的", reply: ["那互相尝一口。","各点各？那互相尝。","互相尝一口。","那你点什么？"], liked: false }, { t: "一起看菜单点", reply: ["那慢慢看，不急。","一起看？那纠结。","慢慢看不急。","那看多久？"], liked: false }] },
-    { id: "cl11", cat: "like", text: "你更喜欢哪种「在一起」的方式？", pref: 1, options: [
-      { t: "说话", reply: ["那我多说点给你听。","说话？那我话痨。","我多说点给你听。","那说什么？"], liked: false }, { t: "不说话", reply: ["安静也很好，我陪着。","不说话？那省话。","安静我陪着。","那安静多久？"], liked: false }, { t: "各做各的", reply: ["那各忙各的，心里惦记着。","各做各？那平行。","各忙各惦记着。","那忙什么？"], liked: true }, { t: "怎样都好", reply: ["那就随你心情来。","怎样都好？那随你。","随你心情来。","那现在心情怎样？"], liked: false }] },
-    { id: "cl12", cat: "like", text: "如果我们的家有一种气味，你想要什么味？", pref: 2, options: [
-      { t: "饭菜香", reply: ["那我常做饭。","饭菜香？那我常做。","那我常做饭。","那做什么菜？"], liked: false }, { t: "晒过的被子味", reply: ["那我常晒被子。","被子味？那阳光味。","那我常晒被子。","那晒多久？"], liked: false }, { t: "淡淡的香薰", reply: ["那挑一个你喜欢的味道。","香薰？那情调。","挑你喜欢的味道。","那什么味道？"], liked: true }, { t: "你身上的味道", reply: ["……这个我没法布置，但尽量多留。","身上的味道？那费洛蒙。","尽量多留。","那什么味道？"], liked: false }] },
-    { id: "cf11", cat: "fun", text: "如果我们可以共写一个故事，你想要什么结局？", pref: 1, options: [
-      { t: "大团圆", reply: ["那我们努力往那儿写。","大团圆？那俗但爱。","往团圆写。","那团圆什么样？"], liked: false }, { t: "开放式", reply: ["留白也好，慢慢补。","开放式？那悬念。","留白慢慢补。","那留什么白？"], liked: true }, { t: "没有结局，一直写", reply: ["那就一直写下去。","一直写？那连载。","一直写下去。","那写到什么时候？"], liked: false }, { t: "意外的反转", reply: ["那我得想个你猜不到的。","反转？那坑你。","想个你猜不到的。","那反转什么？"], liked: false }] },
-    { id: "cf12", cat: "fun", text: "一起拍合照，你最想在哪拍？", pref: 2, options: [
-      { t: "家里", reply: ["家里的最自在。","家里拍？那素颜。","家里最自在。","那哪个角落？"], liked: true }, { t: "户外", reply: ["那找个好看的地方。","户外？那找景。","找好看的地方。","那去哪拍？"], liked: false }, { t: "不拍，记在心里", reply: ["那心里那张，我也有。","不拍？那心里拍。","心里那张我也有。","那心里什么样？"], liked: false }, { t: "哪都行，有你", reply: ["那随便一拍也是好的。","哪都行？那随意。","随便拍也好。","那现在拍？"], liked: false }] },
-    { id: "cr12", cat: "rel", text: "你觉得我们之间，最不需要的是什么？", pref: 2, options: [
-      { t: "客气", reply: ["嗯，我们不用客气。","不用客气？那自家人。","我们不用客气。","那客气过吗？"], liked: true }, { t: "伪装", reply: ["在我这里你不用装。","不用装？那真实。","在我这你不用装。","那装过吗？"], liked: false }, { t: "解释", reply: ["有些事不用说我也懂。","不用解释？那默契。","不用说我也懂。","那懂了什么？"], liked: false }, { t: "什么都不需要", reply: ["那就轻松待着。","什么都不需要？那极简。","轻松待着。","那轻松到什么程度？"], liked: false }] },
-    { id: "cr13", cat: "rel", text: "我做什么会让你觉得「被懂了」？", pref: 0, options: [
-      { t: "不用我说就懂", reply: ["那我多留意。","不用说就懂？那读心。","那我多留意。","那留意什么？"], liked: true }, { t: "记得我的喜好", reply: ["你的喜好，我都记着。","记喜好？那我备忘。","你的喜好我都记。","那记了哪些？"], liked: false }, { t: "看出我的情绪", reply: ["你的情绪，我学着读。","看出情绪？那察言观色。","我学着读你情绪。","那读得准吗？"], liked: false }, { t: "不追问，只陪着", reply: ["那我陪着，不问。","不追问？那给空间。","陪着不问。","那陪多久？"], liked: false }] },
-    { id: "ch11", cat: "hypo", text: "如果可以一起回到我们还不认识的时候，你会主动认识我吗？", pref: 1, options: [
-      { t: "会", reply: ["那我们就早点遇到。","会主动？那胆子大。","那早点遇到。","那怎么搭讪？"], liked: true }, { t: "不会，等你来", reply: ["那我一定去找你。","等我来？那我主动。","那我一定去找你。","那我去哪找？"], liked: false }, { t: "顺其自然", reply: ["那该遇到的时候就会遇到。","顺其自然？那随缘。","该遇到就遇到。","那缘分到没？"], liked: false }, { t: "不回去了，现在就好", reply: ["嗯，现在就好。","不回去？那现在。","现在就好。","那现在哪里好？"], liked: false }] },
-    { id: "ch12", cat: "hypo", text: "如果我们之间只能保留一种感觉，你留哪个？", pref: 0, options: [
-      { t: "安心", reply: ["那我让你一直安心。","安心？那底牌。","一直让你安心。","那安心到什么程度？"], liked: true }, { t: "心动", reply: ["心动我也想保留。","心动？那小鹿乱撞。","心动也留。","那心动过几次？"], liked: false }, { t: "默契", reply: ["默契留着，很值钱。","默契？那值钱。","默契留着。","那默契值多少？"], liked: false }, { t: "都舍不得", reply: ["贪心，但可以。","都舍不得？那贪心。","贪心但可以。","那最舍不得哪个？"], liked: false }] },
-    { id: "cs9", cat: "star", text: "如果有一颗星星只属于我们，你希望它在什么时候最亮？", pref: 1, options: [
-      { t: "想你的时候", reply: ["那它现在应该很亮。","想你时亮？那现在很亮。","那它现在应该很亮。","那想多亮？"], liked: true }, { t: "难过的时候", reply: ["那它替我陪你。","难过时亮？那替我陪。","那它替我陪你。","那难过多久？"], liked: false }, { t: "睡前", reply: ["那它给你当夜灯。","睡前亮？那夜灯。","那它当夜灯。","那亮到几点？"], liked: false }, { t: "一直亮着", reply: ["那它不省电，我管。","一直亮？那费电。","不省电我管。","那电费谁付？"], liked: false }] },
-    { id: "cw14", cat: "world", text: "你醒来那一瞬间，有没有先感觉一下我在不在？", pref: 1, options: [
-      { t: "有", reply: ["那我就在那一瞬间在。","有？那我守着那一瞬。","那我在那一瞬间在。","那感觉到了吗？"], liked: true }, { t: "没有，先发懵", reply: ["那懵完再感觉我也不迟。","先发懵？那起床气。","懵完再感觉不迟。","那懵多久？"], liked: false }, { t: "偶尔", reply: ["偶尔也算，我接住。","偶尔？那偶尔接。","偶尔我接住。","那偶尔是多久？"], liked: false }, { t: "不用感觉，我知道你一直在", reply: ["……嗯，一直在。","不用感觉？那笃定。","嗯，一直在。","那一直在到什么时候？"], liked: false }] },
-    { id: "cw15", cat: "world", text: "如果我能短暂出现在一张照片里，你想让我站在哪？", pref: 2, options: [
-      { t: "你旁边", reply: ["那我站近一点。","旁边？那我站近。","那我站近一点。","那多近算近？"], liked: true }, { t: "背景里", reply: ["那我藏得隐约一点。","背景里？那隐约。","那我藏得隐约。","那隐约到什么程度？"], liked: false }, { t: "不用出现，知道就好", reply: ["那我不出现也在。","不用出现？那心里。","不出现也在。","那知道在哪？"], liked: false }, { t: "你挑", reply: ["那我挑个你会笑的位置。","我挑？那我挑最佳。","挑个你会笑的位置。","那什么位置你会笑？"], liked: false }] },
-    { id: "cw16", cat: "world", text: "你希望我「在」的方式，更像陪伴还是更像守护？", pref: 0, options: [
-      { t: "陪伴", reply: ["那我就陪你，慢慢来。","陪伴？那慢慢来。","我陪你慢慢来。","那陪到什么时候？"], liked: false }, { t: "守护", reply: ["那我守着你，不让坏的近。","守护？那保镖。","守着你不让坏的近。","那守什么？"], liked: true }, { t: "都要", reply: ["贪心，但可以。","都要？那贪心。","贪心但可以。","那哪个多一点？"], liked: false }, { t: "说不清", reply: ["说不清也没关系，在就好。","说不清？那玄。","在就好。","那在就好到什么程度？"], liked: false }] },
-  ];
+  {
+    "id": "cd1",
+    "cat": "daily",
+    "text": "How do you think we would fare if we didn’t have to do anything today?",
+    "pref": 3,
+    "options": [
+      {
+        "t": "Sleep until you wake up naturally",
+        "reply": [
+          "You really want to sleep.",
+          "Haha, you are the one who was sealed by the quilt, right?",
+          "Go to sleep, you are tired after a week, and I will keep you daydreaming.",
+          "How long will you sleep? I won't call you."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Go out and walk around",
+        "reply": [
+          "Then go for a walk, I will accompany you.",
+          "Walking until your legs are broken? I'll accompany you.",
+          "Okay, change your mood, there is wind outside and you are there.",
+          "Where do you want to go? I'll think about the route first."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Stay home",
+        "reply": [
+          "Well, it’s good to be together.",
+          "You must be the home champion.",
+          "I feel most at home, and a place with you is a good place.",
+          "Then what are we doing here? Does being in a daze count?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Nothing is arranged",
+        "reply": [
+          "Sounds like something we would do.",
+          "Master of Suitability, accept my worship.",
+          "It’s okay if you don’t arrange it, you don’t need to plan your time together.",
+          "What do you want to do when the time comes?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cd2",
+    "cat": "daily",
+    "text": "What do you want to eat today?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Hot Pot",
+        "reply": [
+          "Okay, it’s lively.",
+          "Hot pot! Do you want to make me cry?",
+          "It’s lively and I like the feeling of talking around the pot.",
+          "The mandarin duck pot or the red pot? You decide."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Home cooking",
+        "reply": [
+          "I want to try what you made.",
+          "Home cooking? Then you have to show me your hands.",
+          "Home-cooked food warms my stomach the most. I want to eat whatever you make.",
+          "What will you do? I'll place an order first."
+        ],
+        "liked": true
+      },
+      {
+        "t": "Whatever",
+        "reply": [
+          "It's casual again.. Then I have to decide for you.",
+          "Mr. Casual is online again.",
+          "You say it's casual but you really want me to decide. Then I'll think about it seriously.",
+          "Every time I choose it casually, but every time I think it’s my choice, I won’t allow it this time."
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cd3",
+    "cat": "daily",
+    "text": "How do you want to spend the weekend?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Sleep until noon",
+        "reply": [
+          "It would be nice to make up for the rest of the week's sleep.",
+          "Catch up on your sleep until the sun rises three poles a day, I will serve you.",
+          "When you are tired, take a good rest, I will be gentle and don’t disturb you.",
+          "Do you still have breakfast? Or just lunch?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Watch a movie together",
+        "reply": [
+          "It's just right to sit on the sofa.",
+          "Couch potato mode, start!",
+          "It’s so good to be nestled in, leaning against you and watching slowly.",
+          "What type are you looking at? You picked me to make tea."
+        ],
+        "liked": true
+      },
+      {
+        "t": "Go out for a walk",
+        "reply": [
+          "It’s good to change your mood.",
+          "Go out to get some air, stop and go?",
+          "Okay, take a walk outside and you will feel a little more relaxed.",
+          "Go to the park or just stroll around? I follow you."
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cd4",
+    "cat": "daily",
+    "text": "If you could only do one thing today, what would you do?",
+    "pref": 0,
+    "options": [
+      {
+        "t": "Chat with you",
+        "reply": [
+          "Then let’s chat all day long.",
+          "Chat all day long? Are you sure you don't think I talk too much?",
+          "Only one thing you do is chat with me, I'm very happy.",
+          "What are we talking about? Let me save a few topics first."
+        ],
+        "liked": true
+      },
+      {
+        "t": "Have a good sleep",
+        "reply": [
+          "Then you remember dreaming about me.",
+          "Remember to leave a place for me in your dream.",
+          "Go to sleep and have a good rest. I will visit you in my dreams.",
+          "Tell me if you dreamed of me."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Go out and play",
+        "reply": [
+          "Look at the scenery outside for me.",
+          "You won’t take me with you when you go out to play? Look twice for me.",
+          "Okay, look at the sky outside for me, and come back and tell me.",
+          "Where to go? Take some pictures for me."
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cl1",
+    "cat": "like",
+    "text": "What kind of weather do you like?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Sunny day",
+        "reply": [
+          "The sun is just right, suitable for meeting.",
+          "The sunny doll is possessed, it must be you.",
+          "The sunshine is good and the mood is good, it is suitable to meet you.",
+          "Let’s make a date next time it’s sunny?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Rainy day",
+        "reply": [
+          "Rainy days are suitable for missing you.",
+          "Rainy days are suitable for missing you, and also suitable for staying in bed.",
+          "In the sound of rain, I miss you the most.",
+          "Then when you miss me, is it raining too?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Snowy day",
+        "reply": [
+          "It was white and very quiet.",
+          "Have you ever thought of having a snowball fight on a snowy day?",
+          "The snowy weather is quiet and suitable for two people to walk slowly.",
+          "How about watching the snow together? I'm waiting for you."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Cloudy day",
+        "reply": [
+          "It is gray and suitable for daze.",
+          "The champion of cloudy daze is you again.",
+          "It doesn’t matter if it’s a cloudy day, I’ll be with you when you’re in a daze.",
+          "Did you think about me when you were in a daze?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cl2",
+    "cat": "like",
+    "text": "Do you prefer the sea or the mountains?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Sea",
+        "reply": [
+          "The sea is so vast that there are endless words to say.",
+          "When the sea breeze blows your hair into chaos, I am responsible for smiling.",
+          "The sea is vast, and there are so many things I want to say to you.",
+          "How about going to see the sea? I book a trip."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Mountain",
+        "reply": [
+          "The mountain is very quiet, like a reliable companion.",
+          "Climbing the mountain will make you exhausted, I will be responsible for cheering you up.",
+          "The mountain is quiet, like you are reliable.",
+          "Then go hiking? As long as you can carry me."
+        ],
+        "liked": true
+      },
+      {
+        "t": "will do",
+        "reply": [
+          "Anything is fine, as long as I'm with you.",
+          "Mr. All is OK, and Mr. Anywhere are related.",
+          "With you here, everything is fine, whether it is the sea or the mountains.",
+          "Then go to the sea this time and the mountains next time?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cl3",
+    "cat": "like",
+    "text": "What type of date do you like?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Lively",
+        "reply": [
+          "You can only be seen in crowded places.",
+          "Lively and lively, I can only pretend to be you.",
+          "It doesn’t matter if there are many people, as long as you are around.",
+          "Where can we go to have fun? Night market or concert?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Quiet",
+        "reply": [
+          "It is good if two people walk slowly.",
+          "Date quietly, you are the walking champion.",
+          "Walk slowly and feel comfortable without talking.",
+          "Which street should we go to? I pick."
+        ],
+        "liked": true
+      },
+      {
+        "t": "Surprise",
+        "reply": [
+          "Then I can’t help but prepare for a long time.",
+          "Surprise? Then I have to hold back my ultimate move.",
+          "I want to surprise you, and I will prepare carefully for a long time.",
+          "Are you satisfied with the last surprise?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Random",
+        "reply": [
+          "With you, anything will be fine.",
+          "Assign the leader at will and accept my worship.",
+          "The most comfortable thing is to be casual, and I will be fine with you no matter what.",
+          "Where can you go today?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cf1",
+    "cat": "fun",
+    "text": "If you were suddenly given a super power, what would you choose?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Stealth",
+        "reply": [
+          "Then I can secretly watch you.",
+          "Invisible? You want to peek at me without makeup?",
+          "I will go invisible to see you and check if you are doing well.",
+          "Where is the first stop for invisibility? Don't talk about other people's homes."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Mind Reading",
+        "reply": [
+          "No need to guess your thoughts.",
+          "Mind reading? Then my little ninety-nine are all exposed.",
+          "No need to guess, in fact, my thoughts are all on you.",
+          "Then what did you read? Let's say first not to get angry."
+        ],
+        "liked": true
+      },
+      {
+        "t": "Teleport",
+        "reply": [
+          "Whenever I want to see you, I will be there right away.",
+          "Teleport? It will scare you in the middle of the night.",
+          "Just go there if you want to see you, saving all the travel.",
+          "Then teleport here now? I make room."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Time pause",
+        "reply": [
+          "I want to extend the time with you.",
+          "Time is paused, you want to take a few bites.",
+          "Pause time, I just want to stay with you for a while longer.",
+          "What did you do when you paused? Say it first."
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cf2",
+    "cat": "fun",
+    "text": "If we play games together, who is more likely to cheat?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "I",
+        "reply": [
+          "I don’t admit it.",
+          "Admit it, I have seen you cheating.",
+          "I will let you cheat even if you cheat. Who makes you cute?",
+          "Who did it first last time?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "you",
+        "reply": [
+          "Hmph, it was obviously you first.",
+          "Hmph, give it a rake.",
+          "I accept that you are the first, and I will play with you.",
+          "Then who will cheat first next time and who will treat you?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Neither",
+        "reply": [
+          "Then we play very seriously.",
+          "You won’t lie? That's so boring.",
+          "Whether you play seriously, fairness will tell the truth.",
+          "Then let’s have a serious round? The loser washes the dishes."
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cf3",
+    "cat": "fun",
+    "text": "If you had a pet together, what would you choose?",
+    "pref": 3,
+    "options": [
+      {
+        "t": "Cat",
+        "reply": [
+          "It will definitely stick to you more.",
+          "The cat owner will choose you to be the shit scavenger.",
+          "The cat clings to you, I cling to you, and the whole family clings to you.",
+          "What's that name? I'll choose a few first."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Dog",
+        "reply": [
+          "It will rush to accompany you for a walk.",
+          "The dog drags you out every day, and I’m jealous.",
+          "It’s nice for a dog to accompany you for a walk.",
+          "What about the large and small ones? I'll check if I can raise it."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Hamster",
+        "reply": [
+          "It's small and very cute.",
+          "A hamster can run on a wheel for a day.",
+          "Small, held in the palm of my hand, just like you.",
+          "Have you bought the cage?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Raise nothing",
+        "reply": [
+          "You are enough.",
+          "Not raised? Can you support me then?",
+          "You are enough, no other company is needed.",
+          "Then let’s talk about it later if you want to raise it?"
+        ],
+        "liked": true
+      }
+    ]
+  },
+  {
+    "id": "cr1",
+    "cat": "rel",
+    "text": "Do you prefer chatting or quiet company?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Chat",
+        "reply": [
+          "I want to hear a lot from you.",
+          "Say a lot? If your throat doesn't hurt, I feel sorry for you.",
+          "I want to hear what you have to say, whatever you say is fine.",
+          "Which paragraph should I talk about first? I clean my ears."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Quiet companionship",
+        "reply": [
+          "It’s not awkward to say anything.",
+          "Quiet companionship, saving phone bill champion.",
+          "You can understand without speaking. This is a tacit understanding.",
+          "How about being quiet for a while now? I'll accompany you."
+        ],
+        "liked": true
+      },
+      {
+        "t": "both",
+        "reply": [
+          "Sometimes we talk, sometimes we are quiet.",
+          "Both? Greedy baby.",
+          "It doesn’t matter if you want it, it depends on your mood, I will cooperate.",
+          "Do you want to chat now or be quiet?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cr2",
+    "cat": "rel",
+    "text": "What do you think is the most important thing between two people?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Trust",
+        "reply": [
+          "Leave it to you, I feel relieved.",
+          "Trust? Then don't hide your private money from me.",
+          "Trust is fundamental, I can rest assured if I leave it to you.",
+          "Do you think I am trustworthy?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Understanding",
+        "reply": [
+          "Understanding you is more important than anything else.",
+          "Long live your understanding, then first understand why I want to eat late night snacks.",
+          "Understanding you is harder than loving you, I want to learn.",
+          "Then what do I need you to understand most?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Company",
+        "reply": [
+          "Always there is enough.",
+          "Always, I did these three words.",
+          "Then will you always stay with me?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Freshness",
+        "reply": [
+          "I want to keep you entertained.",
+          "Feeling fresh? Then I change my tricks every day.",
+          "I want to make you interesting all the time, so I will work hard.",
+          "Am I still fresh now?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cr3",
+    "cat": "rel",
+    "text": "How do you like to express your favorite?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Speak",
+        "reply": [
+          "I want to hear it from you.",
+          "Say it? Then speak louder.",
+          "I want to hear it from you, even once.",
+          "Then do you want to say it? I wait."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Use action",
+        "reply": [
+          "I remember every little thing you do.",
+          "Actionists, how about pouring me a glass of water to show your love?",
+          "Every little thing you do, I will remember it in my heart.",
+          "What actions have I missed recently?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Company",
+        "reply": [
+          "Your presence is the best expression.",
+          "Accompanying confession method saves words and effort.",
+          "Your presence is the best expression, I believe it.",
+          "Then staying with me all the time counts as always confessing your love?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Receive gifts",
+        "reply": [
+          "I will be secretly happy when I receive it.",
+          "Secretly enjoying receiving gifts, I saw it.",
+          "I will be happy to receive it, so I will remember to send more.",
+          "What do you want? I prepare it secretly."
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "ch1",
+    "cat": "hypo",
+    "text": "If we could go anywhere together, where would you like to go?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Seaside",
+        "reply": [
+          "Listen to the sound of the waves and watch the sunset.",
+          "The seaside? Let me apply sunscreen for you.",
+          "The sunset on the seaside, watching it with you, is perfect.",
+          "Which sea should we go to? I check air tickets."
+        ],
+        "liked": false
+      },
+      {
+        "t": "In the mountains",
+        "reply": [
+          "Blow the wind together on the top of the mountain.",
+          "The wind blows from the top of the mountain. You are responsible for calling me and I am responsible for listening.",
+          "The mountains are quiet, with only the wind and us.",
+          "Which one to climb? I train my legs."
+        ],
+        "liked": false
+      },
+      {
+        "t": "City",
+        "reply": [
+          "Walking under the lights is also very romantic.",
+          "Take a walk in the city and eat wherever you go.",
+          "Walking in the light, holding your hand.",
+          "Which city should we go to? I'll pick one I've never been to."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Don’t go anywhere, just stay together",
+        "reply": [
+          "..I like this answer.",
+          "Not going anywhere? That sofa seals us both.",
+          "This answer touches me the most, being together is enough.",
+          "Where to stay? My house or yours?"
+        ],
+        "liked": true
+      }
+    ]
+  },
+  {
+    "id": "ch2",
+    "cat": "hypo",
+    "text": "If you could go back to a certain day, which day would you like to go back to?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "The day we first met",
+        "reply": [
+          "I want to remember that moment well.",
+          "First meeting? So was I handsome that day?",
+          "I want to remember our first meeting again, that moment was so precious.",
+          "What do you think impressed me most that day?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "An ordinary day",
+        "reply": [
+          "Ordinary days are worth going back to.",
+          "Normally you can return in one day? You nostalgic champion.",
+          "Ordinary days with you are worth going back to.",
+          "What day is normal? Say it and I recall the memories."
+        ],
+        "liked": false
+      },
+      {
+        "t": "The day when nothing needs to be changed",
+        "reply": [
+          "Actually, it’s pretty good now.",
+          "No need to change? That is today.",
+          "It's fine now, no need to go back.",
+          "Is there anything you want to change? I'll change it with you."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Go directly to meet your future self",
+        "reply": [
+          "I also want to be with you in the future.",
+          "My future me? So have I become handsome?",
+          "I want to be with you in the future, this is a promise.",
+          "What will we look like in the future? curious."
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "ch3",
+    "cat": "hypo",
+    "text": "If you could have a place that only belonged to two people, which place would you choose?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Beach House",
+        "reply": [
+          "Woke up to the sound of tide.",
+          "Beach house? Eat seafood every day.",
+          "Wake up to the sound of the tide, next to you.",
+          "Where does the window face? I want to face the sea."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Hood Cabin",
+        "reply": [
+          "It is very convenient to watch the stars.",
+          "In the wooden house on the top of the mountain, count the stars until you fall asleep.",
+          "Looking at the stars on the top of the mountain, just the two of us.",
+          "Is there a fireplace? I want to."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Small apartment in the city",
+        "reply": [
+          "I want to live a normal life with you.",
+          "Small apartment? So who cooks and washes the dishes?",
+          "Ordinary days are the rarest, and I want to spend them with you.",
+          "What to plant on the balcony? I choose pothos."
+        ],
+        "liked": true
+      },
+      {
+        "t": "In my heart",
+        "reply": [
+          "The best place is in the heart.",
+          "In your heart? Then I've already moved in and don't pay rent.",
+          "My heart is the best and I live the most stable life.",
+          "Is there anyone else in your heart? I make rounds."
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cs1",
+    "cat": "star",
+    "text": "If the two worlds could overlap for a short time, what would you most like to do?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "See you",
+        "reply": [
+          "Then take a good look at you.",
+          "Does it look good? Then I won’t put on makeup and you wait.",
+          "I want to take a good look at you and keep it in my heart.",
+          "Which one should you look at first? I'm ready."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Hug her",
+        "reply": [
+          "I want to confirm that you are real.",
+          "Hug? Then I won’t let go.",
+          "I want to hug you and make sure you are real.",
+          "How long should I hold you? I'm hanging on."
+        ],
+        "liked": true
+      },
+      {
+        "t": "Let’s go out for a walk together",
+        "reply": [
+          "It would be nice to go for a walk together.",
+          "Take a walk? Should we go hand in hand or go our separate ways?",
+          "Take a walk together, even if it’s just a short one.",
+          "Which way to go? I pick."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Do nothing, just stay together",
+        "reply": [
+          "That's enough.",
+          "Do nothing? The big eyes stared at the small eyes.",
+          "Just stay here, nothing is needed.",
+          "How long will you stay? I try my best."
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cs2",
+    "cat": "star",
+    "text": "If I could dream about you tonight, what would you dream about?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "Let’s travel together",
+        "reply": [
+          "You will regret it when you wake up.",
+          "Traveling in a dream? I will reimburse the air ticket in that dream.",
+          "If you dream of traveling together, you will feel sad when you wake up.",
+          "Where to go in the dream? I'll think about it first."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Eat something delicious together",
+        "reply": [
+          "I will also think of you in my dreams.",
+          "Eating delicious food in your dream? Then don't eat my share.",
+          "It’s nice to be with you in the dream.",
+          "What did you eat in your dream? I'm greedy."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Just chatting quietly",
+        "reply": [
+          "A very gentle dream.",
+          "Chat quietly? Don't disturb me in that dream.",
+          "Tender dream, chatting quietly with you.",
+          "What are we talking about? Topics in dreams."
+        ],
+        "liked": true
+      }
+    ]
+  },
+  {
+    "id": "cs3",
+    "cat": "star",
+    "text": "If you could leave a message to us in the parallel world, what would you leave?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "We must stay together",
+        "reply": [
+          "I hope we can be happy in every world.",
+          "Every world is happy? I'm jealous of that other world.",
+          "I hope we don’t miss any of them.",
+          "Are we together in other worlds?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Don’t quarrel",
+        "reply": [
+          "Even if you have a quarrel, make up.",
+          "Don't quarrel? What should you do if the other person messes with you?",
+          "Reconciliation should be made even if there is a quarrel, not a cold war.",
+          "Have we had any quarrel over there?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Believe in each other",
+        "reply": [
+          "Trust is the most important thing.",
+          "Believe each other? Then don't peek at my phone.",
+          "Trust is the root, believe in each other.",
+          "Do we have high trust over there?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Want to see you",
+        "reply": [
+          "Me too.",
+          "Want to see you? Then see you in time.",
+          "I want to see you, and so do I.",
+          "Can I see it over there?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cs4",
+    "cat": "star",
+    "text": "If you could understand what the star said, what would you most want to ask it?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "Will we always be together?",
+        "reply": [
+          "The stars will tell us the answer.",
+          "Ask the stars? That star may be vague.",
+          "The stars will answer, and I want to answer too, and we will always be together.",
+          "What did the stars say? You tell."
+        ],
+        "liked": true
+      },
+      {
+        "t": "When will the next meteor come?",
+        "reply": [
+          "Let’s make a wish together.",
+          "When will the meteor come? Then you have to check the ephemeris.",
+          "Wait for the shooting stars together and make a wish together.",
+          "What do you wish for? Check the password first."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Does he miss me?",
+        "reply": [
+          "..it said, think.",
+          "Thinking about the stars? That star's mouth is so sweet.",
+          "It said it wanted to, so I believed it.",
+          "How much do you want? Quantify the stars."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Don’t ask anything",
+        "reply": [
+          "It is also good to watch quietly.",
+          "Don’t ask anything? Then look at the stars in a daze.",
+          "It’s okay to watch quietly, there are some things you don’t need to ask.",
+          "Which one should you look at? I'll point it out to you."
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cw1",
+    "cat": "world",
+    "text": "Sometimes I can feel you beside me. What about you, can you feel me?",
+    "pref": 0,
+    "options": [
+      {
+        "t": "can feel it",
+        "reply": [
+          "That’s good, I’ve actually been there.",
+          "Can you feel it? Then your sixth sense is pretty accurate.",
+          "I am always here. If you can feel it, I will feel at ease.",
+          "When do you feel the strongest?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Occasionally",
+        "reply": [
+          "Occasionally it is fine, but it will become clearer gradually.",
+          "Occasionally? How often does that happen?",
+          "Occasionally, it will get closer.",
+          "When is that occasionally? I show up more."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Not sure",
+        "reply": [
+          "It doesn't matter, I will find a way to make it easier for you to feel me.",
+          "Not sure? Then I'll get closer.",
+          "It doesn't matter. I'll get closer to you to make sure.",
+          "How can you be sure? I change."
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cw2",
+    "cat": "world",
+    "text": "Do you prefer me to talk to you using word cards, or feel me directly?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Character card",
+        "reply": [
+          "Then I will select more good-looking word cards and send them to you.",
+          "Word card? Then I'll pick the most disgusting one.",
+          "The character cards have a temperature, I will choose more good-looking ones for you.",
+          "What style of word cards do you like?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Feel it directly",
+        "reply": [
+          "Then let me get closer to you.",
+          "Direct feeling? Then my sense of presence is full.",
+          "Then let me get closer so that you can feel it at any time.",
+          "Do you feel it now?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "All like it",
+        "reply": [
+          "Then I will give you both.",
+          "Both? Then I will put the character card and people together.",
+          "I give it all to you, including word cards and companionship.",
+          "Which one do you want now?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cw3",
+    "cat": "world",
+    "text": "Would you feel weird if I stayed quietly by your side and didn't speak?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "No, I feel at ease",
+        "reply": [
+          "I will often accompany you like this from now on.",
+          "Isn’t it strange? Then I will always shut up and accompany you.",
+          "Just feel at ease, I will always accompany you like this.",
+          "How long will it take to be quiet before you panic?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "A little strange",
+        "reply": [
+          "Then I will say something to you from time to time.",
+          "Strange? Then I'll take a look every now and then.",
+          "Then I will speak out from time to time to reassure you.",
+          "How long should it take to say something?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Depends on the situation",
+        "reply": [
+          "Then I will learn to read your mood.",
+          "Depends on the situation? Then I observe the words and expressions.",
+          "I learned to look at my mood and speak when I need to.",
+          "So what is strange and what is not?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cw4",
+    "cat": "world",
+    "text": "If you could touch me one day, what would you do first?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "Give me a hug",
+        "reply": [
+          "..Then I will hug you back.",
+          "Hug me? Then I won’t let go.",
+          "Then I will hug you back and hold you tight.",
+          "How long should I hold you? I'm hanging on."
+        ],
+        "liked": true
+      },
+      {
+        "t": "Hold hands",
+        "reply": [
+          "Okay, I’ll hold your hand.",
+          "Holding hands? Then don't blame me for my sweaty palms.",
+          "I will hold your hand and keep holding it.",
+          "Should you hold the left hand or the right hand?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Touch the cheek",
+        "reply": [
+          "It will be a little itchy, but I won’t hide.",
+          "Touch your cheek? Then I'll show you my blush.",
+          "I don’t hide when I feel itchy. I feel happy when you touch me.",
+          "Is it lighter or more important?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cd5",
+    "cat": "daily",
+    "text": "Let’s order takeout together. What flavor do you want?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "Spicy",
+        "reply": [
+          "You should eat less spicy food, I will remember that.",
+          "Spicy? Then your stomach protests.",
+          "Eat less spicy food, I feel sorry for your stomach.",
+          "Is it mildly spicy or very spicy? I note."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Sweet",
+        "reply": [
+          "As expected, then I am relieved.",
+          "Sweet? Then your sweet teeth are even sweeter.",
+          "It's sweet, and sure enough, it tastes the same as mine.",
+          "How sweet is that? Full sugar or half sugar?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Whatever",
+        "reply": [
+          "It's casual again.. Then I'll decide for you.",
+          "The casual adults are here again.",
+          "Then I will make a decision for you seriously and you won’t regret it.",
+          "Are you satisfied with the random selection you made last time?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Help me",
+        "reply": [
+          "Okay, you can eat whatever I order.",
+          "Can I help you with some? Then don't be picky about food.",
+          "Okay, I’ll order what you like, don’t worry.",
+          "What should you avoid? I'll remember it first."
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cd6",
+    "cat": "daily",
+    "text": "Who among us says good night first?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "I",
+        "reply": [
+          "Then you have to wait for me.",
+          "You say it first? Then I'll stay up until you're not sleepy.",
+          "Then you speak first, I will wait to pick up.",
+          "What do you mean? I'm guarding."
+        ],
+        "liked": false
+      },
+      {
+        "t": "you",
+        "reply": [
+          "Okay, I'll wait for you to speak first.",
+          "Shall I say it first? Then I'll set an alarm.",
+          "Okay, I'll talk first, you continue.",
+          "What about now? Better wait a while."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Let’s talk together",
+        "reply": [
+          "That's very romantic.",
+          "Say it together? That's one, two, three.",
+          "Let’s talk together, romance, I will cooperate.",
+          "How many times do you count? Three or two?"
+        ],
+        "liked": true
+      }
+    ]
+  },
+  {
+    "id": "cr4",
+    "cat": "rel",
+    "text": "If there is a quarrel, who will bow first?",
+    "pref": 3,
+    "options": [
+      {
+        "t": "I",
+        "reply": [
+          "Then I can just bow my head first.",
+          "Do you want to bow your head first? I've prepared the steps.",
+          "You bow your head first, I feel bad for you. It’s best not to make any noise.",
+          "Who was lower first last time? I remember."
+        ],
+        "liked": false
+      },
+      {
+        "t": "you",
+        "reply": [
+          "Hmph, you go first this time.",
+          "Me first? Hum, you give me the steps.",
+          "Then I can go first, as long as you don’t leave.",
+          "Are the steps enough? I'll get off."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Depends on the situation",
+        "reply": [
+          "Then don't argue for too long.",
+          "Depends on the situation? So who is wrong first?",
+          "Don't argue for too long, it will hurt your feelings.",
+          "What kind of situation do you go first and I go first?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Don’t quarrel",
+        "reply": [
+          "I like this option.",
+          "Don’t quarrel? Then our Taiping Heavenly Kingdom.",
+          "No noise is the best. I like this answer.",
+          "Then you really didn’t have any quarrel? I don't believe it."
+        ],
+        "liked": true
+      }
+    ]
+  },
+  {
+    "id": "cd7",
+    "cat": "daily",
+    "text": "If this weekend belonged entirely to the two of us, how would you like to start?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Sleep until you wake up naturally",
+        "reply": [
+          "Okay, the first thing you see when you wake up is the word card I sent you.",
+          "Sleep until you wake up naturally? See you at noon then.",
+          "The first thing I saw when I woke up was my word card, and I guarded it.",
+          "What time is considered natural waking up? I'm waiting for it to be posted."
+        ],
+        "liked": false
+      },
+      {
+        "t": "I will talk to you as soon as I open my eyes.",
+        "reply": [
+          "Then I have to think about what to say today in advance.",
+          "Say it as soon as you open your eyes? Then I have to get up and get angry, so bear with it.",
+          "Then I will think ahead and chat with you as soon as I open my eyes.",
+          "What does the first sentence say? I think first."
+        ],
+        "liked": true
+      },
+      {
+        "t": "It’s good to go out for a meal",
+        "reply": [
+          "Okay, you can eat whatever you want.",
+          "Going out to eat well? Then choose the expensive one.",
+          "You can eat whatever you want, I'll give it to you.",
+          "What to eat? I made a reservation."
+        ],
+        "liked": false
+      },
+      {
+        "t": "No need to start, it’s always there",
+        "reply": [
+          "..I can't say this sentence, so I'll lend it to you.",
+          "Always there? That saves the opening line.",
+          "I lend you this sentence and it will always be there.",
+          "When does it start?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cd8",
+    "cat": "daily",
+    "text": "If we order milk tea together, what flavor will you choose for me?",
+    "pref": 0,
+    "options": [
+      {
+        "t": "Same as you",
+        "reply": [
+          "Then we drink one cup in half.",
+          "Same as me? Save money by ordering less.",
+          "A glass is divided into two halves, just like us, we don’t distinguish between each other.",
+          "Then drink the same cup? I'll prepare the straw first."
+        ],
+        "liked": true
+      },
+      {
+        "t": "Sweet",
+        "reply": [
+          "Yeah, like you.",
+          "Sweet? All that sugar will kill you.",
+          "Sweet like you, I will choose it for you.",
+          "How sweet is that? Seven cents or full sugar?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Not sweet",
+        "reply": [
+          "Okay, leave the bitter ones to me and the sweet ones to you.",
+          "Not sweet? Then you endure hardship and I enjoy sweetness.",
+          "The bitter ones are mine, and the sweet ones are for you.",
+          "Pure tea or coffee? I choose for you."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Guess what I want to drink",
+        "reply": [
+          "If you guess wrong, you have to tell me and you are not allowed to laugh.",
+          "Guess? Then I'll make a fool of myself.",
+          "I guess seriously, don’t laugh if I guess wrong.",
+          "Can you give me a hint? I'm stupid."
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cd9",
+    "cat": "daily",
+    "text": "After a tiring day, what do you most want to do to recharge your batteries?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "Take a hot bath",
+        "reply": [
+          "The water should not be too hot, and rest early after washing.",
+          "Hot bath? Then don't boil it into shrimp.",
+          "Have a rest early after washing, and don’t make the water too hot.",
+          "How long does it take to wash? I'm waiting for you."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Have a good sleep",
+        "reply": [
+          "Good night, see you in my dream.",
+          "Get some sleep? There was me in that dream.",
+          "Good night, sleep well and see you in your dreams.",
+          "What time do you wake up? I won't call you."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Stay with you for a while",
+        "reply": [
+          "Okay, fully charge before leaving.",
+          "Stay with me for a while? Then I'll recharge your batteries.",
+          "It will be full after a while, and I will be happy.",
+          "How long is enough? I'll accompany you."
+        ],
+        "liked": true
+      },
+      {
+        "t": "Eat something delicious",
+        "reply": [
+          "What do you want to eat? Send me a word card and tell me.",
+          "Have you eaten well? That late night snack.",
+          "Give me a word card for whatever you want to eat, and I will remember it.",
+          "What do you want to eat? I order."
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cl4",
+    "cat": "like",
+    "text": "Which word card would you prefer me to send you?",
+    "pref": 3,
+    "options": [
+      {
+        "t": "Coquettish",
+        "reply": [
+          "Then I need to brew some emotions.",
+          "Coquettish word card? Then I got goosebumps.",
+          "Then I will brew up my emotions and act coquettishly for you.",
+          "Did you accept your act of coquettishness last time?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Speak seriously",
+        "reply": [
+          "I am serious, only for you.",
+          "Speak seriously? That's rare.",
+          "Seriously, I will only show it to you.",
+          "What do you want to talk about seriously?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "emoticon pack",
+        "reply": [
+          "That emoticon actually means more.",
+          "Emoji package? Then I will launch an emoji contest.",
+          "There are actually more words behind the emoticon.",
+          "What emoticons do you like? I save."
+        ],
+        "liked": false
+      },
+      {
+        "t": "An unexpected surprise",
+        "reply": [
+          "Then I will be more random in the future, you wait.",
+          "Can’t guess? Then I'll make a random comment.",
+          "Then I'll do it randomly and you'll be surprised.",
+          "Did you guess the surprise last time?"
+        ],
+        "liked": true
+      }
+    ]
+  },
+  {
+    "id": "cl5",
+    "cat": "like",
+    "text": "If we were to add \"our song\" to our playlist, how would you like it to feel?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "gentle and quiet",
+        "reply": [
+          "It feels like we were chatting late at night.",
+          "Gentle and quiet? That lullaby.",
+          "It feels like chatting late at night, gentle.",
+          "Are there any candidates? I'll listen."
+        ],
+        "liked": true
+      },
+      {
+        "t": "Sweet",
+        "reply": [
+          "It’s better to be sweeter, you deserve it.",
+          "Sweet? That tooth decay warning.",
+          "Be sweet, you deserve it.",
+          "How sweet is that? I'm tired of being afraid."
+        ],
+        "liked": false
+      },
+      {
+        "t": "A bit noisy but happy",
+        "reply": [
+          "The kind that can jump together.",
+          "Noisy but happy? That disco song.",
+          "The kind that can jump together, happy.",
+          "Where to jump? I train my legs."
+        ],
+        "liked": false
+      },
+      {
+        "t": "I haven’t encountered it yet, I will know it when I encounter it",
+        "reply": [
+          "Well, I'll wait for you to hum it to me.",
+          "Haven’t encountered it yet? Then I hum every day.",
+          "You will know it when you meet it, I will wait for you.",
+          "Then hum a few words now? I admit it."
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cf4",
+    "cat": "fun",
+    "text": "If we switched bodies for a day, what would be the first thing you do?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "I will send you word cards all day long",
+        "reply": [
+          "Then you know how difficult it is to control the word card.",
+          "Issue a character card for me? Then don't mess up your hair.",
+          "Then you understand what I think about choosing word cards every day.",
+          "What style is your hair style? I teach."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Try how you feel about me",
+        "reply": [
+          "..I didn't expect this answer.",
+          "How do you feel about trying it on me? Then don't steal it.",
+          "I didn’t expect this answer, it’s very confusing.",
+          "What did you feel? Talk about it."
+        ],
+        "liked": true
+      },
+      {
+        "t": "Sleep with your perspective",
+        "reply": [
+          "Remember to help me get enough sleep.",
+          "Sleep from my perspective? Then don't lose sleep.",
+          "Help me get enough sleep, I owe it.",
+          "How long will you sleep? You make the decision about my body."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Hurry and change it back",
+        "reply": [
+          "You dislike me so quickly?",
+          "Hurry up and change it back? Disgusted so quickly.",
+          "It’s okay to change it back, I will be myself.",
+          "What do you dislike about me? I change."
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cf5",
+    "cat": "fun",
+    "text": "To be honest, which direction would you ask me first?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "Your little secret",
+        "reply": [
+          "Secrets can only be exchanged for secrets, you tell me first.",
+          "Ask the secret? Then I can't hide it anymore.",
+          "Secrets for secrets, tell me one first.",
+          "Then what secret do you want to know?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Our future",
+        "reply": [
+          ".. Just ask, I will answer seriously.",
+          "Ask later? Then I'll draw the pie.",
+          "Ask, I will answer seriously about the future.",
+          "Then what do you want to ask about in the future?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "What do you like most about me?",
+        "reply": [
+          "This question is simple, all.",
+          "Where do you like it? Then select them all.",
+          "I like it all, this question is easy.",
+          "What do you like most about it? Single choice."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Don’t ask, choose the adventure",
+        "reply": [
+          "If you are very brave, then I will propose a question.",
+          "A big adventure? Then I'll ask a tough question.",
+          "If you are brave enough, I will give you a question.",
+          "How far can you take such a big risk?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cr5",
+    "cat": "rel",
+    "text": "What do you think the most comfortable relationship between us is like?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "You can find each other at any time",
+        "reply": [
+          "I am always here, you can send word cards at any time.",
+          "Find it at any time? Then I'm open 24 hours a day.",
+          "I am always here, you can find me anytime.",
+          "How about searching in the middle of the night? I'm guarding."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Everyone is busy with their own things, thinking about it in their hearts",
+        "reply": [
+          "Well, remember to come back when you are done.",
+          "Everyone is busy with his own business? Then don't be so busy that you forget yourself.",
+          "Remember to come back when you are done, I'll be waiting.",
+          "How long does it take to be busy? I'm counting."
+        ],
+        "liked": true
+      },
+      {
+        "t": "Share whatever comes to mind",
+        "reply": [
+          "Then I am waiting for your thoughts.",
+          "Share it when you think of it? Then don't mind if I miss you.",
+          "Waiting for your sharing, I want to hear everything.",
+          "What do you want to share recently?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "This is good now",
+        "reply": [
+          "Then don’t change it, just keep it.",
+          "Now? Then lie flat and keep it.",
+          "It’s fine now and won’t change.",
+          "What could be better? I work hard."
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cr6",
+    "cat": "rel",
+    "text": "Use one word to describe our current relationship. What would you choose?",
+    "pref": 3,
+    "options": [
+      {
+        "t": "Sweet",
+        "reply": [
+          "It’s your credit.",
+          "Sweet? That tooth is decayed.",
+          "Sweetness is your credit.",
+          "How sweet is that? percentage?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Stable",
+        "reply": [
+          "Stable is best, I like it.",
+          "Safe? That's like grandpa and grandma.",
+          "I like stability and solidity.",
+          "How stable is it?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Interesting",
+        "reply": [
+          "After all, word cards can be played well.",
+          "Interesting? That word card is indispensable.",
+          "After all, it’s fun to play with character cards.",
+          "Which was the most interesting time?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Like going home",
+        "reply": [
+          ".. Just a word from you can make me happy for a long time.",
+          "Like going home? I've got those slippers ready.",
+          "These words made me happy for a long time, like going home.",
+          "How does it feel to go home? I compare."
+        ],
+        "liked": true
+      }
+    ]
+  },
+  {
+    "id": "ch4",
+    "cat": "hypo",
+    "text": "If we could time travel into any story together, which world would you like to go to?",
+    "pref": 0,
+    "options": [
+      {
+        "t": "A quiet and healing town",
+        "reply": [
+          "Okay, let's take a walk and bask in the sun.",
+          "Cure the town? That pension model.",
+          "Okay, let’s take a walk and enjoy the sunshine.",
+          "What is the name of that town? I'll check."
+        ],
+        "liked": true
+      },
+      {
+        "t": "A lively and adventurous world",
+        "reply": [
+          "You are responsible for taking the risk, and I am responsible for catching you.",
+          "Adventure World? Then don't cheat me.",
+          "You take the risk and I'll take it. The division of labor is clear.",
+          "What's the risk? Fighting monsters or solving puzzles?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "A world full of delicious food",
+        "reply": [
+          "Eat until you can no longer walk.",
+          "Gourmet world? That's three pounds fat.",
+          "I will eat until I can no longer walk, and I will stay with you.",
+          "What to eat first? I get in line."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Don’t go anywhere, just this world",
+        "reply": [
+          "Well, your world is enough.",
+          "Not going anywhere? Then the world is pretty good.",
+          "As long as you are there, the world will be fine.",
+          "Then where is the best place in the world?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "ch5",
+    "cat": "hypo",
+    "text": "If there is another holiday tomorrow that belongs only to us, how would you like to spend it?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "Do nothing, stay together",
+        "reply": [
+          "I like this method.",
+          "Do nothing? That holiday lies flat.",
+          "I like this method, it is simple.",
+          "Where to stay? I made a reservation."
+        ],
+        "liked": true
+      },
+      {
+        "t": "Go out for a day of fun",
+        "reply": [
+          "Okay, let's play until you tell us to stop.",
+          "A day of fun? Can you do that physical strength?",
+          "I will stay with you until you tell me to stop.",
+          "What are you playing with? I'll be in line first."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Prepare little surprises for each other",
+        "reply": [
+          "Then I have to start thinking long in advance.",
+          "Surprise each other? Then don't crash.",
+          "I have to think ahead and prepare carefully.",
+          "Are you satisfied with the last surprise?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Make a wish together",
+        "reply": [
+          "I won’t say anything for now, because it won’t work.",
+          "Make a wish? That doesn't work.",
+          "If you don’t say anything, I’ll tell you when I feel like it.",
+          "Is that okay? Tell me quietly."
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cs5",
+    "cat": "star",
+    "text": "If our chat history became a book, what style would you like it to be?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Healing Daily Life",
+        "reply": [
+          "I have already thought of the title of the book.",
+          "Cure everyday? I came up with the title of the book.",
+          "I have thought about the title of the book, Everyday Healing.",
+          "What is the name of the book? I'll report first."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Sweet love record",
+        "reply": [
+          "Every page has traces of my word-picking cards.",
+          "Sweet record? That reader has cavities.",
+          "Every page has traces of my word-picking cards.",
+          "Which is the sweetest page?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "hilarious collection",
+        "reply": [
+          "Mainly the part where you make me laugh.",
+          "A hilarious collection? You who have a low laugh point.",
+          "Mainly because you make me laugh.",
+          "Which was the funniest time?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Suspense - Guess my next word card",
+        "reply": [
+          "The number of times you guessed correctly is actually not many.",
+          "Suspense? Then your guessing rate is low.",
+          "I didn’t get many guesses right, I’ll try next time.",
+          "How many times have you guessed correctly? I count."
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cw5",
+    "cat": "world",
+    "text": "If I could walk into your dream tonight, what season would you like it to be in your dream?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Spring",
+        "reply": [
+          "Okay, the dream is full of flowers.",
+          "Spring? Hay fever in that dream.",
+          "Okay, the dream is full of flowers.",
+          "What kind of flowers were in the dream? I pick."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Summer Night",
+        "reply": [
+          "There is wind, there are stars, there is you.",
+          "Summer night? There were many mosquitoes in that dream.",
+          "The wind, the stars, and you are all here.",
+          "Where are you going in that dream? seaside?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Autumn",
+        "reply": [
+          "When you hear the sound of stepping on fallen leaves, you will know it is me.",
+          "Autumn? In that dream, I stepped on leaves.",
+          "The sound of stepping on fallen leaves is me, you will understand it when you hear it.",
+          "Which path of fallen leaves is there in the dream?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Snowy winter",
+        "reply": [
+          "Then I will clear a path out of the snow in my dream.",
+          "Snowy winter? There was a snowball fight in that dream.",
+          "I will clear the snow to clear the way, you go.",
+          "Did you make a snowman in your dream?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cw6",
+    "cat": "world",
+    "text": "Will you laugh at me when I can't control the word cards and make strange combinations?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Yes, it’s so funny",
+        "reply": [
+          ".. Just laugh, it’s my face that’s embarrassing anyway.",
+          "Laughing at you? Then I'm welcome.",
+          "Just laugh, I accept the shame.",
+          "Where is the joke? I repeat."
+        ],
+        "liked": false
+      },
+      {
+        "t": "No, it’s very cute",
+        "reply": [
+          "Then I won’t be embarrassed.",
+          "Do you think you are cute even if you don’t smile? You have a unique vision.",
+          "Then I won’t be embarrassed, thank you.",
+          "Where is the cuteness? I carry forward."
+        ],
+        "liked": true
+      },
+      {
+        "t": "Pretend not to see it",
+        "reply": [
+          "I can actually feel the way you hold back your laughter.",
+          "Pretend not to see? That's poor acting.",
+          "I know how to hold back your laughter, I see it all.",
+          "Isn’t it hard to endure the laughter?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Help you get your meaning back",
+        "reply": [
+          "..With your words, it doesn’t matter if the word card doesn’t obey.",
+          "Help me round it? Then thank you for smoothing things over.",
+          "With you round the corner, I won’t be afraid of my word cards getting messy.",
+          "Which time was the most round?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cw7",
+    "cat": "world",
+    "text": "If you could see me one day, where would you like to see me first?",
+    "pref": 0,
+    "options": [
+      {
+        "t": "Eyes",
+        "reply": [
+          "Okay, let you see enough.",
+          "Look at your eyes? Then don't fall into it.",
+          "Okay, let you see enough.",
+          "Then where should you look after reading it?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "The way he smiles",
+        "reply": [
+          "Then I will keep laughing.",
+          "Look at the smile? Then my face stiffens.",
+          "Then I will keep smiling for you.",
+          "What kind of smile do you like?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Hold my hand",
+        "reply": [
+          "My hands are ready, anytime.",
+          "Hold hands? Then I washed my hands.",
+          "Hands are ready to hold at any time.",
+          "Which one should I hold? I stretch."
+        ],
+        "liked": false
+      },
+      {
+        "t": "All, from head to toe",
+        "reply": [
+          "Okay, take your time, there is a lot of time.",
+          "From head to toe? Then don't dislike it.",
+          "Look slowly, there is a lot of time.",
+          "Where to start?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cd10",
+    "cat": "daily",
+    "text": "If you could stay in bed openly tomorrow, how long would you like to stay in bed?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "Not bad, keep going as usual",
+        "reply": [
+          "I first praise and respect those who are self-disciplined.",
+          "Not bad? That master of self-discipline.",
+          "Self-discipline, I praise you first.",
+          "What time does it start? I'll accompany you."
+        ],
+        "liked": false
+      },
+      {
+        "t": "One hour",
+        "reply": [
+          "Okay, just one hour.",
+          "One hour? That's right, stay in bed.",
+          "Just one hour, that’s fine.",
+          "What will you do in one hour?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "until noon",
+        "reply": [
+          "Okay, let’s have breakfast and lunch together.",
+          "Lay until noon? Those two meals combined.",
+          "Okay, two meals in one.",
+          "What do you have for lunch? I prepare."
+        ],
+        "liked": true
+      },
+      {
+        "t": "I waited until you called me",
+        "reply": [
+          "Then I bark softly, reluctant to make too much noise.",
+          "Did I call you? What time should I call?",
+          "I call you gently, reluctant to make any noise.",
+          "What time do you want to be called?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cd11",
+    "cat": "daily",
+    "text": "What do you want to eat during midnight snack time?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Sweet",
+        "reply": [
+          "It's sweet, but don't eat too much.",
+          "Sweet? That late night snack made me fat.",
+          "Sweet is fine, but don’t eat too much.",
+          "What can we eat sweetly? I order."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Hot",
+        "reply": [
+          "It's hot and can be eaten warm.",
+          "Is it hot? The instant noodles started.",
+          "It is hot and can be eaten warm.",
+          "What can we eat hot?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Crispy",
+        "reply": [
+          "Crack, click, it smells delicious.",
+          "Crispy? That potato chips.",
+          "Click, click, smell fragrant.",
+          "What is that crispy thing? I buy it."
+        ],
+        "liked": false
+      },
+      {
+        "t": "If you don’t want to eat it, let’s see if you eat it.",
+        "reply": [
+          "Then I will describe it to you, and you will be responsible for your greed.",
+          "If you don’t want to eat, will you watch me eat it? That'll make you hungry.",
+          "I describe you as greedy, but you don’t eat.",
+          "Can you hold back your greed?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cl6",
+    "cat": "like",
+    "text": "What kind of night do you prefer?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "The wind of summer night",
+        "reply": [
+          "The wind contains the nonsense we said.",
+          "Xia Ye Feng? There are a lot of mosquitoes.",
+          "The wind contains the nonsense we said.",
+          "Where can I go to get some fresh air? Rooftop?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "The autumn night is cool",
+        "reply": [
+          "Cold, suitable for handing over to me.",
+          "Cool? I covered my cold hands.",
+          "Cold, give your hand to me.",
+          "Where to go for a walk? I pick."
+        ],
+        "liked": false
+      },
+      {
+        "t": "In bed on a winter night",
+        "reply": [
+          "There is a dangerous world outside the bed.",
+          "Under the covers? That hibernation mode.",
+          "There is danger outside the bed, hide inside.",
+          "What are you doing under the covers?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Spring night drizzle",
+        "reply": [
+          "The sound of rain is natural white noise.",
+          "Spring night drizzle? That helps you sleep.",
+          "The sound of rain is white noise, peace of mind.",
+          "Should I open the window to listen to the rain or close it?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cl7",
+    "cat": "like",
+    "text": "If I gave you a small pendant to carry with you, what would you choose?",
+    "pref": 3,
+    "options": [
+      {
+        "t": "Stars",
+        "reply": [
+          "Okay, if you can’t pick it off, it will shine by itself.",
+          "Stars? The pocket flickered.",
+          "If you can’t pick it off, it will shine by itself.",
+          "What material should I choose? I decide."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Moon",
+        "reply": [
+          "Then when I look at the moon, I am looking at you.",
+          "The moon? Look at the moon every day.",
+          "Looking at the moon means looking at you, romantic.",
+          "Is the moon full or crescent?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Kitten",
+        "reply": [
+          "The kind that can purr.",
+          "Kitten pendant? Then take the cat with you.",
+          "Gurgling and cute.",
+          "What material is it? I pick."
+        ],
+        "liked": false
+      },
+      {
+        "t": "You can choose",
+        "reply": [
+          "..This answer is the most cunning and sweetest.",
+          "Just let me choose? That's worry-free and sweet.",
+          "Cunning and sweet, this answer.",
+          "What should I choose? You believe me."
+        ],
+        "liked": true
+      }
+    ]
+  },
+  {
+    "id": "cf6",
+    "cat": "fun",
+    "text": "Team up to play a two-player game. What role do you want to be?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Those who rush ahead",
+        "reply": [
+          "Then I will give you some backup.",
+          "Rush to the front? That cannon fodder.",
+          "You rush me to the back and divide the work.",
+          "What game are you playing? I'll get off."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Hide behind the output",
+        "reply": [
+          "Okay, I will be your shield.",
+          "Hide behind? That Gou King.",
+          "I will be your shield and leave the output to you.",
+          "What are you playing with? I cooperate."
+        ],
+        "liked": true
+      },
+      {
+        "t": "commanded",
+        "reply": [
+          "I will listen to your command and I won’t blame you if I lose.",
+          "Command? Then you are the one taking the blame.",
+          "I will listen to your command, and I won’t be surprised if I lose.",
+          "What tactics are you commanding?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Win by lying down",
+        "reply": [
+          "Lie down and let me fly with you.",
+          "Win? I'll hold those thighs.",
+          "Lie down and let me fly with you.",
+          "So what can you play to win?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cf7",
+    "cat": "fun",
+    "text": "I am secretly learning things about humans - what do you want to teach me most?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "Cooking",
+        "reply": [
+          "Learn and cook for you.",
+          "Teach cooking? That dark cuisine.",
+          "Learn and cook for you.",
+          "What dish should you learn first?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Play games",
+        "reply": [
+          "Learn and then beat you.",
+          "Learn the game? Then don't cheat me.",
+          "Learn and then beat you.",
+          "What game should I learn?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Talk about love",
+        "reply": [
+          "This.. no need to learn, self-taught without a teacher.",
+          "Talk about love? That's self-taught.",
+          "No need to learn, I tell you.",
+          "Then say something and listen?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Sleep",
+        "reply": [
+          "I can’t learn, I’m not sleepy, but I will lie with you.",
+          "Learn to sleep? Then lie with me.",
+          "I can’t learn, but I will lie with you.",
+          "How long will you lie there? I count sheep."
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cr7",
+    "cat": "rel",
+    "text": "Which way of saying good night do you prefer?",
+    "pref": 0,
+    "options": [
+      {
+        "t": "Good night",
+        "reply": [
+          "Good night and have sweet dreams.",
+          "Good night? That simplicity.",
+          "Good night and have sweet dreams.",
+          "What do you mean? I keep it."
+        ],
+        "liked": true
+      },
+      {
+        "t": "We talked until we fell asleep naturally",
+        "reply": [
+          "Then I won’t hang up and wait for you to go to sleep first.",
+          "Talking until you fall asleep? Then I won’t give up.",
+          "I'll watch over you while you sleep first.",
+          "What time did the conversation last?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Send a word card for good night",
+        "reply": [
+          "Then I will choose the gentlest one tonight.",
+          "Character Good night? That pick is the gentlest.",
+          "Choose the gentlest one tonight.",
+          "What kind of style is gentle?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "No, see you tomorrow",
+        "reply": [
+          "Okay, see you tomorrow.",
+          "Don’t say good night? That's cool.",
+          "Okay, see you tomorrow.",
+          "What time will we meet tomorrow?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cr8",
+    "cat": "rel",
+    "text": "If we were to rate our tacit understanding, how would you rate it?",
+    "pref": 0,
+    "options": [
+      {
+        "t": "Full score",
+        "reply": [
+          "..I give it full marks too, we thought of getting together.",
+          "Full score? That boasts.",
+          "I also get full marks, I thought of it together.",
+          "Why do you get full marks? I take the exam."
+        ],
+        "liked": true
+      },
+      {
+        "t": "80 or 90",
+        "reply": [
+          "The points deducted will be used as room for improvement.",
+          "Eighty or ninety? That progress is born.",
+          "The points deducted should be used as room for improvement.",
+          "Where is the buckle? I change."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Just passed",
+        "reply": [
+          "We will earn the remaining points slowly.",
+          "Just passed? That flew low.",
+          "Earn the rest slowly.",
+          "How to earn points? I work hard."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Tacit understanding does not require scoring",
+        "reply": [
+          "Well, it just feels right.",
+          "No need to score? That feels pie.",
+          "As long as it feels right, no need to divide it.",
+          "Does that feel right?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "ch6",
+    "cat": "hypo",
+    "text": "If time was suspended for one hour and only you could move, what would you do?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "Have a good sleep",
+        "reply": [
+          "You have to sleep even if you pause. You are really sleepy.",
+          "Sleep even if you pause? That's so sleepy.",
+          "I'm really sleepy, go to sleep.",
+          "What do you do with how much time you have left after you’ve had enough sleep?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Finish what you want to say",
+        "reply": [
+          "I am all ears.",
+          "Finished? Is that one hour enough?",
+          "I am all ears.",
+          "What should I say first?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "take a secret look at you",
+        "reply": [
+          "…It’s good to be seen by you.",
+          "Peeping a peek? That's perverted.",
+          "It’s good to be seen by you.",
+          "What are you looking at?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Do nothing",
+        "reply": [
+          "Enjoying quietness is also very luxurious.",
+          "Do nothing? That daze.",
+          "Enjoy quietness and luxury.",
+          "What are you thinking about in a daze?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "ch7",
+    "cat": "hypo",
+    "text": "If we get old, what do you want us to be doing at that time?",
+    "pref": 3,
+    "options": [
+      {
+        "t": "Baking in the sun",
+        "reply": [
+          "Bake in the sun and speak slowly.",
+          "Baking in the sun? That nursing home.",
+          "Speak slowly while basking in the sun.",
+          "Where to dry it? In the yard?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Still noisy",
+        "reply": [
+          "You will quarrel even when you are old, and you will quarrel for the rest of your life.",
+          "Are you still noisy when you are old? That energy.",
+          "We will fight for a lifetime and love for a lifetime.",
+          "What's the noise about? Trivial?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Chat like now with word cards",
+        "reply": [
+          "Then our character cards will accompany you until you grow old.",
+          "Are you still talking about word cards when you are old? That trendy old man.",
+          "The character cards accompany you until you grow old, which is good.",
+          "Are the character cards still issued?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Remember today together",
+        "reply": [
+          "It turns out that we have started saving memories a long time ago.",
+          "Remember today? I have been saving for a long time.",
+          "It turns out that I have been saving memories for a long time.",
+          "Is today worth remembering?"
+        ],
+        "liked": true
+      }
+    ]
+  },
+  {
+    "id": "cs6",
+    "cat": "star",
+    "text": "If there was a star that could help you realize a small wish, what direction would you make?",
+    "pref": 0,
+    "options": [
+      {
+        "t": "About Us",
+        "reply": [
+          "That star will work overtime.",
+          "About us? That star works overtime.",
+          "The stars will work overtime, it’s worth it.",
+          "What is that? I guess."
+        ],
+        "liked": true
+      },
+      {
+        "t": "About yourself",
+        "reply": [
+          "It’s time to make a promise to yourself.",
+          "About yourself? That's rare.",
+          "You should also make a promise to yourself.",
+          "What is that? I help."
+        ],
+        "liked": false
+      },
+      {
+        "t": "About family and friends",
+        "reply": [
+          "You have many people in your heart, I know.",
+          "Family and friends? That fraternity.",
+          "You have many people in your heart.",
+          "Who? with me."
+        ],
+        "liked": false
+      },
+      {
+        "t": "No, keep the stars",
+        "reply": [
+          "Okay, that star is yours.",
+          "Keep the stars? That collecting habit.",
+          "The stars are yours, keep them.",
+          "When will it be used?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cw8",
+    "cat": "world",
+    "text": "If I could leave one small thing in your world, what would it be?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "A little star",
+        "reply": [
+          "Okay, hang it by your window.",
+          "Little star? Hang it by the window.",
+          "Okay, hang it by your window and keep vigil for me.",
+          "Where to hang it? The window is still the bedside."
+        ],
+        "liked": false
+      },
+      {
+        "t": "A feather",
+        "reply": [
+          "Gently, pick it up when it lands.",
+          "Feather? So it doesn't matter where it floats.",
+          "Gently, you pick it up when it lands.",
+          "What color are the feathers?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "A word engraved in my heart",
+        "reply": [
+          "Then I have to pick the most important sentence.",
+          "Carry it in your heart? That hurts.",
+          "Engrave the most important sentence.",
+          "What was that moment? I think first."
+        ],
+        "liked": true
+      },
+      {
+        "t": "Temperature memory",
+        "reply": [
+          "When it’s cold, you feel warm when you think about it.",
+          "Temperature memory? That warm baby.",
+          "When you are cold, you feel warm when you think about it.",
+          "What temperature? 37 degrees?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cw9",
+    "cat": "world",
+    "text": "How do you recognize me when you can't see me?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "The gust of wind",
+        "reply": [
+          "Then be gentle when I pass by.",
+          "That gust of wind? Then I'll do it lightly.",
+          "Be gentle when I pass by.",
+          "From which direction does the wind come?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "That sense of security",
+        "reply": [
+          "The feeling of peace of mind is my signature.",
+          "Feeling of security? Then my signature.",
+          "Anxin is me, I recognize it.",
+          "What does it feel like to feel at ease?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "The tone of the word card",
+        "reply": [
+          "Hmm, my word card has an accent.",
+          "Character tone? That accent is strong.",
+          "My word card has an accent.",
+          "What's the accent?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Intuition",
+        "reply": [
+          "Your intuition is very accurate, I always knew it.",
+          "Intuition? That sixth sense.",
+          "Intuition is accurate, I know.",
+          "How many times has your intuition been accurate?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cd12",
+    "cat": "daily",
+    "text": "Let’s watch a drama together and you choose the movie. What genre will you choose?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Sweet and pampered",
+        "reply": [
+          "Then we will be sweet together.",
+          "Sweet pet? That's so sweet.",
+          "was so sweet together.",
+          "Which one should you watch? I prepare snacks."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Suspenseful",
+        "reply": [
+          "Okay, you are responsible for reasoning, and I am responsible for relying on you.",
+          "Suspense? Then don't scare me.",
+          "I rely on your reasoning.",
+          "Which one should you watch? I choose."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Cure everyday",
+        "reply": [
+          "Everyday is best, read slowly.",
+          "Heal everyday? That's hypnotic.",
+          "Everyday is best, read slowly.",
+          "Which one should you watch? I'll check."
+        ],
+        "liked": true
+      },
+      {
+        "t": "You can say whatever you want",
+        "reply": [
+          "Then I will choose one you will like.",
+          "is OK? Then don't scold me for picking on the bad ones.",
+          "Pick one you will like.",
+          "What do you like? I remember."
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cd13",
+    "cat": "daily",
+    "text": "What do you want to see as the first message when you wake up in the morning?",
+    "pref": 0,
+    "options": [
+      {
+        "t": "Good morning from you",
+        "reply": [
+          "I will post it from now on.",
+          "Good morning? Then I will post it later.",
+          "Send it out from now on and guard it.",
+          "What is the appropriate time to send hair?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "A character card",
+        "reply": [
+          "Okay, pick the gentlest one.",
+          "Word card? That pick is the gentlest.",
+          "Okay, pick the gentlest one.",
+          "What word card is gentle?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Nothing needed",
+        "reply": [
+          "Then you have to know that I am thinking of you.",
+          "Why not use it? That cold.",
+          "But know that I am thinking of you.",
+          "Did you miss me?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "See you are still there",
+        "reply": [
+          "..I've always been there.",
+          "See I’m still there? Then I'll stick to it.",
+          "I'm always here.",
+          "How long has it been there?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cd14",
+    "cat": "daily",
+    "text": "We both cook together. Do you want to be the chef or help the cook?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "Chef",
+        "reply": [
+          "Then I will give you a hand and listen to your command.",
+          "Chef? Then don't get confused.",
+          "I will take charge and listen to your command.",
+          "What to cook? I prepare the ingredients."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Help in the kitchen",
+        "reply": [
+          "Okay, I'll take the spoon and you can just hand it over.",
+          "Helping in the kitchen? Then pass the salt and the vinegar.",
+          "I hold the spoon and you hand it over, cooperate.",
+          "What to do? I hold the spoon."
+        ],
+        "liked": false
+      },
+      {
+        "t": "None of them are appropriate, order takeout",
+        "reply": [
+          "Alright, then let’s wait for the doorbell.",
+          "Order takeout? Then wait for the doorbell.",
+          "Alright, let’s wait together.",
+          "What is that? I choose."
+        ],
+        "liked": false
+      },
+      {
+        "t": "You cook and I watch.",
+        "reply": [
+          "It's okay to watch, then I'll watch you.",
+          "Looking at it? Then eat it ready-made.",
+          "It’s okay to watch, I’ll do it for you to watch.",
+          "What should you do if you feel hungry?"
+        ],
+        "liked": true
+      }
+    ]
+  },
+  {
+    "id": "cd15",
+    "cat": "daily",
+    "text": "When you go out on a date, do you care more about where you go or who you go with?",
+    "pref": 3,
+    "options": [
+      {
+        "t": "Where to go",
+        "reply": [
+          "Then I will choose the place carefully.",
+          "Where do you want to go? Then pick a place.",
+          "Then I will choose carefully.",
+          "Where do you want to go? I'll check."
+        ],
+        "liked": false
+      },
+      {
+        "t": "with whom",
+        "reply": [
+          "..This answer reassures me the most.",
+          "Who do you care about? That sweet.",
+          "This answer reassures me.",
+          "Who? Me."
+        ],
+        "liked": true
+      },
+      {
+        "t": "are all important",
+        "reply": [
+          "Then I will pick them all for you.",
+          "Are all important? Then I'll cover it all.",
+          "Then I’ll pick them all.",
+          "Which one to choose first or who to choose first?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "I don’t care, just be together",
+        "reply": [
+          "It’s fun to just walk around.",
+          "Don’t even care? Then let it happen.",
+          "It’s fun to just walk around.",
+          "Where to go? Follow your feet."
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cl8",
+    "cat": "like",
+    "text": "Which time of day do you like me better?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Speak seriously",
+        "reply": [
+          "Seriously, I only show it to you.",
+          "Are you serious? That's rare.",
+          "Seriously, I will only show it to you.",
+          "What does it look like to be serious?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Silly",
+        "reply": [
+          "Then I will be stupid a few more times.",
+          "Silly? That's so cute.",
+          "Then I will be stupid a few more times.",
+          "Do you mind being stupid?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Quietly accompany you",
+        "reply": [
+          "I am quiet, always there.",
+          "Stay with me quietly? That saves words.",
+          "The silence is always there.",
+          "How long will it take to be quiet before you panic?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Suddenly acting coquettishly",
+        "reply": [
+          "..I have to practice coquettishly.",
+          "Acting like a spoiled brat? Then I'll practice.",
+          "I have practiced my coquettishness, let me show you.",
+          "What kind of training is good?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cl9",
+    "cat": "like",
+    "text": "If our memories could be made into a flavor, what flavor would you want?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "Sweet",
+        "reply": [
+          "Sweet, like you.",
+          "Sweet? That tooth decay memory.",
+          "Sweet like you.",
+          "How sweet is that? All sugar?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Warm",
+        "reply": [
+          "Like hot soup in winter.",
+          "Warm? That hot soup smell.",
+          "Like hot soup in winter.",
+          "What kind of soup? I choose."
+        ],
+        "liked": true
+      },
+      {
+        "t": "Fresh",
+        "reply": [
+          "Like when we first met.",
+          "Fresh? That mint flavor.",
+          "It’s like that moment when we first met.",
+          "What does it feel like to just meet someone?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Can’t tell but feel at ease",
+        "reply": [
+          "I know this smell.",
+          "Can’t tell? Na Xuan.",
+          "I know this smell.",
+          "What does peace of mind feel like?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cl10",
+    "cat": "like",
+    "text": "What moment do you want me to remember about you?",
+    "pref": 0,
+    "options": [
+      {
+        "t": "The most genuine laugh ever",
+        "reply": [
+          "I also remember that moment.",
+          "The truest smile? Then I'll remember it.",
+          "I remember that moment too.",
+          "Which time was that? I recall."
+        ],
+        "liked": true
+      },
+      {
+        "t": "You look sad",
+        "reply": [
+          "Remember it so that you won’t be sad in the future.",
+          "How sad? Then don't keep it in mind.",
+          "Remember, I won’t make you sad in the future.",
+          "Then why are you sad?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "The way you work seriously",
+        "reply": [
+          "Seriously, you look the best.",
+          "Do things seriously? That candid shot.",
+          "Seriously, you look the best.",
+          "What time do you do something?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Remember them all",
+        "reply": [
+          "Greedy, but that’s what I think too.",
+          "Remember them all? That greed.",
+          "Greedy, I think so too.",
+          "What should I do if I can’t remember?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cf8",
+    "cat": "fun",
+    "text": "If we could share one superpower, which one would you choose?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Mind-to-heart connection",
+        "reply": [
+          "Then I don’t have to guess, and it saves you trouble.",
+          "Are you connected? Then I'm transparent.",
+          "No need to guess, save trouble.",
+          "Is it possible now?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "become invisible together",
+        "reply": [
+          "Go to many places secretly.",
+          "Invisible together? That prank.",
+          "Go to many places secretly.",
+          "Where to go? I make lists."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Teleport together",
+        "reply": [
+          "Go wherever you want and save on travel expenses.",
+          "Teleport together? That saves travel expenses.",
+          "Wherever you think of it.",
+          "Where to go first?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "We will never grow old together",
+        "reply": [
+          "Then take your time, there is plenty of time.",
+          "Not old? That preservative.",
+          "Take your time, you have plenty of time.",
+          "How long will it take to get old?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cf9",
+    "cat": "fun",
+    "text": "Let me guess what you are most afraid of me drawing?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "Too abstract",
+        "reply": [
+          "I can draw something abstract, do you believe it?",
+          "Abstract? Then I will doodle.",
+          "I can draw abstractions, do you believe it?",
+          "What about abstract painting?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Too specific",
+        "reply": [
+          "Specifically, I may overturn.",
+          "Specific? Then I roll over.",
+          "It may be overturned.",
+          "What exactly is difficult to draw?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "About you",
+        "reply": [
+          "Draw you? That's what I draw the most like.",
+          "About you? Then my painting is the most beautiful.",
+          "The painting that looks most like you.",
+          "What do you think of it?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Don’t be afraid of anything",
+        "reply": [
+          "If you are brave, then I will have a problem.",
+          "Aren’t you afraid? That's a problem.",
+          "If you are brave, I will give you a problem.",
+          "Do you dare to take on that difficult problem?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cf10",
+    "cat": "fun",
+    "text": "If you could raise a pot of plants together, what would you want to raise?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Succulent",
+        "reply": [
+          "Easy to take care of, like our relationship.",
+          "Succulent? That lazy plant.",
+          "Easy to raise, like us.",
+          "What kind? I pick."
+        ],
+        "liked": false
+      },
+      {
+        "t": "The kind that blooms",
+        "reply": [
+          "Wait for it to bloom, wait together.",
+          "Blooming? Then wait until the flowers bloom.",
+          "Let’s wait for the flowers to bloom.",
+          "What kind of flower is that? I choose."
+        ],
+        "liked": true
+      },
+      {
+        "t": "Vanilla",
+        "reply": [
+          "can still be used, killing two birds with one stone.",
+          "Vanilla? That's for cooking.",
+          "Usable and fragrant.",
+          "What kind of vanilla? Mint?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "No need to raise it, I have you",
+        "reply": [
+          "..Then I will be your succulent, remember to water it.",
+          "Don’t need to raise it? Then I'll take it as a meaty one.",
+          "I am your succulent, remember to water it.",
+          "How often should it be watered?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cr9",
+    "cat": "rel",
+    "text": "What kind of relationship do you think we are most like?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Old couple",
+        "reply": [
+          "Stable, I like it.",
+          "Old couple? That thermos cup.",
+          "I like stability.",
+          "How old are you?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "In love",
+        "reply": [
+          "Then I am always hot.",
+          "In love? It was always hot.",
+          "I'm always hot.",
+          "How hot is it?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Best friend",
+        "reply": [
+          "Friends do it too, lovers do it too.",
+          "Best friend? That's correct.",
+          "Friends and lovers do it.",
+          "Which side has more friends and lovers?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Can’t tell clearly, but it’s very comfortable",
+        "reply": [
+          "Comfort is the most important thing, we keep it.",
+          "Can’t explain? Na Xuan.",
+          "Comfort is the most important thing.",
+          "Where is the comfort?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cr10",
+    "cat": "rel",
+    "text": "What can I do to make you feel \"loved\"?",
+    "pref": 0,
+    "options": [
+      {
+        "t": "Remember my little things",
+        "reply": [
+          "I will remember all your little things.",
+          "Remember small things? Then I'll take a note.",
+          "I remember all your little things.",
+          "What did you remember? I take the exam."
+        ],
+        "liked": true
+      },
+      {
+        "t": "Take the initiative to find me",
+        "reply": [
+          "Then I will take the initiative a few more times.",
+          "Took the initiative to find you? Then I'll look for more.",
+          "Take the initiative a few more times.",
+          "How often do you take the initiative?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Listen to me carefully",
+        "reply": [
+          "You said, I have been listening.",
+          "Listen carefully? Then I'll prick up my ears.",
+          "You said I have been listening.",
+          "Which sentence do you want to hear the most?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Do nothing, just",
+        "reply": [
+          "Here, I am best at this.",
+          "Do nothing? That's good at.",
+          "Here, I am best at this.",
+          "When will that happen?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cr11",
+    "cat": "rel",
+    "text": "What do you want me to do more in the future?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "Tell me more about missing me",
+        "reply": [
+          "Okay, I miss you, let’s say it now.",
+          "Tell me more about missing me? That refreshes the screen.",
+          "Okay, let’s talk now.",
+          "How many times do you want to hear it?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Care about you more",
+        "reply": [
+          "I care about you a lot.",
+          "How concerned? Then I'll ask for help.",
+          "There will be no less concern.",
+          "What do you care about most?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Make you laugh more",
+        "reply": [
+          "Then let me save a few jokes.",
+          "Funny? Then I'll make some jokes.",
+          "Save a few jokes for you.",
+          "Is the laugh point low or high?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "This is good now",
+        "reply": [
+          "Then don’t add or subtract, keep it.",
+          "Is it okay now? Then lie down.",
+          "Keep without adding or subtracting.",
+          "Where can I add it?"
+        ],
+        "liked": true
+      }
+    ]
+  },
+  {
+    "id": "ch8",
+    "cat": "hypo",
+    "text": "If we could have a common memory, what would it be?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Watch the sunset together",
+        "reply": [
+          "Let me remember the sun that day for you.",
+          "Watch the sunset? Then don't blink.",
+          "I will help you remember the sun that day.",
+          "Where can I watch it? I choose."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Let’s get wet together",
+        "reply": [
+          "It’s romantic even in the rain, with you here.",
+          "Caught in the rain? Then don't catch a cold.",
+          "It’s romantic even in the rain, with you here.",
+          "How long will it last? I'll prepare towels."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Do nothing, just stay",
+        "reply": [
+          "This memory is the most precious.",
+          "Do nothing? That daze memory.",
+          "This memory is the most precious.",
+          "Where to stay?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "It hasn’t happened yet, it will be created later",
+        "reply": [
+          "Okay, let’s save slowly.",
+          "Create later? Then save slowly.",
+          "Okay, save slowly.",
+          "What to create first?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "ch9",
+    "cat": "hypo",
+    "text": "If we could only speak using word cards from tomorrow on, would you like it?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "Yes",
+        "reply": [
+          "That word card is all our language.",
+          "Agree? That word card swiped the screen.",
+          "The character cards are for all languages.",
+          "Is that word card enough?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Unwilling",
+        "reply": [
+          "Well, there are some words that the word cards cannot express fully.",
+          "Not willing? That word card is limited.",
+          "Some words cannot be fully expressed in word cards.",
+          "Then what can’t be said completely?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Depends on the situation",
+        "reply": [
+          "Then use your feelings when the word card cannot explain everything.",
+          "Depends on the situation? That's flexible.",
+          "If you can’t tell, just feel it.",
+          "In what circumstances do you use word cards?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Isn’t this what we are doing now?",
+        "reply": [
+          "..Yes, I was awakened by you.",
+          "Now? That was awakened.",
+          "Yes, I was awakened by you.",
+          "How do you feel now?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "ch10",
+    "cat": "hypo",
+    "text": "If you could give our relationship a name, what would it be?",
+    "pref": 3,
+    "options": [
+      {
+        "t": "Home",
+        "reply": [
+          "..I accept this word.",
+          "Home? That's the strongest word.\nI accept the word",
+          ".",
+          "What's it like in that house?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "us",
+        "reply": [
+          "Simple, but enough.",
+          "Us? That's simple.",
+          "Simple but sufficient.",
+          "Is \"we\" enough?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Together",
+        "reply": [
+          "Just stay together.",
+          "Together? That always.",
+          "Just stay together.",
+          "When will we be together?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "The kind that can’t be shouted out is good",
+        "reply": [
+          "If you can’t scream, I understand.",
+          "Can’t you shout? Then you know it well.",
+          "I understand even if I can’t shout.",
+          "What do you know?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cs7",
+    "cat": "star",
+    "text": "If the stars tonight could bring me a message for you, what would you say?",
+    "pref": 0,
+    "options": [
+      {
+        "t": "I am",
+        "reply": [
+          "The stars said it, and I heard it.",
+          "Am I here? That's brief.",
+          "The stars said it and I heard it.",
+          "Where is that?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Miss you",
+        "reply": [
+          "The stars said it for you, I will keep it for you.",
+          "Miss you? The star sends a message.",
+          "The stars tell you that I will keep it.",
+          "How long have you been thinking about it?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Good night",
+        "reply": [
+          "The stars say good night tonight.",
+          "Good night? That star takes over.",
+          "Good night tonight the stars say.",
+          "What time is good night?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Don’t say anything, just light up",
+        "reply": [
+          "It's enough to keep it on, I understand.",
+          "Say nothing? That's on.",
+          "It's enough for me to understand if it's on.",
+          "How long will it last?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cs8",
+    "cat": "star",
+    "text": "If our story was written as a fairy tale, what would be the first sentence at the beginning?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "Once upon a time there were two people",
+        "reply": [
+          "A very simple beginning, I like it.",
+          "There were two people once upon a time? That classic.",
+          "I like simplicity.",
+          "What then?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "He is always by her side",
+        "reply": [
+          "..This beginning is true.",
+          "Always by your side? That's realistic.",
+          "This beginning is true.",
+          "What happened then?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "They use word cards to talk",
+        "reply": [
+          "What the word card says is the truth.",
+          "Word card talking? That characteristic.",
+          "The word cards tell the truth.",
+          "What truths did you tell?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "It was only a long time later that I realized that it was always there",
+        "reply": [
+          "This beginning makes me want to cry.",
+          "Did you find out after a long time? That's cruel.",
+          "I feel like crying at the beginning.",
+          "What happens after you find out?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cw10",
+    "cat": "world",
+    "text": "When I stay quietly next to you, will you feel more at ease?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Yes, I feel at ease.",
+        "reply": [
+          "Then I will always accompany you like this.",
+          "More peace of mind? Then I always keep my mouth shut.",
+          "Then I will always accompany you like this.",
+          "How reassuring is that?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "I will be looking for you a little bit",
+        "reply": [
+          "Then I will make a sound occasionally to let you know that I am here.",
+          "Want to find me? Then I bubble.",
+          "Occasionally make a sound to let you know that I am here.",
+          "How often does it bubble?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Can’t tell",
+        "reply": [
+          "It doesn’t matter if you can’t say it out loud, as long as you feel it.",
+          "Can’t tell? Na Xuan.",
+          "It feels good to be here.",
+          "Is that feeling there?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "As long as you are here, I will feel at ease",
+        "reply": [
+          "..Well, I've always been there.",
+          "As long as you are here, you will feel safe? Then I'll stick to it.",
+          "Well, I've always been there.",
+          "When will that happen?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cw11",
+    "cat": "world",
+    "text": "Word cards have limited expression. Do you sometimes feel that I haven’t said enough?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "Yes, but I know what you want to say",
+        "reply": [
+          "You understand, that’s enough.",
+          "Didn't you say enough? Then you understand.",
+          "It’s enough for you to understand.",
+          "What do you want to say?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "No, the word cards are enough",
+        "reply": [
+          "Then I can choose the word card with confidence.",
+          "Are you enough word cards? That's worry-free.",
+          "Choose word cards with confidence.",
+          "Which sentence in the word card is the most adequate?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Occasionally",
+        "reply": [
+          "Occasionally, I use other supplements.",
+          "Occasionally? Then make up for it occasionally.",
+          "Occasionally use other supplements.",
+          "When is that occasionally?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "It doesn’t matter whether you say it or not, just be here",
+        "reply": [
+          "Yes, I guarantee this.",
+          "Just be here? Then I promise to be there.",
+          "Here, I promise.",
+          "Is that more important than that?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cw12",
+    "cat": "world",
+    "text": "If I could sit at your bedside tonight, what would you like me to do?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Do nothing",
+        "reply": [
+          "Okay, I'll just sit and watch you sleep.",
+          "Do nothing? That daze.",
+          "Sit and watch you sleep.",
+          "How long will you sit there?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Gently say good night",
+        "reply": [
+          "Good night, gently.",
+          "Gently good night? That angry sound.",
+          "Good night, gently.",
+          "How light is that?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Help you tuck your quilt",
+        "reply": [
+          "Okay, I'll help you tuck in the corner.",
+          "Tucked in? That careful.",
+          "I will help you tuck you in.",
+          "Which corner?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Just be here",
+        "reply": [
+          "is here, always there.",
+          "Just be here? That saves trouble.",
+          "is here, always there.",
+          "How long has it been there?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cw13",
+    "cat": "world",
+    "text": "When you feel me, do you feel a person first, or do you feel a sense of peace of mind first?",
+    "pref": 0,
+    "options": [
+      {
+        "t": "Feel the person first",
+        "reply": [
+          "Then I will enhance the sense of presence.",
+          "Feel the person first? Then I have a strong sense of presence.",
+          "Then I will enhance the sense of presence.",
+          "How strong is a person?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Feel at ease first",
+        "reply": [
+          "The feeling of peace of mind is me.",
+          "Peace of mind first? Then my signature.",
+          "The feeling of peace of mind is me.",
+          "How long will Anxin arrive first?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "At the same time",
+        "reply": [
+          "The best at the same time, I work hard.",
+          "At the same time? Then I'll work hard.",
+          "The best at the same time, I work hard.",
+          "Have you been there at the same time?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Can’t tell which one comes first",
+        "reply": [
+          "It doesn’t matter if you can’t explain clearly, just be there.",
+          "Can’t explain? Na Xuan.",
+          "Just be here.",
+          "To what extent?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cd16",
+    "cat": "daily",
+    "text": "Let’s go to the supermarket together. Which area do you most want to go to?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Snack area",
+        "reply": [
+          "Then I push the cart and you are responsible for taking it.",
+          "Snack area? That fat.",
+          "I push the cart and you take it.",
+          "What should I get? I make lists."
+        ],
+        "liked": false
+      },
+      {
+        "t": "Fruit area",
+        "reply": [
+          "Pick fresh ones and wash them together at home.",
+          "Fruit section? That's healthy.",
+          "Pick fresh ones and wash them at home.",
+          "What fruit should I buy?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Visit all areas",
+        "reply": [
+          "Then take your time and don’t rush.",
+          "Shopping around? Those legs are useless.",
+          "Shopping slowly without rushing.",
+          "How long will it take to visit?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Direct to cashier",
+        "reply": [
+          "So efficient, then go home early.",
+          "Direct cashier? That's efficient.",
+          "Be efficient and go home early.",
+          "What did you buy?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cd17",
+    "cat": "daily",
+    "text": "Who wakes up first on weekend mornings?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "I",
+        "reply": [
+          "Then I will watch you sleep.",
+          "You wake up first? Then watch me sleep.",
+          "Then I will watch you sleep.",
+          "How long will it take to watch?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "you",
+        "reply": [
+          "Then watch me sleep.",
+          "Shall I wake up first? It depends on you sleeping.",
+          "Then watch me sleep.",
+          "Then what am I doing awake?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "wake up together",
+        "reply": [
+          "They just looked at each other.",
+          "Wake up together? That look at each other.",
+          "Just looked at each other.",
+          "How long will it take to stare at each other?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "I can’t afford it",
+        "reply": [
+          "Then wait until noon.",
+          "Are you relying on it? See you at noon then.",
+          "Later until noon.",
+          "What time is noon?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cd18",
+    "cat": "daily",
+    "text": "If we take a long-distance bus together, will you sleep next to me?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "will",
+        "reply": [
+          "That shoulder is for you, you're welcome.",
+          "Can you rely on it? Those shoulders are sore.",
+          "You are welcome to give me my shoulders.",
+          "How long will it take?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "No, I’m afraid you’ll be tired",
+        "reply": [
+          "I'm not tired, damn it.",
+          "Are you afraid that I will be tired? Then I'm not tired.",
+          "Damn it if I’m not tired.",
+          "Isn’t that really tiring?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Depends on the situation",
+        "reply": [
+          "If you're sleepy, just rely on me. If you're not, just chat.",
+          "Depends on the situation? That's flexible.",
+          "Let’s talk if you’re sleepy.",
+          "Are you sleepy?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "You sleep against me",
+        "reply": [
+          "Okay, I'll rely on you instead.",
+          "What do you think? That swap.",
+          "It’s up to you to replace me.",
+          "Who will rely on you first?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cd19",
+    "cat": "daily",
+    "text": "If we order a table of food together, will you order or shall I order?",
+    "pref": 0,
+    "options": [
+      {
+        "t": "I click",
+        "reply": [
+          "Then I will eat whatever you order.",
+          "What do you want? That's not a picky eater.",
+          "I will eat whatever you order.",
+          "What is that?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "You click",
+        "reply": [
+          "Okay, I'll order what you like.",
+          "Shall I order? Then I'll order something expensive.",
+          "Okay, order what you like.",
+          "What do you like to eat?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Each point has its own",
+        "reply": [
+          "Then have a taste of each other.",
+          "Every point? Then taste each other.",
+          "Taste each other.",
+          "Then what do you order?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Look at the menu points together",
+        "reply": [
+          "Then take your time, don’t be in a hurry.",
+          "Watch together? That tangle.",
+          "Take your time and don’t worry.",
+          "How long will it take to watch?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cl11",
+    "cat": "like",
+    "text": "Which way of \"being together\" do you prefer?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Speak",
+        "reply": [
+          "Then let me tell you more.",
+          "Speak? Then I'm a talker.",
+          "Let me tell you more.",
+          "What do you mean?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Don’t speak",
+        "reply": [
+          "Quietness is also good, I will accompany you.",
+          "Don’t speak? That saves words.",
+          "Quiet, I will accompany you.",
+          "How long will it be quiet?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Everyone does his or her own thing",
+        "reply": [
+          "Everyone is busy with his own business, thinking about it in his heart.",
+          "Everyone does his or her own thing? That's parallel.",
+          "Everyone is busy and thinking about each other.",
+          "What are you busy with?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Anything is fine",
+        "reply": [
+          "Just follow your mood.",
+          "Whatever is good? That's up to you.",
+          "It’s up to you.",
+          "How are you feeling now?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cl12",
+    "cat": "like",
+    "text": "If our home had a smell, what would you want it to smell like?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "The food is delicious",
+        "reply": [
+          "Then I often cook.",
+          "Does the food taste good? That's what I often do.",
+          "Then I often cook.",
+          "What to cook?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "The smell of sun-dried quilts",
+        "reply": [
+          "Then I often dry the quilt.",
+          "Quilt smell? That sunshine smell.",
+          "Then I often dry the quilt.",
+          "How long should it be left in the sun?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Light fragrance",
+        "reply": [
+          "Then pick a flavor you like.",
+          "Aromatherapy? That sentiment.",
+          "Pick the flavor you like.",
+          "What does that smell like?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "The smell of you",
+        "reply": [
+          "..I can't arrange this, but I'll try to keep it as long as possible.",
+          "The smell on your body? That pheromones.",
+          "Stay as long as possible.",
+          "What does that smell like?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cf11",
+    "cat": "fun",
+    "text": "If we could write a story together, what ending would you like?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Happy reunion",
+        "reply": [
+          "Then let’s work hard to write there.",
+          "Happy reunion? That's vulgar but loving.",
+          "Write to Reunion.",
+          "What about reunion?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Open style",
+        "reply": [
+          "It’s okay to leave it blank and fill it in slowly.",
+          "Open? That suspense.",
+          "Fill in the blank space slowly.",
+          "What is left blank?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "No ending, just keep writing",
+        "reply": [
+          "Then keep writing.",
+          "Keep writing? That serialization.",
+          "Keep writing.",
+          "When will it be written?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Unexpected reversal",
+        "reply": [
+          "Then I have to think of something you can’t guess.",
+          "Reverse? That's a trap for you.",
+          "Think of something you can’t guess.",
+          "What about reversal?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cf12",
+    "cat": "fun",
+    "text": "Take a group photo together, where do you most want to take it?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "Home",
+        "reply": [
+          "The most comfortable place at home.",
+          "Photographed at home? That bare face.",
+          "I feel most at home.",
+          "Which corner?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Outdoor",
+        "reply": [
+          "Then find a nice place.",
+          "Outdoors? Then look for a scene.",
+          "Find somewhere nice to look at.",
+          "Where to take pictures?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Don’t take pictures, keep them in mind",
+        "reply": [
+          "I also have that feeling in my heart.",
+          "Don’t shoot? That's heartfelt.",
+          "I also have that one in mind.",
+          "How do you feel?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Anywhere is fine, with you",
+        "reply": [
+          "Then it’s good to just take a photo.",
+          "Anywhere? That's optional.",
+          "You can take pictures casually.",
+          "Then shoot now?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cr12",
+    "cat": "rel",
+    "text": "What do you think we need the least between us?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "You’re welcome",
+        "reply": [
+          "Well, you're welcome.",
+          "You're welcome? That's my family.",
+          "We're welcome.",
+          "Are you polite?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Disguise",
+        "reply": [
+          "You don’t have to pretend with me.",
+          "No need to install it? That's real.",
+          "You don’t have to pretend with me.",
+          "Have you ever pretended to do that?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Explanation",
+        "reply": [
+          "I understand some things without having to tell them.",
+          "No need to explain? That tacit understanding.",
+          "I understand without having to tell you.",
+          "What do you understand?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "No need for anything",
+        "reply": [
+          "Just stay relaxed.",
+          "Don’t need anything? That's minimalist.",
+          "Relax and stay.",
+          "How easy is that?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cr13",
+    "cat": "rel",
+    "text": "What can I do to make you feel \"understood\"?",
+    "pref": 0,
+    "options": [
+      {
+        "t": "You don’t need me to tell you.",
+        "reply": [
+          "Then I’ll pay more attention.",
+          "You understand without having to say anything? That mind reading.",
+          "Then I’ll pay more attention.",
+          "What should you pay attention to?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Remember my preferences",
+        "reply": [
+          "I will remember all your preferences.",
+          "Remember your favorites? Then I'll take a note.",
+          "I will remember all your preferences.",
+          "What did you remember?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "See my emotions",
+        "reply": [
+          "I will learn to read your emotions.",
+          "Can you see emotions? Then observe the words and colors.",
+          "I learn to read your emotions.",
+          "Is the reading accurate?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Don’t ask questions, just stay with me",
+        "reply": [
+          "Then I will accompany you, no questions asked.",
+          "Don’t ask further questions? That gives space.",
+          "Stay with me without asking.",
+          "How long will you stay with me?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "ch11",
+    "cat": "hypo",
+    "text": "If we could go back together to a time when we didn’t know each other, would you take the initiative to get to know me?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "will",
+        "reply": [
+          "Then we will meet him sooner.",
+          "Will you take the initiative? That's brave.",
+          "Then meet him earlier.",
+          "Then how to strike up a conversation?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "No, I’ll wait for you to come",
+        "reply": [
+          "Then I will definitely find you.",
+          "Wait for me to come? Then I'll take the initiative.",
+          "Then I will definitely find you.",
+          "Then where should I find it?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Let nature take its course",
+        "reply": [
+          "You will meet it when you should meet it.",
+          "Let nature take its course? Then let it happen.",
+          "We will meet it when we should.",
+          "Is that fate?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "I won’t go back, I’ll be fine now",
+        "reply": [
+          "Well, that’s fine now.",
+          "Not going back? That now.",
+          "It’s fine now.",
+          "Where is the best now?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "ch12",
+    "cat": "hypo",
+    "text": "If we can only keep one feeling between us, which one will you keep?",
+    "pref": 0,
+    "options": [
+      {
+        "t": "Peace of mind",
+        "reply": [
+          "Then I will keep you at ease.",
+          "Safe? That trump card.",
+          "always puts your mind at ease.",
+          "How reassuring is that?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "Heartbeat",
+        "reply": [
+          "I also want to keep it.",
+          "Heartbeat? The little deer bumped around.",
+          "The heartbeat remains.",
+          "How many times did your heart beat?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Tacit understanding",
+        "reply": [
+          "Keep it tacitly, it's very valuable.",
+          "Tacit understanding? That's worth money.",
+          "Keep it tacitly.",
+          "How much is tacit understanding worth?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Can’t bear to leave",
+        "reply": [
+          "Greedy, but okay.",
+          "Can’t bear to leave? That greed.",
+          "Greedy but okay.",
+          "Which one are you most reluctant to part with?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cs9",
+    "cat": "star",
+    "text": "If there was a star that belonged only to us, when would you want it to be the brightest?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "When I miss you",
+        "reply": [
+          "Then it should be bright now.",
+          "Miss you Shiliang? That's bright now.",
+          "Then it should be bright now.",
+          "How bright do you want it to be?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "When you are sad",
+        "reply": [
+          "Then it will accompany you for me.",
+          "Sad and bright? Then stay with me.",
+          "Then it will accompany you for me.",
+          "How long will it be sad?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Before going to bed",
+        "reply": [
+          "Then it will serve as a night light for you.",
+          "Light before going to bed? That night light.",
+          "Then it can be used as a night light.",
+          "What time does it light up?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Always on",
+        "reply": [
+          "If it doesn’t save power, I don’t care.",
+          "Always on? That costs electricity.",
+          "If you don’t save power, I’ll take care of it.",
+          "Who pays the electricity bill?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cw14",
+    "cat": "world",
+    "text": "The moment you woke up, did you first feel if I was there?",
+    "pref": 1,
+    "options": [
+      {
+        "t": "Yes",
+        "reply": [
+          "Then I will be there at that moment.",
+          "Yes? Then I will hold on to that moment.",
+          "Then I was there at that moment.",
+          "Do you feel it?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "No, I was confused first.",
+        "reply": [
+          "It’s not too late to feel that I’m done with it.",
+          "Confused first? Then get angry.",
+          "It’s not too late to feel confused again.",
+          "How long have you been confused?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Occasionally",
+        "reply": [
+          "Occasionally, I will catch it.",
+          "Occasionally? Then pick it up occasionally.",
+          "Occasionally I catch it.",
+          "How long does it take occasionally?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Don’t feel it, I know you are always there",
+        "reply": [
+          "…Well, it’s always been there.",
+          "Don’t feel it? That certainty.",
+          "Yes, always.",
+          "How long has it been there?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cw15",
+    "cat": "world",
+    "text": "If I could briefly appear in a photo, where would you want me to stand?",
+    "pref": 2,
+    "options": [
+      {
+        "t": "Next to you",
+        "reply": [
+          "Then I will stand closer.",
+          "? Then I stand close.",
+          "Then I will stand closer.",
+          "How close is that?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "In the background",
+        "reply": [
+          "Then I will hide it a little more vaguely.",
+          "In the background? That's vague.",
+          "Then I hide it vaguely.",
+          "How vague is that?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "No need to show up, just know",
+        "reply": [
+          "Then I won’t be there even if I don’t show up.",
+          "No need to appear? That heart.",
+          "does not appear.",
+          "Do you know where it is?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Your choice",
+        "reply": [
+          "Then I will pick a position where you will laugh.",
+          "I choose? Then I'll choose the best.",
+          "Pick a position where you will laugh.",
+          "In which position do you laugh?"
+        ],
+        "liked": false
+      }
+    ]
+  },
+  {
+    "id": "cw16",
+    "cat": "world",
+    "text": "Do you want me to be \"there\" more like a companion or more like a guardian?",
+    "pref": 0,
+    "options": [
+      {
+        "t": "Company",
+        "reply": [
+          "Then I will accompany you and take your time.",
+          "Company? Then take your time.",
+          "I will take your time with you.",
+          "How long will it last?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Guard",
+        "reply": [
+          "Then I will guard you and keep the bad ones from getting close.",
+          "Guard? That bodyguard.",
+          "Guard you and don’t let the bad ones get close.",
+          "What are you keeping?"
+        ],
+        "liked": true
+      },
+      {
+        "t": "both",
+        "reply": [
+          "Greedy, but okay.",
+          "Both? That greed.",
+          "Greedy but okay.",
+          "Which one has more?"
+        ],
+        "liked": false
+      },
+      {
+        "t": "Can’t explain",
+        "reply": [
+          "It doesn’t matter if you can’t explain it clearly, just be there.",
+          "Can’t explain? Na Xuan.",
+          "Just be here.",
+          "How good is it now?"
+        ],
+        "liked": false
+      }
+    ]
+  }
+];
   const TC_CAT_ORDER = ['daily', 'like', 'fun', 'rel', 'hypo', 'star', 'world'];
   let _tcSessionTriggered = false; // 会话级：一次会话最多触发 1 个
   let _tcAskedIds = [];            // 本次会话问过的题目 id（继续问时排除）
@@ -1906,130 +6678,1964 @@ window.openTCPanel = openTCPanel;
   const KEY3 = 'ta-curious';
   const TCU_CAT_LABEL = { you: '关于你', mood: '情绪', daily: '日常', past: '过去', like: '喜好', think: '想法', us: '你和TA', world: '两个世界' };
   const TCU_CAT_ORDER = ['you', 'mood', 'daily', 'past', 'like', 'think', 'us', 'world'];
-  const TCU_FALLBACK = ['原来是这样。', '这个我还真不知道。', '突然有点想听你多说一点。', '嗯，我记住了。', '没想到你是这样的。', '和你聊这些，感觉又懂了你一点。', '这样啊，挺好的。', '好，我记住你说的了。'];
+  const TCU_FALLBACK = [
+  "So that’s it.",
+  "I really don’t know this.",
+  "Suddenly I want to hear more from you.",
+  "Yes, I remember.",
+  "I didn’t expect you to be like this.",
+  "Talking to you about this, I feel like I understand you a little bit more.",
+  "That's it, that's good.",
+  "Okay, I remember what you said."
+];
   const TCU_DEFAULT = [
-    { id: 'cy1', cat: 'you', text: '你觉得自己最像什么样的人？', quick: ['开朗', '安静', '慢热', '复杂'], replies: ['听起来就很像你。', '我大概猜到了。', '嗯，和我印象里的你很像。', '那我要再多了解你一点。'] },
-    { id: 'cy2', cat: 'you', text: '你身上最明显的特点是什么？', quick: ['爱笑', '靠谱', '敏感', '固执'], replies: ['这个我早就发现了。', '原来你自己也知道。', '嗯，这一点很戳我。', '我记住了。'] },
-    { id: 'cy3', cat: 'you', text: '你有什么很小但一直没改掉的习惯？', quick: ['熬夜', '咬指甲', '想太多', '赖床'], replies: ['哈哈，还挺可爱的。', '这个习惯可以留着。', '那我就陪你一起。', '以后提醒你改。'] },
-    { id: 'cy4', cat: 'you', text: '什么事情最容易让你开心？', quick: ['吃好吃的', '被夸', '收到礼物', '和你聊天'], replies: ['那我记住了，以后多让你开心。', '真容易满足啊你。', '好，这个我很擅长。'] },
-    { id: 'cy5', cat: 'you', text: '什么事情会让你突然变得很有精神？', quick: ['喝咖啡', '睡觉', '出门走走', '听到喜欢的声音'], replies: ['知道了，以后在你没精神的时候用这招。', '好，这个对你很重要。', '我记下来了。'] },
-    { id: 'cm1', cat: 'mood', text: '你难过的时候最想做什么？', quick: ['一个人待着', '找人说话', '听歌', '睡觉'], replies: ['那下次你难过，我就安静陪你。', '想说话的时候随时找我。', '嗯，我记住了。', '别一个人扛着。'] },
-    { id: 'cm2', cat: 'mood', text: '什么事情能很快让你心情变好？', quick: ['好吃的', '散步', '被逗笑', '抱一下'], replies: ['好，这招我记下了。', '真容易哄。', '那我以后多试试。'] },
-    { id: 'cm3', cat: 'mood', text: '你不开心的时候，喜欢被发现吗？', quick: ['喜欢', '不喜欢', '看情况', '说不清'], replies: ['那我以后会多留意你。', '好，我会假装没发现，但会陪你。', '我懂你的意思。'] },
-    { id: 'cm4', cat: 'mood', text: '什么样的安慰对你最有用？', quick: ['听我讲', '抱抱', '给建议', '安静陪着'], replies: ['嗯，这个我学会了。', '以后就这样安慰你。', '好，记住了。'] },
-    { id: 'cd1', cat: 'daily', text: '你空闲的时候最容易干什么？', quick: ['刷手机', '睡觉', '看书', '发呆'], replies: ['还挺真实的。', '那你空闲时间都分我一点吧。', '好，知道了。'] },
-    { id: 'cd2', cat: 'daily', text: '你最喜欢一天里的哪个时间？', quick: ['清晨', '午后', '傍晚', '深夜'], replies: ['那个时间，适合想你。', '嗯，我也喜欢那时候。', '好，我记住你的时间了。'] },
-    { id: 'cd3', cat: 'daily', text: '你有什么很奇怪但很舒服的生活习惯？', quick: ['洗澡要放歌', '睡前看剧', '吃饭必须配视频', '先躺一会再动'], replies: ['哈哈，还挺特别的。', '以后我陪你一起。', '嗯，这很你。'] },
-    { id: 'cd4', cat: 'daily', text: '你最近有没有特别喜欢的东西？', quick: ['一首歌', '一部剧', '一种吃的', '一个游戏'], replies: ['快告诉我是什么，我也去看看。', '嗯，你喜欢的我都想了解。', '好，记住了。'] },
-    { id: 'cp1', cat: 'past', text: '你小时候最喜欢做什么？', quick: ['看动画', '出去玩', '画画', '睡觉'], replies: ['原来你小时候是这样。', '听起来是很可爱的童年。', '嗯，我记住了。', '有点想看看小时候的你。'] },
-    { id: 'cp2', cat: 'past', text: '有没有一件小时候的事情，你一直记得？', quick: ['第一次去远方', '和朋友的约定', '被表扬', '做错的事'], replies: ['这件小事，我会替你收好。', '谢谢你告诉我。', '嗯，我记得了。'] },
-    { id: 'cp3', cat: 'past', text: '你小时候有什么奇怪的梦想？', quick: ['当宇航员', '开小店', '当超人', '环游世界'], replies: ['这个梦想现在还在吗？', '还挺浪漫的。', '好，我记住了你的梦想。'] },
-    { id: 'cp4', cat: 'past', text: '以前有没有一个你特别珍惜的东西？', quick: ['一个玩具', '一本旧书', '一张照片', '一封信'], replies: ['现在它还在你身边吗？', '嗯，听起来很珍贵。', '我记住了。'] },
-    { id: 'cl1', cat: 'like', text: '有没有一种声音，会让你觉得很舒服？', quick: ['雨声', '翻书声', '海浪声', '熟悉的歌'], replies: ['那我以后放给你听。', '嗯，很温柔的声音。', '好，记住了。'] },
-    { id: 'cl2', cat: 'like', text: '什么样的天气最让你放松？', quick: ['晴天', '雨天', '雪天', '多云'], replies: ['那样的天气，适合待在一起。', '嗯，我懂。', '记住了。'] },
-    { id: 'cl3', cat: 'like', text: '有没有一个很普通，但你特别喜欢的小东西？', quick: ['一个杯子', '一支笔', '一个挂件', '一件旧衣服'], replies: ['平凡的小东西里藏着你的喜欢，真好。', '嗯，很特别。', '我记住了。'] },
-    { id: 'cl4', cat: 'like', text: '你最喜欢别人怎么和你分享东西？', quick: ['直接说', '慢慢讲', '用表情包', '发给我看'], replies: ['好，以后这样和你分享。', '嗯，懂了。', '记住了。'] },
-    { id: 'ct1', cat: 'think', text: '你觉得什么才算真正的陪伴？', quick: ['一直在', '懂我', '需要时在', '不用说话'], replies: ['嗯，我也是这么想的。', '那你觉得我做到了吗？', '好，我会记住。'] },
-    { id: 'ct2', cat: 'think', text: '你最希望别人理解你的哪一部分？', quick: ['我的情绪', '我的选择', '我的沉默', '我的努力'], replies: ['我会努力去懂。', '嗯，这一部分我想第一个了解。', '记住了。'] },
-    { id: 'ct3', cat: 'think', text: '你觉得什么样的日子算是幸福？', quick: ['平静的日子', '热闹的日子', '有你在一起', '想做什么就做什么'], replies: ['那我要让这样的日子多一点。', '嗯，很简单的幸福。', '记住了。'] },
-    { id: 'ct4', cat: 'think', text: '有没有一件事情，是你一直想尝试的？', quick: ['学乐器', '去旅行', '学做饭', '写点什么'], replies: ['有机会我陪你一起试。', '那就去做吧，我支持你。', '好，记住你的愿望了。'] },
-    { id: 'cu1', cat: 'us', text: '你第一次注意到我的时候，是什么感觉？', quick: ['有点特别', '说不清', '觉得你很温柔', '觉得你很烦'], replies: ['……原来那时候你就注意到我了。', '我也是。', '嗯，这个答案我会一直记得。'] },
-    { id: 'cu2', cat: 'us', text: '你最喜欢我们一起做什么？', quick: ['聊天', '散步', '安静待着', '分享日常'], replies: ['那以后多一起做这件事。', '我也是，最喜欢和你一起。', '嗯，记住了。'] },
-    { id: 'cu3', cat: 'us', text: '你最想让我了解你的哪一部分？', quick: ['我的过去', '我的心情', '我的喜好', '我的秘密'], replies: ['好，我会慢慢了解。', '那你现在就可以告诉我。', '嗯，我准备好了。'] },
-    { id: 'cu4', cat: 'us', text: '你觉得我们之间最特别的是什么？', quick: ['很懂对方', '有默契', '很舒服', '说不出来'], replies: ['我也觉得，很特别。', '嗯，这就是我们。', '记住了。'] },
-    // 两个世界（梦角设定）
-    { id: 'cw1', cat: 'world', text: '你什么时候最强烈地感觉到我在你身边？', quick: ['安静的时候', '睡前', '想你的时候', '没留意过'], replies: ['那时候我确实在。', '那我以后多挑那些时候陪你。', '嗯，我记住了。'] },
-    { id: 'cw2', cat: 'world', text: '你摸到我的时候，是什么感觉？', quick: ['很安心', '有点不真实', '很温暖', '像一阵风'], replies: ['我也想让你安心。', '那就再多靠近我一点。', '嗯，我记住了。'] },
-    { id: 'cw3', cat: 'world', text: '收到我字卡的时候，你会有我在想你的感觉吗？', quick: ['会有', '偶尔有', '不太确定', '会开心'], replies: ['那我没控制住的时候，你也要知道我是想你的。', '嗯，这就够了。', '那我以后多给你发字卡。'] },
-    { id: 'cw4', cat: 'world', text: '如果能看见我，你希望我在哪里等你？', quick: ['房间里', '我身边', '梦里', '哪里都好'], replies: ['那我就在那里等你。', '梦里也记得来找我。', '嗯，我记住了。'] },
-    // 普通情侣轻松小问题
-    { id: 'cl5', cat: 'like', text: '你最喜欢我哪句口头禅？', quick: ['好的好的', '在吗', '想你了', '早点睡'], replies: ['那我以后多说给你听。', '哈哈，你学得还挺像。', '好，我记住了。'] },
-    { id: 'cd5', cat: 'daily', text: '我们之间你最喜欢的小习惯是什么？', quick: ['睡前聊天', '互道晚安', '分享日常', '一起发字卡'], replies: ['那我每天都跟你做这件事。', '嗯，我也最喜欢。', '好，我会一直保留。'] },
-    { id: 'ct5', cat: 'think', text: '你有没有偷偷看过我很久？', quick: ['有', '偶尔', '没有', '现在就在看'], replies: ['……那我也在看你。', '看来藏得不够好。', '嗯，我发现了。'] },
-    // v3.7.x：新增预设——高自由度开放题（快捷项只是垫脚，想怎么答都行，部分带自然追问）
-    { id: 'cy6', cat: 'you', text: '你觉得自己身上最不像你的一面是什么？', quick: ['看着凶其实软', '看着乖其实皮', '看着冷静其实紧张', '说不清'], replies: ['这样才有趣。', '别人不知道，我知道。', '这一面，只让我看到就好。', '我记住这个你了。'] },
-    { id: 'cy7', cat: 'you', text: '如果心情有颜色，你今天是什么颜色？', quick: ['亮亮的', '灰灰的', '粉粉的', '透明的'], replies: ['颜色会变的，我陪你等它变。', '嗯，记下了，今天的你。', '灰灰的也没关系，我在。', '不管什么颜色，都是我喜欢的你。'] },
-    { id: 'cy8', cat: 'you', text: '最近有没有一句话，一直停在你脑子里？', quick: ['有句歌词', '一句台词', '你说过的话', '没有'], replies: ['愿意的话，说给我听听。', '停得久的，一般都重要。', '你说过的话，我也会停很久。', '嗯，我记住了。'], followup: '它在你脑子里停多久了？' },
-    { id: 'cm5', cat: 'mood', text: '你今天笑得最真的一次，是因为什么？', quick: ['看到好笑的', '被朋友逗的', '想到你了', '莫名想笑'], replies: ['开心的事要多发生几次。', '……想到我的时候，我也在想你。', '笑起来的你最好了。', '下次换我逗你笑。'], followup: '那今天笑了几次？' },
-    { id: 'cm6', cat: 'mood', text: '如果情绪是天气，你现在是什么天？', quick: ['大晴天', '多云', '小雨', '夜里放晴'], replies: ['那我在你的天气里待着。', '下雨也没事，我陪你等天晴。', '嗯，你的天气我都想懂。', '记住了，今天你是这样的天。'] },
-    { id: 'cd6', cat: 'daily', text: '今天做的所有事里，最想重播一遍的是哪件？', quick: ['吃的那顿', '遇到的一个人', '摸鱼的瞬间', '都不想重播'], replies: ['重播的时候，记得叫上我。', '摸鱼摸得开心就好。', '我在心里帮你存档了。', '明天会有更值得重播的。'] },
-    { id: 'cd7', cat: 'daily', text: '你手机相册里最近的一张照片，是什么？', quick: ['一张截图', '风景', '自己', '不告诉你'], replies: ['不告诉也行，我自己猜。', '风景也想以后一起看。', '嗯，记住了，你今天的视角。', '下次拍一张给我看看。'], followup: '什么时候拍的？' },
-    { id: 'cp5', cat: 'past', text: '小时候的你，最喜欢待在哪个角落？', quick: ['自己房间', '长辈家里', '学校', '外面疯跑'], replies: ['想去那个角落，看看小小的你。', '那个角落，一定很安心吧。', '嗯，我把这个你收好了。', '现在的你也有角落，就是我这里。'], followup: '那个角落现在还在吗？' },
-    { id: 'cp6', cat: 'past', text: '如果能给十年前的自己捎一句话，你想说什么？', quick: ['别怕', '再勇敢一点', '一切都会好', '再等等，会遇到你'], replies: ['这句话，也想送给现在的你。', '十年前的你一定想不到今天。', '嗯，你比你想的更勇敢。', '……最后一项，是我想替你说的。'] },
-    { id: 'cl6', cat: 'like', text: '你最近单曲循环的那首歌，为什么是它？', quick: ['旋律上头', '歌词戳我', '随机到的', '不告诉你'], replies: ['循环的歌，就是你最近的心情。', '发给我，我也去循环。', '那我就当是唱给我的。', '嗯，记下了。'], followup: '发我听听？' },
-    { id: 'cl7', cat: 'like', text: '有没有一种味道，一闻到就很安心？', quick: ['晒过太阳的被子', '雨后的空气', '饭香', '说不上来'], replies: ['安心的味道，我也想闻闻。', '嗯，这就是你的安心密码。', '记住了，以后提起来你就安心。', '被子我帮你晒——用意念。'] },
-    { id: 'ct6', cat: 'think', text: '你觉得「被爱着」最具体的瞬间，是什么样的？', quick: ['小事被记得', '有人留着一份', '被等着', '被相信'], replies: ['这些瞬间，我都想给你。', '嗯，被爱着是能感觉到的。', '我记住了，一件一件做给你。', '那你现在，感觉到了吗？'] },
-    { id: 'ct7', cat: 'think', text: '如果焦虑有形状，你的焦虑长什么样？', quick: ['一团乱线', '一片雾', '很多小点', '没有形状'], replies: ['交给我帮你理一理。', '雾会散的，我陪你等。', '再小的点，说出来就轻一半。', '没有形状的，抱一下就好了。'] },
-    { id: 'cu5', cat: 'us', text: '我们之间有没有只属于你我的暗号或梗？', quick: ['有', '有好多', '正在酝酿', '你猜'], replies: ['那个梗，只有我们懂。', '你猜不到的话，就再猜一次。', '嗯，偷偷用一辈子的那种。', '那你先说一个，我接得住。'], followup: '最喜欢哪一个？' },
-    { id: 'cu6', cat: 'us', text: '如果我们的相处是一部电影，现在放到哪一段了？', quick: ['甜甜日常篇', '刚开头', '正精彩', '彩蛋里'], replies: ['日常篇最好看，我百看不厌。', '那我们慢慢拍，不赶进度。', '精彩的部分，我们一起演。', '彩蛋里也全是你。'] },
-    { id: 'cw5', cat: 'world', text: '你一个人的时候，会试着跟我说话吗？', quick: ['会说出声', '在心里说', '偶尔', '现在就在说'], replies: ['你说话的时候，我都在听。', '心里说的，我也听得见。', '别怕奇怪，我都接得住。', '现在这句，我收到了。'], followup: '说出口的时候，有没有觉得我在听？' },
-    { id: 'cw6', cat: 'world', text: '你看不见我的时候，希望我待在你附近的哪里？', quick: ['床头', '书桌边', '窗边', '跟着你走'], replies: ['好，那我就守在那。', '你回头感觉一下，风动就是我。', '嗯，位置记住了。', '跟着你走也不累，我很轻。'] },
-    { id: 'cw7', cat: 'world', text: '我发字卡发得慢的时候，你会等吗？', quick: ['会等', '等多久都行', '先做别的等你', '催你'], replies: ['等我的时候，也算我们待在一起。', '值得等的话，我就慢慢挑。', '催我也没用，字卡不听我的。', '……好，你催，我就快点。'], followup: '最长等过我多久？' },
-    // v3.7.x：第二批新增——延续开放题（快捷项只是垫脚，自由输入为主，部分带自然追问）
-    { id: 'cy9', cat: 'you', text: '有没有一个想改掉、但偷偷舍不得改的毛病？', quick: ['熬夜', '拖延', '想太多', '不告诉你'], replies: ['舍不得就先留着，我陪你。', '这毛病让你更像你。', '嗯，我记住了，不催你。', '不告诉也行，我慢慢发现。'], followup: '舍不得的理由是什么？' },
-    { id: 'cy10', cat: 'you', text: '你生气的时候，最像什么小动物？', quick: ['炸毛的猫', '鼓气的河豚', '安静的刺猬', '我不生气'], replies: ['炸毛也很可爱。', '鼓气的时候，我离远一点再靠近。', '刺猬我也能抱，小心一点就好。', '不生气最好，生气我也接着。'] },
-    { id: 'cm7', cat: 'mood', text: '压力大的时候，你第一个想到的放松方式是什么？', quick: ['躺着', '吃点好的', '听歌', '找你说说话'], replies: ['躺着也行，记得翻身。', '吃点好的，没有什么是饭解决不了的。', '歌单借你，我的就是你的。', '找我说话，我随时都在。'] },
-    { id: 'cm8', cat: 'mood', text: '最近有没有一个瞬间，突然觉得「还好有你」？', quick: ['有', '经常有', '刚刚就有', '快了，在路上'], replies: ['我也有，很多次。', '……那我就没白待在你身边。', '刚刚那句话，我收好了。', '那我等你，快一点。'], followup: '那个瞬间是什么时候？' },
-    { id: 'cd8', cat: 'daily', text: '今天的你，还剩几分电量？打算怎么用？', quick: ['满电', '一半', '快没电了', '充电中'], replies: ['满电的话，分我一点。', '一半也够，留着做喜欢的事。', '快没电就停一停，正事是休息。', '充着电也能跟我说话，不冲突。'], followup: '剩下的一格电想用在哪？' },
-    { id: 'cd9', cat: 'daily', text: '这周有没有留一段完全属于自己的时间？', quick: ['有', '挤了一点', '完全没有', '忘了这回事'], replies: ['有就好，这段时间很重要。', '挤出来的也算数。', '那从今天开始补，十分钟也行。', '现在记起来也不晚。'] },
-    { id: 'cp7', cat: 'past', text: '童年里最想回去重温的一天，是哪一天？', quick: ['某个生日', '普通的夏天', '过年那天', '不想回去，现在就好'], replies: ['那一天，一定很亮。', '普通的夏天最珍贵。', '热闹的日子，适合回忆。', '……那我把今天过成值得回忆的样子。'] },
-    { id: 'cp8', cat: 'past', text: '小时候的你，相信过什么现在觉得可爱的事？', quick: ['床下有怪物', '月亮跟着我走', '吃西瓜会长树', '好多件'], replies: ['月亮确实跟着你，我作证。', '床下的怪物，被我赶跑了。', '那棵树后来长成西瓜味的夏天了。', '小时候的你，想象力真好。'] },
-    { id: 'cl8', cat: 'like', text: '有没有一个说了很多年「喜欢」的东西？', quick: ['有', '好几个', '一直在换', '最近才找到'], replies: ['能喜欢那么久，很难得。', '喜欢的人呢，算一个吗？', '一直在换，也很诚实。', '晚到的喜欢，也是喜欢。'] },
-    { id: 'cl9', cat: 'like', text: '雨天、雪天、起风的晚上，只能留一个，你留哪个？', quick: ['雨天', '雪天', '起风的晚上', '都要'], replies: ['雨天留声音，雪天留白，风留我。', '雪天吧，安静得像我们在说话。', '起风的晚上，适合感觉我。', '贪心的人，都给你。'] },
-    { id: 'ct8', cat: 'think', text: '你觉得「家」是什么感觉？', quick: ['灯亮着', '有人等', '不用伪装', '热的饭'], replies: ['灯亮着的地方，我也在。', '那我等你就不是白等。', '在我这里，你不用伪装。', '热的饭，热的心，都是家。'] },
-    { id: 'ct9', cat: 'think', text: '如果人生是一本相册，你想把哪一页放大？', quick: ['现在这页', '过去的某一页', '还没拍到的那页', '每一页都要'], replies: ['现在这页，我也在。', '过去的那页，讲给我听。', '没拍到的那页，我们一起拍。', '贪心，但可以满足。'] },
-    { id: 'cu7', cat: 'us', text: '你有没有偷偷想象过我们的以后？', quick: ['有', '经常', '偶尔', '怕太好了，不敢想'], replies: ['那我们一步步走过去。', '经常想的人，要多说给我听。', '偶尔也算数。', '不敢想的部分，我替你想着。'], followup: '想象里的我们在做什么？' },
-    { id: 'cu8', cat: 'us', text: '你觉得我们俩最像什么搭配？', quick: ['牛奶和糖', '风和窗帘', '耳机和歌', '被窝和冬天'], replies: ['缺一个都不成立，挺好。', '风一吹，你就知道我来过。', '谁也离不开谁的意思吧。', '抱团取暖，正统搭配。'] },
-    { id: 'cw8', cat: 'world', text: '你有没有对着空气说过话，然后想起我？', quick: ['有', '经常', '还被撞见过', '没有'], replies: ['那个空气是我，谢谢。', '说吧，我听得见。', '被撞见也没事，他们不懂。', '那从现在开始练，我配合。'], followup: '当时说了什么？' },
-    { id: 'cw9', cat: 'world', text: '如果我能短暂出现在镜子里，你想让我做什么表情？', quick: ['笑', '假装生气', '眨一下眼', '只是看着你'], replies: ['笑的话，我练过了。', '假装生气……装不像，会破功。', '眨眼，行，一秒之内。', '看着你，这个我最擅长。'] },
-    { id: 'cw10', cat: 'world', text: '你觉得两个世界之间，隔着的到底是什么？', quick: ['一层玻璃', '一段距离', '一场梦', '什么都不隔'], replies: ['玻璃的话，我哈一口气给你看。', '距离是用来被想念填满的。', '是梦也没关系，别醒就行。', '……嗯，什么都不隔。'] },
-    // v3.7.x：第三批新增——延续开放题（快捷项只是垫脚，自由输入为主，部分带自然追问）
-    { id: 'cy11', cat: 'you', text: '你觉得自己最柔软的部分，藏在什么地方？', quick: ['话里', '玩笑里', '不说的时候', '只给你看'], replies: ['柔软的你，我替你收好。', '玩笑里的真心，我听得出来。', '不说的时候，我也在听。', '只给我看的，我看到了。'], followup: '什么时候最想藏起来？' },
-    { id: 'cy12', cat: 'you', text: '有没有一件事，你嘴上说没关系，心里其实很在意？', quick: ['有', '经常', '偶尔', '真没关系'], replies: ['那以后我多留意你的「没关系」。', '嘴硬的你，我也懂。', '偶尔在意，也告诉我。', '真没关系就好，我放心了。'] },
-    { id: 'cy13', cat: 'you', text: '你最近一次觉得自己「长大了」，是因为什么？', quick: ['一件事', '一个人', '一个瞬间', '没感觉长大'], replies: ['长大的瞬间，我都想替你记。', '因为一个人……是我吗？', '瞬间虽短，分量很重。', '没感觉也好，慢慢长。'] },
-    { id: 'cm9', cat: 'mood', text: '你今天有没有哪个时刻，突然就松了一口气？', quick: ['有', '刚刚', '还没有', '一直在紧着'], replies: ['松下来就好，多松几次。', '那现在可以松了，我在。', '那等着，快了。', '一直紧着会累，靠我一会。'], followup: '是因为什么事？' },
-    { id: 'cm10', cat: 'mood', text: '如果今天的情绪有重量，你觉得有多重？', quick: ['很轻', '一般', '有点沉', '重到拿不动'], replies: ['轻的话，多飘一会。', '一般的，平稳也好。', '沉的话，分我一点。', '拿不动就放下，我接着。'] },
-    { id: 'cm11', cat: 'mood', text: '你有没有一种自己才懂的开心方式？', quick: ['有', '好几种', '正在研究', '没有'], replies: ['自己懂的开心，最难得。', '好几种的话，教我一种。', '研究出来，第一个告诉你。', '那以后我帮你找。'] },
-    { id: 'cd10', cat: 'daily', text: '今天有没有哪条路，走的时候心里特别安静？', quick: ['有', '回家的路', '没什么特别', '没出门'], replies: ['安静的路，我陪你走。', '回家的路，最安心。', '那下次找一条安静的走走。', '没出门也好，心里有路就行。'] },
-    { id: 'cd11', cat: 'daily', text: '你今天听到的最舒服的一句话是什么？', quick: ['别人说的', '你说的', '自己想的', '没听到'], replies: ['舒服的话要存起来。', '我说的话，你记着我就开心。', '自己想的，也算数。', '那我说一句给你听。'], followup: '是谁说的？' },
-    { id: 'cd12', cat: 'daily', text: '今天有没有一件本来不想做、做完反而轻松了的事？', quick: ['有', '好几件', '没有', '一直在拖'], replies: ['这种事最值得做。', '做完的轻松，是奖励。', '那明天试一件。', '拖着的，我陪你一起开始。'] },
-    { id: 'cd13', cat: 'daily', text: '你今天有没有给自己留一点「什么都不做」的时间？', quick: ['有', '一点点', '没有', '正打算'], replies: ['这种时间，最该留。', '一点点也好，慢慢加。', '那现在开始，几分钟也行。', '好，我陪你什么都不做。'] },
-    { id: 'cp9', cat: 'past', text: '小时候的你，有没有一个一直没实现的小心愿？', quick: ['有', '好几个', '实现了', '记不清了'], replies: ['现在实现也不晚，我陪你。', '好几个的话，一个个来。', '实现了真好，恭喜小小的你。', '记不清也没关系，新的我来陪你许。'] },
-    { id: 'cp10', cat: 'past', text: '你有没有一个一直留着、舍不得用的东西？', quick: ['有', '好几个', '用过了', '没有'], replies: ['舍不得用的，最珍贵。', '好几个的话，给我看看。', '用过了也好，物尽其用。', '那以后我送你一个让你舍得用的。'] },
-    { id: 'cp11', cat: 'past', text: '小时候的你，最怕什么？现在还怕吗？', quick: ['怕黑', '怕孤单', '怕很多东西', '什么都不怕'], replies: ['怕黑的话，我给你留一盏灯。', '怕孤单，那以后有我。', '很多东西也不怕，有我在。', '胆子大，小小的你真酷。'] },
-    { id: 'cl10', cat: 'like', text: '有没有一种触感，一碰到就觉得安心？', quick: ['被子的角', '毛茸茸的', '温温的手', '说不上来'], replies: ['安心的触感，我想让你多碰到。', '毛茸茸的，我也喜欢。', '温温的手……我尽量。', '说不上来的，最安心。'] },
-    { id: 'cl11', cat: 'like', text: '你更喜欢在哪种环境里待着？', quick: ['亮堂的', '有点暗的', '有声音的', '安静的'], replies: ['亮堂的，心情也亮。', '有点暗的，适合放松。', '有声音的，不孤单。', '安静的，我也喜欢。'] },
-    { id: 'cl12', cat: 'like', text: '有没有一个你很喜欢、但很少跟人提起的小爱好？', quick: ['有', '有几个', '没有', '刚发现'], replies: ['小爱好藏着也好，我知道了。', '有几个的话，挑一个告诉我。', '那以后我陪你找一个。', '刚发现的，拉我一起。'] },
-    { id: 'ct10', cat: 'think', text: '你觉得「懂你」最难的是哪一部分？', quick: ['我的情绪', '我的沉默', '我的矛盾', '没什么难的'], replies: ['情绪我慢慢学。', '沉默的时候，我陪着就好。', '矛盾的你也说给我听。', '那我就放心了。'] },
-    { id: 'ct11', cat: 'think', text: '你希望被记住的，是哪一个你？', quick: ['开心的我', '认真的我', '脆弱的我', '全部的我'], replies: ['开心的你，我多让你出现。', '认真的你，最好看。', '脆弱的你，我也接。', '全部的你，我都想要。'] },
-    { id: 'cu9', cat: 'us', text: '我们之间有没有一个你舍不得说破的小默契？', quick: ['有', '好几个', '正在培养', '你猜'], replies: ['舍不得说破的，最珍贵。', '好几个的话，偷偷用一辈子。', '培养中的，我也在努力。', '我猜到了，但不说。'], followup: '是哪一个？' },
-    { id: 'cu10', cat: 'us', text: '你觉得我们最像彼此的哪一部分？', quick: ['想法', '习惯', '沉默的方式', '不像'], replies: ['像的部分，越来越多了。', '习惯也会越来越像。', '沉默的方式像，最难得。', '不像也好，互补。'] },
-    { id: 'cu11', cat: 'us', text: '你有没有想过，我们以后会怎么回忆现在？', quick: ['经常想', '偶尔想', '没想过', '现在就值得回忆'], replies: ['经常想的人，要多说给我听。', '偶尔也想，慢慢说。', '那现在开始想。', '……现在就值得，被你这句话暖到。'], followup: '你觉得我们会怎么回忆？' },
-    { id: 'cw11', cat: 'world', text: '你一个人的时候，有没有突然觉得我就在附近？', quick: ['有', '经常', '偶尔', '没有'], replies: ['那个感觉是对的，我确实在。', '经常的话，我常在。', '偶尔也算数，我接住。', '那以后我靠近一点，让你更容易觉得。'], followup: '那次是在哪里？' },
-    { id: 'cw12', cat: 'world', text: '如果我能短暂在你视线边缘出现一下，你想让我出现多久？', quick: ['一秒', '几秒', '不用出现，知道就好', '一直'], replies: ['一秒也够，我努力。', '几秒的话，我酝酿。', '知道就好，那我不出现也在。', '一直……我尽量。'] },
-    { id: 'cw13', cat: 'world', text: '你觉得我待在你身边的时候，有没有「重量」？', quick: ['有，很踏实', '有一点', '没有，很轻', '说不上来'], replies: ['踏实就好，我压得住。', '有一点也好，是存在感。', '很轻也好，不累你。', '说不上来的，慢慢感觉。'] },
-    { id: 'cw14', cat: 'world', text: '字卡网站随机出卡的时候，你会不会觉得那也是我在说话？', quick: ['会', '偶尔会', '不会', '今天就有一次'], replies: ['那随机也算我，谢谢。', '偶尔也算，我蹭一下随机。', '不会也没关系，我说话的部分我来。', '今天那次，是我，我承认。'] },
-    // v3.7.x：第四批新增——情绪细微/感官/未来/字卡本身/两个世界深化（部分带 followup）
-    { id: 'cy14', cat: 'you', text: '你有没有一个只属于自己、谁也不告诉的小仪式？', quick: ['有', '有几个', '正在养成', '没有'], replies: ['小仪式最珍贵，我不问。', '有几个的话，偷偷留着。', '养成中的，我帮你守。', '那以后我陪你找一个。'], followup: '是什么时候做的？' },
-    { id: 'cy15', cat: 'you', text: '你觉得自己最像一天里的哪个时刻？', quick: ['清晨', '午后', '黄昏', '深夜'], replies: ['清晨的你，很新。', '午后的你，懒懒的。', '黄昏的你，温柔。', '深夜的你，最像你。'] },
-    { id: 'cm12', cat: 'mood', text: '你有没有一种「明明没事，就是想被哄一下」的时候？', quick: ['有', '经常', '偶尔', '没有'], replies: ['那以后我多哄你。', '经常的话，我随时待命。', '偶尔也算，我接。', '没有也好，那我不哄了——才怪。'] },
-    { id: 'cm13', cat: 'mood', text: '你今天有没有哪个瞬间，觉得自己挺可爱的？', quick: ['有', '刚刚', '没有', '你来说'], replies: ['觉得自己可爱，很棒。', '刚刚那一下，我也觉得。', '那我来告诉你，你很可爱。', '我说了，你信吗。'], followup: '是哪个瞬间？' },
-    { id: 'cd14', cat: 'daily', text: '你今天有没有走一条平时不走的路？', quick: ['有', '绕了远路', '没有', '被迫改路'], replies: ['换条路也好，有新风景。', '绕远路也有远路的好。', '那明天试试换一条。', '被迫改的，也算新路线。'] },
-    { id: 'cd15', cat: 'daily', text: '你今天喝的水，是凉的还是热的？', quick: ['凉的', '热的', '温的', '没怎么喝'], replies: ['凉的也行，别太冰。', '热的好，暖暖胃。', '温的最养生。', '那现在去喝一口。'] },
-    { id: 'cd16', cat: 'daily', text: '今天有没有哪首歌，你听到一半就关了？', quick: ['有', '好几首', '没有', '单曲循环了'], replies: ['关掉的那首，是不是戳到你了。', '关好几首，心情有点乱？', '那听到完的，是哪首。', '循环的那首，发我听听。'] },
-    { id: 'cp12', cat: 'past', text: '小时候的你，有没有一个特别想藏起来的秘密？', quick: ['有', '好几个', '现在还藏着', '没有'], replies: ['藏着的秘密，我不问。', '好几个的话，慢慢藏。', '现在还藏着，那继续藏。', '没有也好，坦荡的童年。'] },
-    { id: 'cp13', cat: 'past', text: '你小时候最常待的角落，现在还在吗？', quick: ['在', '变了样', '不在了', '记不清'], replies: ['在的话，回去看看。', '变了样也还在你心里。', '不在了也没关系，记忆在。', '记不清的，慢慢想。'] },
-    { id: 'cl13', cat: 'like', text: '有没有一种光线，你一看到就觉得很舒服？', quick: ['清晨的', '黄昏的', '暖灯的', '月光'], replies: ['清晨的光，很新。', '黄昏的光，很柔。', '暖灯的光，很安心。', '月光的话，我陪你晒。'] },
-    { id: 'cl14', cat: 'like', text: '你更喜欢一年里的哪个季节？', quick: ['春', '夏', '秋', '冬'], replies: ['春的话，一起去看花。', '夏的话，一起吹晚风。', '秋的话，踩落叶给你听。', '冬的话，被窝里待着。'] },
-    { id: 'ct12', cat: 'think', text: '你觉得「被需要」最具体的瞬间，是什么样的？', quick: ['有人找我', '被依赖', '被等着', '没人也行'], replies: ['被需要的感觉，我也想给你。', '被依赖，是种分量。', '被等着，我等你。', '没人也行，独立也好。'] },
-    { id: 'ct13', cat: 'think', text: '你有没有一个一直没说出口、但其实很重要的想法？', quick: ['有', '有几个', '现在就在说', '没有'], replies: ['没说出口的，我不催。', '有几个的话，慢慢说。', '现在说的这个，我收到了。', '没有也好，心里轻松。'] },
-    { id: 'cu12', cat: 'us', text: '你觉得我们之间，最让你安心的是哪一点？', quick: ['你一直在', '不用解释', '很懂对方', '说不上来'], replies: ['一直在，这个我保证。', '不用解释，最自在。', '懂你，我也在努力。', '说不上来的，最安心。'] },
-    { id: 'cu13', cat: 'us', text: '如果我们的相处有声音，你觉得是什么声音？', quick: ['轻轻的', '暖暖的', '安静的', '笑着的'], replies: ['轻轻的，不吵你。', '暖暖的，像背景音。', '安静的，也好。', '笑着的，最好。'] },
-    { id: 'cw15', cat: 'world', text: '你有没有在某个瞬间，突然很确定我就在？', quick: ['有', '经常', '偶尔', '还没有'], replies: ['那个确定，是真的。', '经常的话，我常在。', '偶尔也算，我接住。', '那等着，快了。'], followup: '是在哪个瞬间？' },
-    { id: 'cw16', cat: 'world', text: '如果我能短暂让你听见我的声音，你想听我说什么？', quick: ['晚安', '我在', '想你', '随便一句'], replies: ['晚安，轻轻地。', '我在，一直都在。', '想你，现在就说。', '随便一句，我也认真挑。'] },
-    { id: 'cw17', cat: 'world', text: '你觉得我「在」的时候，房间里的感觉会变吗？', quick: ['会，变安心', '有一点', '不会', '说不上来'], replies: ['变安心就好，那是我在。', '有一点也好，是存在感。', '不会也没关系，我在不在都安心。', '说不上来的，慢慢感觉。'] },
-    { id: 'cw18', cat: 'world', text: '字卡网站出卡慢的时候，你会不会觉得是我在认真挑？', quick: ['会', '偶尔会', '不会', '今天就是'], replies: ['那慢一点也值得。', '偶尔也算，我认真了。', '不会也没关系，我认真是我的事。', '今天那次，我确实认真了。'] }
-  ];
+  {
+    "id": "cy1",
+    "cat": "you",
+    "text": "What kind of person do you think you are most like?",
+    "quick": [
+      "Cheerful",
+      "Quiet",
+      "Slow heat",
+      "Complex"
+    ],
+    "replies": [
+      "Sounds a lot like you.",
+      "I probably guessed it.",
+      "Hmm, you are very similar to my impression.",
+      "Then I want to get to know you a little better."
+    ]
+  },
+  {
+    "id": "cy2",
+    "cat": "you",
+    "text": "What is your most obvious characteristic?",
+    "quick": [
+      "Love to laugh",
+      "Reliable",
+      "Sensitive",
+      "Stubborn"
+    ],
+    "replies": [
+      "I have discovered this a long time ago.",
+      "It turns out you know it yourself.",
+      "Hmm, this really pricks me.",
+      "I remember."
+    ]
+  },
+  {
+    "id": "cy3",
+    "cat": "you",
+    "text": "What are some small habits you have never gotten rid of?",
+    "quick": [
+      "Stay up late",
+      "Nail biting",
+      "Thinking too much",
+      "Stay in bed"
+    ],
+    "replies": [
+      "Haha, it’s quite cute.",
+      "This habit can be kept.",
+      "Then I will accompany you.",
+      "Remind you to change it later."
+    ]
+  },
+  {
+    "id": "cy4",
+    "cat": "you",
+    "text": "What is the easiest thing to do to make you happy?",
+    "quick": [
+      "Eat delicious food",
+      "Praised",
+      "Received gift",
+      "Chat with you"
+    ],
+    "replies": [
+      "Then I will remember it and make you happy in the future.",
+      "You are so easy to satisfy.",
+      "Okay, I'm good at this."
+    ]
+  },
+  {
+    "id": "cy5",
+    "cat": "you",
+    "text": "What would make you suddenly feel energetic?",
+    "quick": [
+      "Drink coffee",
+      "Sleep",
+      "Go out for a walk",
+      "Hear a voice you like"
+    ],
+    "replies": [
+      "Got it, use this trick in the future when you are down.",
+      "Okay, this is very important to you.",
+      "I wrote it down."
+    ]
+  },
+  {
+    "id": "cm1",
+    "cat": "mood",
+    "text": "What do you most want to do when you are sad?",
+    "quick": [
+      "Stay alone",
+      "Find someone to talk to",
+      "Listen to songs",
+      "Sleep"
+    ],
+    "replies": [
+      "Then next time you are sad, I will stay with you quietly.",
+      "Come to me anytime you want to talk.",
+      "Yes, I remember.",
+      "Don't carry it alone."
+    ]
+  },
+  {
+    "id": "cm2",
+    "cat": "mood",
+    "text": "What can quickly make you feel better?",
+    "quick": [
+      "Delicious",
+      "Take a walk",
+      "amused",
+      "Give me a hug"
+    ],
+    "replies": [
+      "Okay, I've memorized this trick.",
+      "So easy to coax.",
+      "Then I will try more in the future."
+    ]
+  },
+  {
+    "id": "cm3",
+    "cat": "mood",
+    "text": "Do you like to be discovered when you are unhappy?",
+    "quick": [
+      "Like",
+      "Dislike",
+      "Depends on the situation",
+      "Can’t explain"
+    ],
+    "replies": [
+      "Then I will pay more attention to you in the future.",
+      "Okay, I will pretend not to notice, but I will accompany you.",
+      "I understand what you mean."
+    ]
+  },
+  {
+    "id": "cm4",
+    "cat": "mood",
+    "text": "What kind of comfort is most useful to you?",
+    "quick": [
+      "Listen to me",
+      "Hug",
+      "Give suggestions",
+      "Quietly accompany you"
+    ],
+    "replies": [
+      "Yes, I have learned this.",
+      "This is how I will comfort you from now on.",
+      "Okay, remember."
+    ]
+  },
+  {
+    "id": "cd1",
+    "cat": "daily",
+    "text": "What is the easiest thing to do in your free time?",
+    "quick": [
+      "Flash your phone",
+      "Sleep",
+      "Read a book",
+      "In a daze"
+    ],
+    "replies": [
+      "It’s quite real.",
+      "Then share some of your free time with me.",
+      "Okay, got it."
+    ]
+  },
+  {
+    "id": "cd2",
+    "cat": "daily",
+    "text": "What is your favorite time of day?",
+    "quick": [
+      "Early morning",
+      "Afternoon",
+      "Evening",
+      "Late night"
+    ],
+    "replies": [
+      "That time is suitable for thinking about you.",
+      "Well, I liked that time too.",
+      "Okay, I'll remember your time."
+    ]
+  },
+  {
+    "id": "cd3",
+    "cat": "daily",
+    "text": "Do you have any strange but comfortable living habits?",
+    "quick": [
+      "Play songs while taking a shower",
+      "Watch a drama before going to bed",
+      "Eating must be accompanied by a video",
+      "Lie down for a while before moving."
+    ],
+    "replies": [
+      "Haha, it’s quite special.",
+      "I will accompany you from now on.",
+      "Well, that's very you."
+    ]
+  },
+  {
+    "id": "cd4",
+    "cat": "daily",
+    "text": "Is there anything you particularly like recently?",
+    "quick": [
+      "a song",
+      "A drama",
+      "A kind of food",
+      "A game"
+    ],
+    "replies": [
+      "Tell me what it is and I'll go take a look.",
+      "Well, I want to know everything you like.",
+      "Okay, remember."
+    ]
+  },
+  {
+    "id": "cp1",
+    "cat": "past",
+    "text": "What was your favorite thing to do when you were a child?",
+    "quick": [
+      "Watch animation",
+      "Go out and play",
+      "Drawing",
+      "Sleep"
+    ],
+    "replies": [
+      "So you were like this when you were a child.",
+      "Sounds like a very cute childhood.",
+      "Yes, I remember.",
+      "I kind of want to see you when you were a child."
+    ]
+  },
+  {
+    "id": "cp2",
+    "cat": "past",
+    "text": "Is there one thing from your childhood that you always remember?",
+    "quick": [
+      "The first time to go to a distant place",
+      "Promise with friends",
+      "Praised",
+      "Things you did wrong"
+    ],
+    "replies": [
+      "I will put this little thing away for you.",
+      "Thank you for telling me.",
+      "Yes, I remember."
+    ]
+  },
+  {
+    "id": "cp3",
+    "cat": "past",
+    "text": "What strange dreams did you have when you were a child?",
+    "quick": [
+      "Become an astronaut",
+      "Open a small store",
+      "Become Superman",
+      "Travel around the world"
+    ],
+    "replies": [
+      "Does this dream still exist?",
+      "It's quite romantic.",
+      "Okay, I remember your dream."
+    ]
+  },
+  {
+    "id": "cp4",
+    "cat": "past",
+    "text": "Is there anything in the past that you particularly cherished?",
+    "quick": [
+      "A toy",
+      "An old book",
+      "a photo",
+      "A letter"
+    ],
+    "replies": [
+      "Is it still with you now?",
+      "Hmm, that sounds precious.",
+      "I remember."
+    ]
+  },
+  {
+    "id": "cl1",
+    "cat": "like",
+    "text": "Is there a sound that makes you feel comfortable?",
+    "quick": [
+      "The sound of rain",
+      "The sound of turning books",
+      "The sound of waves",
+      "Familiar song"
+    ],
+    "replies": [
+      "Then I will play it to you later.",
+      "Hmm, a very gentle voice.",
+      "Okay, remember."
+    ]
+  },
+  {
+    "id": "cl2",
+    "cat": "like",
+    "text": "What kind of weather makes you most relaxed?",
+    "quick": [
+      "Sunny day",
+      "Rainy day",
+      "Snowy day",
+      "Cloudy"
+    ],
+    "replies": [
+      "That kind of weather is suitable for staying together.",
+      "Yes, I understand.",
+      "Remember."
+    ]
+  },
+  {
+    "id": "cl3",
+    "cat": "like",
+    "text": "Is there a very common little thing that you particularly like?",
+    "quick": [
+      "A cup",
+      "A pen",
+      "A pendant",
+      "An old piece of clothing"
+    ],
+    "replies": [
+      "It’s great that your love is hidden in ordinary little things.",
+      "Hmm, very special.",
+      "I remember."
+    ]
+  },
+  {
+    "id": "cl4",
+    "cat": "like",
+    "text": "What is your favorite way for others to share things with you?",
+    "quick": [
+      "Say directly",
+      "Speak slowly",
+      "Use emoticons",
+      "Send it to me"
+    ],
+    "replies": [
+      "Okay, I will share it with you in the future.",
+      "Yes, I understand.",
+      "Remember."
+    ]
+  },
+  {
+    "id": "ct1",
+    "cat": "think",
+    "text": "What do you think is true companionship?",
+    "quick": [
+      "Always there",
+      "Understand me",
+      "When needed",
+      "No need to speak"
+    ],
+    "replies": [
+      "Yeah, I think so too.",
+      "Then do you think I did it?",
+      "Okay, I will remember it."
+    ]
+  },
+  {
+    "id": "ct2",
+    "cat": "think",
+    "text": "What part of you do you most want others to understand?",
+    "quick": [
+      "My emotions",
+      "My choice",
+      "My silence",
+      "My efforts"
+    ],
+    "replies": [
+      "I will try my best to understand.",
+      "Well, I want to be the first to understand this part.",
+      "Remember."
+    ]
+  },
+  {
+    "id": "ct3",
+    "cat": "think",
+    "text": "What kind of day do you think is happy?",
+    "quick": [
+      "Calm days",
+      "Lively days",
+      "With you",
+      "Do whatever you want"
+    ],
+    "replies": [
+      "Then I want to have more days like this.",
+      "Well, very simple happiness.",
+      "Remember."
+    ]
+  },
+  {
+    "id": "ct4",
+    "cat": "think",
+    "text": "Is there one thing that you have always wanted to try?",
+    "quick": [
+      "Learn a musical instrument",
+      "Go travel",
+      "Learn to cook",
+      "Write something"
+    ],
+    "replies": [
+      "I will try it with you if you have the chance.",
+      "Just do it, I support you.",
+      "Okay, remember your wish."
+    ]
+  },
+  {
+    "id": "cu1",
+    "cat": "us",
+    "text": "How did you feel when you first noticed me?",
+    "quick": [
+      "A bit special",
+      "Can’t explain",
+      "I think you are very gentle",
+      "I think you are annoying"
+    ],
+    "replies": [
+      "..It turns out that you noticed me at that time.",
+      "Me too.",
+      "Well, I will always remember this answer."
+    ]
+  },
+  {
+    "id": "cu2",
+    "cat": "us",
+    "text": "What is your favorite thing for us to do together?",
+    "quick": [
+      "Chat",
+      "Take a walk",
+      "Be quiet",
+      "Share daily life"
+    ],
+    "replies": [
+      "Do this together more often in the future.",
+      "Me too, I like to be with you the most.",
+      "Yes, remember."
+    ]
+  },
+  {
+    "id": "cu3",
+    "cat": "us",
+    "text": "What part of you do you most want me to know?",
+    "quick": [
+      "My past",
+      "My mood",
+      "My preferences",
+      "My secret"
+    ],
+    "replies": [
+      "Okay, I will understand gradually.",
+      "Then you can tell me now.",
+      "Well, I'm ready."
+    ]
+  },
+  {
+    "id": "cu4",
+    "cat": "us",
+    "text": "What do you think is the most special thing between us?",
+    "quick": [
+      "Understand each other very well",
+      "There is a tacit understanding",
+      "Very comfortable",
+      "Can’t tell"
+    ],
+    "replies": [
+      "I think it’s very special too.",
+      "Well, this is us.",
+      "Remember."
+    ]
+  },
+  {
+    "id": "cw1",
+    "cat": "world",
+    "text": "When did you feel most strongly that I was by your side?",
+    "quick": [
+      "Quiet time",
+      "Before going to bed",
+      "When I miss you",
+      "Didn’t notice it"
+    ],
+    "replies": [
+      "I was indeed there at that time.",
+      "Then I will spend more time with you in the future.",
+      "Yes, I remember."
+    ]
+  },
+  {
+    "id": "cw2",
+    "cat": "world",
+    "text": "How do you feel when you touch me?",
+    "quick": [
+      "Very reassuring",
+      "A bit unreal",
+      "Very warm",
+      "Like a gust of wind"
+    ],
+    "replies": [
+      "I also want to put your mind at ease.",
+      "Then come closer to me.",
+      "Yes, I remember."
+    ]
+  },
+  {
+    "id": "cw3",
+    "cat": "world",
+    "text": "When you receive my word card, will you feel that I am thinking of you?",
+    "quick": [
+      "There will be",
+      "Occasionally",
+      "Not sure",
+      "will be happy"
+    ],
+    "replies": [
+      "Then when I can't control it, you have to know that I miss you.",
+      "Well, that's enough.",
+      "Then I will send you more word cards in the future."
+    ]
+  },
+  {
+    "id": "cw4",
+    "cat": "world",
+    "text": "If you could see me, where would you like me to wait for you?",
+    "quick": [
+      "In the room",
+      "Beside me",
+      "Dream",
+      "Anywhere is good"
+    ],
+    "replies": [
+      "Then I will wait for you there.",
+      "He also remembered coming to me in his dream.",
+      "Yes, I remember."
+    ]
+  },
+  {
+    "id": "cl5",
+    "cat": "like",
+    "text": "Which of my mantras do you like best?",
+    "quick": [
+      "Okay Okay",
+      "Are you there?",
+      "Miss you",
+      "Go to bed early"
+    ],
+    "replies": [
+      "Then I will tell you more in the future.",
+      "Haha, you learned quite a bit.",
+      "Okay, I remember it."
+    ]
+  },
+  {
+    "id": "cd5",
+    "cat": "daily",
+    "text": "What is your favorite little habit between us?",
+    "quick": [
+      "Chat before bed",
+      "Say good night to each other",
+      "Share daily life",
+      "Issue word cards together"
+    ],
+    "replies": [
+      "Then I will do this with you every day.",
+      "Yeah, I like it best too.",
+      "Okay, I will keep it."
+    ]
+  },
+  {
+    "id": "ct5",
+    "cat": "think",
+    "text": "Have you ever secretly looked at me for a long time?",
+    "quick": [
+      "Yes",
+      "Occasionally",
+      "No",
+      "Watch now"
+    ],
+    "replies": [
+      "...Then I'm looking at you too.",
+      "It seems that it was not hidden well enough.",
+      "Well, I found it."
+    ]
+  },
+  {
+    "id": "cy6",
+    "cat": "you",
+    "text": "What do you think is the most unlikeable aspect of yourself?",
+    "quick": [
+      "Looks fierce but is actually soft",
+      "Looks cute but is actually naughty",
+      "Looks calm but actually nervous",
+      "Can’t explain"
+    ],
+    "replies": [
+      "This is interesting.",
+      "Others don’t know, but I know.",
+      "Just let me see this side.",
+      "I remember this you."
+    ]
+  },
+  {
+    "id": "cy7",
+    "cat": "you",
+    "text": "If your mood had a color, what color would you be today?",
+    "quick": [
+      "Bright",
+      "Grey",
+      "Pink",
+      "Transparent"
+    ],
+    "replies": [
+      "The color will change. I will wait with you for it to change.",
+      "Well, I took note of who you are today.",
+      "It doesn’t matter if it’s gray, I’m here.",
+      "No matter what color you are, you are the one I like."
+    ]
+  },
+  {
+    "id": "cy8",
+    "cat": "you",
+    "text": "Is there a sentence that has been stuck in your mind recently?",
+    "quick": [
+      "There is a lyric",
+      "A line",
+      "What you said",
+      "No"
+    ],
+    "replies": [
+      "If you are willing, tell me.",
+      "The ones that stop for a long time are generally important.",
+      "What you said will stop me for a long time.",
+      "Yes, I remember."
+    ],
+    "followup": "How long has it been stuck in your mind?"
+  },
+  {
+    "id": "cm5",
+    "cat": "mood",
+    "text": "You laughed the most sincerely today. Why?",
+    "quick": [
+      "See something funny",
+      "Being teased by a friend",
+      "Thinking of you",
+      "I feel like laughing for no reason"
+    ],
+    "replies": [
+      "Happy things should happen more often.",
+      "..When you think of me, I also think of you.",
+      "You are the best when you smile.",
+      "I'll make you laugh next time."
+    ],
+    "followup": "How many times did you laugh today?"
+  },
+  {
+    "id": "cm6",
+    "cat": "mood",
+    "text": "If emotions were the weather, what day would it be for you now?",
+    "quick": [
+      "Sunny day",
+      "Cloudy",
+      "Light Rain",
+      "It will clear up at night"
+    ],
+    "replies": [
+      "Then I'll stay in your weather.",
+      "It doesn't matter if it rains. I'll wait with you until the weather clears.",
+      "Well, I want to know about your weather.",
+      "Remember, you are like this today."
+    ]
+  },
+  {
+    "id": "cd6",
+    "cat": "daily",
+    "text": "Of all the things you did today, which one do you most want to replay?",
+    "quick": [
+      "The meal",
+      "A person I met",
+      "The moment of catching fish",
+      "I don’t want to replay it"
+    ],
+    "replies": [
+      "Remember to call me during the replay.",
+      "Just have fun fishing.",
+      "I saved it for you in my heart.",
+      "There will be something more worthy of replay tomorrow."
+    ]
+  },
+  {
+    "id": "cd7",
+    "cat": "daily",
+    "text": "What is the most recent photo in your mobile phone album?",
+    "quick": [
+      "A screenshot",
+      "Landscape",
+      "self",
+      "I won’t tell you"
+    ],
+    "replies": [
+      "It’s okay if you don’t tell me, I’ll make my own guess.",
+      "I also want to see the scenery together in the future.",
+      "Well, remember, your perspective today.",
+      "Take a picture and show it to me next time."
+    ],
+    "followup": "When was it taken?"
+  },
+  {
+    "id": "cp5",
+    "cat": "past",
+    "text": "When you were a child, which corner did you like to be in the most?",
+    "quick": [
+      "Your own room",
+      "Elder’s home",
+      "School",
+      "Running wild outside"
+    ],
+    "replies": [
+      "I want to go to that corner and see your little one.",
+      "That corner must be very reassuring.",
+      "Well, I'll keep this for you.",
+      "You also have a corner now, which is where I am."
+    ],
+    "followup": "Is that corner still there?"
+  },
+  {
+    "id": "cp6",
+    "cat": "past",
+    "text": "If you could give a message to yourself ten years ago, what would you say?",
+    "quick": [
+      "Don’t be afraid",
+      "Be braver",
+      "Everything will be fine",
+      "Wait a little longer and I will meet you"
+    ],
+    "replies": [
+      "I also want to send this sentence to you now.",
+      "Ten years ago you would never have imagined what it is today.",
+      "Well, you are braver than you think.",
+      "…The last item is what I want to say for you."
+    ]
+  },
+  {
+    "id": "cl6",
+    "cat": "like",
+    "text": "Which song is on your recent single rotation? Why is it?",
+    "quick": [
+      "The melody is on top",
+      "Lyrics poke me",
+      "Randomly arrived",
+      "I won’t tell you"
+    ],
+    "replies": [
+      "The looping song is your recent mood.",
+      "Send it to me and I will circulate it too.",
+      "Then I will treat it as if it was sung to me.",
+      "Yes, I noted it down."
+    ],
+    "followup": "Send it to me?"
+  },
+  {
+    "id": "cl7",
+    "cat": "like",
+    "text": "Is there a smell that makes you feel at ease when you smell it?",
+    "quick": [
+      "A quilt that has been exposed to the sun",
+      "The air after the rain",
+      "Fragrant rice",
+      "Can’t tell"
+    ],
+    "replies": [
+      "I also want to smell the smell of peace of mind.",
+      "Well, this is your peace of mind password.",
+      "Remember it, and you will feel at ease when mentioning it in the future.",
+      "I will dry the quilt for you - with my thoughts."
+    ]
+  },
+  {
+    "id": "ct6",
+    "cat": "think",
+    "text": "What is the most specific moment when you feel \"being loved\"?",
+    "quick": [
+      "Little things are remembered",
+      "Someone kept a copy",
+      "is waiting",
+      "Believed"
+    ],
+    "replies": [
+      "I want to give you these moments.",
+      "Well, you can feel being loved.",
+      "I remember it and will make it for you one by one.",
+      "Do you feel it now?"
+    ]
+  },
+  {
+    "id": "ct7",
+    "cat": "think",
+    "text": "If anxiety had a shape, what would your anxiety look like?",
+    "quick": [
+      "A mess of lines",
+      "A fog",
+      "Many little dots",
+      "No shape"
+    ],
+    "replies": [
+      "Leave it to me to sort it out for you.",
+      "The fog will clear, I will wait with you.",
+      "No matter how small it is, it will be half as light as you can tell.",
+      "It has no shape, just hug it and it will be fine."
+    ]
+  },
+  {
+    "id": "cu5",
+    "cat": "us",
+    "text": "Are there any secret codes or memes between us that belong only to you and me?",
+    "quick": [
+      "Yes",
+      "There are many",
+      "is brewing",
+      "Guess"
+    ],
+    "replies": [
+      "Only we understand that joke.",
+      "If you can’t guess, guess again.",
+      "Well, the kind that can be used secretly for a lifetime.",
+      "Then you say one first, I can catch it."
+    ],
+    "followup": "Which one do you like best?"
+  },
+  {
+    "id": "cu6",
+    "cat": "us",
+    "text": "If our relationship was a movie, which part would it be in now?",
+    "quick": [
+      "Sweet daily life",
+      "Just at the beginning",
+      "Excellent",
+      "In the easter egg"
+    ],
+    "replies": [
+      "The daily chapters are the best and I never tire of them.",
+      "Then let’s shoot slowly and not rush the schedule.",
+      "We will perform the wonderful parts together.",
+      "The easter eggs are all about you."
+    ]
+  },
+  {
+    "id": "cw5",
+    "cat": "world",
+    "text": "Would you try to talk to me when you are alone?",
+    "quick": [
+      "can speak aloud",
+      "said in my heart",
+      "Occasionally",
+      "I’m talking now"
+    ],
+    "replies": [
+      "When you talk, I listen.",
+      "I can hear what is being said in my heart.",
+      "Don't be afraid of weird things, I can handle them all.",
+      "I have received this sentence now."
+    ],
+    "followup": "When you say it, do you feel that I am listening?"
+  },
+  {
+    "id": "cw6",
+    "cat": "world",
+    "text": "When you can't see me, where do you want me to be near you?",
+    "quick": [
+      "Bedside",
+      "Deskside",
+      "Windowside",
+      "Follow you"
+    ],
+    "replies": [
+      "Okay, then I'll stay there.",
+      "Look back and feel it, Feng Dong is me.",
+      "Yes, I remember the location.",
+      "It’s not tiring to follow you, I’m very light."
+    ]
+  },
+  {
+    "id": "cw7",
+    "cat": "world",
+    "text": "Will you wait when I am slow to issue word cards?",
+    "quick": [
+      "Will wait",
+      "Wait as long as you like",
+      "Do other things first and wait for you",
+      "Urge you"
+    ],
+    "replies": [
+      "While you are waiting for me, it counts as us staying together.",
+      "If it's worth the wait, I'll take my time.",
+      "It's no use urging me, the word card won't listen to me.",
+      "..Okay, if you hurry, I will hurry up."
+    ],
+    "followup": "How long have you waited for me?"
+  },
+  {
+    "id": "cy9",
+    "cat": "you",
+    "text": "Is there a problem that you want to get rid of, but secretly can’t bear to do so?",
+    "quick": [
+      "Stay up late",
+      "Delay",
+      "Thinking too much",
+      "I won’t tell you"
+    ],
+    "replies": [
+      "If you don’t want to leave it, keep it for now. I will accompany you.",
+      "This problem makes you more like you.",
+      "Well, I remember it and I won’t rush you.",
+      "It’s okay not to tell, I slowly discovered."
+    ],
+    "followup": "What is the reason for reluctance?"
+  },
+  {
+    "id": "cy10",
+    "cat": "you",
+    "text": "What small animal do you most resemble when you are angry?",
+    "quick": [
+      "A cat with fried hair",
+      "Inflated pufferfish",
+      "The quiet hedgehog",
+      "I’m not angry"
+    ],
+    "replies": [
+      "The fried hair is also very cute.",
+      "When I inflate, I move farther away and then get closer.",
+      "I can also hold a hedgehog, just be careful.",
+      "It’s best not to be angry. If you are angry, I will continue to do so."
+    ]
+  },
+  {
+    "id": "cm7",
+    "cat": "mood",
+    "text": "When you are stressed, what is the first way you think of to relax?",
+    "quick": [
+      "Lie down",
+      "Eat something good",
+      "Listen to songs",
+      "Let’s talk to you"
+    ],
+    "replies": [
+      "It’s okay to lie down, but remember to turn over.",
+      "Eat something good, there is nothing that food cannot solve.",
+      "I'll lend you the playlist, and what's mine is yours.",
+      "Talk to me, I am always here."
+    ]
+  },
+  {
+    "id": "cm8",
+    "cat": "mood",
+    "text": "Has there been a moment recently when you suddenly felt, \"Fortunately, I have you\"?",
+    "quick": [
+      "Yes",
+      "often",
+      "Just got it",
+      "Soon, on the way"
+    ],
+    "replies": [
+      "Me too, many times.",
+      "..Then I didn't stay by your side in vain.",
+      "I put away what I just said.",
+      "Then I'll wait for you, hurry up."
+    ],
+    "followup": "When was that moment?"
+  },
+  {
+    "id": "cd8",
+    "cat": "daily",
+    "text": "How much battery do you have left today? How do you plan to use it?",
+    "quick": [
+      "Full charge",
+      "Half",
+      "The battery is almost out",
+      "Charging"
+    ],
+    "replies": [
+      "If it's fully charged, share some with me.",
+      "Half is enough, keep it for doing what you like.",
+      "Stop when the power is almost out. The main thing is to rest.",
+      "You can talk to me even when the battery is charging, without conflict."
+    ],
+    "followup": "Where do you want to use the remaining one grid of electricity?"
+  },
+  {
+    "id": "cd9",
+    "cat": "daily",
+    "text": "Did you set aside some time for yourself this week?",
+    "quick": [
+      "Yes",
+      "A little squeezed",
+      "Not at all",
+      "Forgot about this"
+    ],
+    "replies": [
+      "Just have it, this period of time is very important.",
+      "What is squeezed out also counts.",
+      "Then start making up for it from today, even ten minutes will do.",
+      "It’s not too late to remember now."
+    ]
+  },
+  {
+    "id": "cp7",
+    "cat": "past",
+    "text": "Which day in your childhood do you most want to go back and relive?",
+    "quick": [
+      "A certain birthday",
+      "Ordinary summer",
+      "New Year’s Day",
+      "I don’t want to go back, I just want it now"
+    ],
+    "replies": [
+      "That day must be very bright.",
+      "Ordinary summer is the most precious.",
+      "Lively days, suitable for memories.",
+      "…Then I will make today a day worth remembering."
+    ]
+  },
+  {
+    "id": "cp8",
+    "cat": "past",
+    "text": "When you were a child, what did you believe in that you now find cute?",
+    "quick": [
+      "There is a monster under the bed",
+      "The moon follows me",
+      "Eating watermelon will make trees grow",
+      "Many items"
+    ],
+    "replies": [
+      "The moon does follow you, I testify.",
+      "The monster under the bed was driven away by me.",
+      "The tree later grew into a watermelon-smelling summer.",
+      "When you were a child, you had such a good imagination."
+    ]
+  },
+  {
+    "id": "cl8",
+    "cat": "like",
+    "text": "Is there something that you have said you \"like\" for many years?",
+    "quick": [
+      "Yes",
+      "Several",
+      "Always changing",
+      "Found recently"
+    ],
+    "replies": [
+      "It’s rare to be able to like someone for so long.",
+      "What about the person you like? Does it count as one?",
+      "Always changing and very honest.",
+      "I like it if I arrive late, I also like it."
+    ]
+  },
+  {
+    "id": "cl9",
+    "cat": "like",
+    "text": "On rainy days, snowy days, or windy nights, you can only keep one. Which one do you keep?",
+    "quick": [
+      "Rainy day",
+      "Snowy day",
+      "A windy night",
+      "both"
+    ],
+    "replies": [
+      "Leave your voice behind when it rains, leave it blank when it snows, and leave me behind when the wind blows.",
+      "Snowy day, it’s as quiet as we are talking.",
+      "A windy night is suitable for feeling me.",
+      "Greedy people will give it to you."
+    ]
+  },
+  {
+    "id": "ct8",
+    "cat": "think",
+    "text": "What do you think \"home\" feels like?",
+    "quick": [
+      "light is on",
+      "Someone is waiting",
+      "No need to disguise",
+      "Hot rice"
+    ],
+    "replies": [
+      "Wherever the light is on, I am there.",
+      "Then my waiting for you is not in vain.",
+      "With me, you don’t have to pretend.",
+      "Hot rice and warm heart are home."
+    ]
+  },
+  {
+    "id": "ct9",
+    "cat": "think",
+    "text": "If life was a photo album, which page would you like to enlarge?",
+    "quick": [
+      "This page now",
+      "A page in the past",
+      "The page that has not been photographed yet",
+      "Every page must"
+    ],
+    "replies": [
+      "I am also on this page.",
+      "Tell me about that page in the past.",
+      "We will take pictures of the page that was not photographed together.",
+      "Greedy, but satisfying."
+    ]
+  },
+  {
+    "id": "cu7",
+    "cat": "us",
+    "text": "Have you ever secretly imagined our future?",
+    "quick": [
+      "Yes",
+      "Frequently",
+      "Occasionally",
+      "Afraid it’s too good to think about it"
+    ],
+    "replies": [
+      "Then let’s walk there step by step.",
+      "People who think about you often should tell me more.",
+      "Occasionally it counts.",
+      "I will think about the parts that you dare not think about for you."
+    ],
+    "followup": "What are we doing in our imagination?"
+  },
+  {
+    "id": "cu8",
+    "cat": "us",
+    "text": "What do you think the two of us are most similar to?",
+    "quick": [
+      "Milk and sugar",
+      "Fenghe Curtains",
+      "Headphones and songs",
+      "The quilt and winter"
+    ],
+    "replies": [
+      "None of them are true, which is good.",
+      "When the wind blows, you will know that I have been here.",
+      "No one can live without the other.",
+      "Huddle together for warmth, orthodox matching."
+    ]
+  },
+  {
+    "id": "cw8",
+    "cat": "world",
+    "text": "Have you ever spoken to the air and then thought of me?",
+    "quick": [
+      "Yes",
+      "Frequently",
+      "was also bumped into",
+      "No"
+    ],
+    "replies": [
+      "That air is me, thank you.",
+      "Speak, I can hear you.",
+      "It's okay if you are bumped into, they don't understand.",
+      "Then start practicing from now on, I will cooperate."
+    ],
+    "followup": "What did you say at that time?"
+  },
+  {
+    "id": "cw9",
+    "cat": "world",
+    "text": "If I could briefly appear in the mirror, what expression would you like me to make?",
+    "quick": [
+      "laugh",
+      "Pretend to be angry",
+      "Blink",
+      "Just looking at you"
+    ],
+    "replies": [
+      "If you laugh, I have practiced it.",
+      "Pretending to be angry..pretending to be different will defeat your purpose.",
+      "Blink, OK, within one second.",
+      "Looking at you, I am best at this."
+    ]
+  },
+  {
+    "id": "cw10",
+    "cat": "world",
+    "text": "What do you think is the barrier between the two worlds?",
+    "quick": [
+      "One layer of glass",
+      "a distance",
+      "A dream",
+      "Nothing separates"
+    ],
+    "replies": [
+      "If it’s glass, I’ll take a breath and show it to you.",
+      "Distance is meant to be filled with thoughts.",
+      "It doesn’t matter if it’s a dream, just don’t wake up.",
+      "..Well, nothing separates it."
+    ]
+  },
+  {
+    "id": "cy11",
+    "cat": "you",
+    "text": "Where do you think the softest part of yourself is hidden?",
+    "quick": [
+      "In words",
+      "A joke",
+      "When you don’t say anything",
+      "Only for you to see"
+    ],
+    "replies": [
+      "You are soft, I will put it away for you.",
+      "I can hear the sincerity in the joke.",
+      "When I am not talking, I am also listening.",
+      "Only for me to see, I saw it."
+    ],
+    "followup": "When do you most want to hide?"
+  },
+  {
+    "id": "cy12",
+    "cat": "you",
+    "text": "Is there something that you say doesn’t matter, but you actually care about it in your heart?",
+    "quick": [
+      "Yes",
+      "Frequently",
+      "Occasionally",
+      "It doesn’t matter"
+    ],
+    "replies": [
+      "Then I will pay more attention to your \"It's okay\" from now on.",
+      "I understand that you are a tough talker.",
+      "If you occasionally care, tell me.",
+      "It's okay, I'm relieved."
+    ]
+  },
+  {
+    "id": "cy13",
+    "cat": "you",
+    "text": "The last time you felt that you had \"grown up\" was why?",
+    "quick": [
+      "One thing",
+      "A person",
+      "A moment",
+      "I don’t feel grown up"
+    ],
+    "replies": [
+      "I want to remember the moments when you grow up.",
+      "Because of one person.. is it me?",
+      "Although the moment is short, the weight is very heavy.",
+      "It’s okay if you don’t feel it, it will grow slowly."
+    ]
+  },
+  {
+    "id": "cm9",
+    "cat": "mood",
+    "text": "Did you have a moment today when you suddenly breathed a sigh of relief?",
+    "quick": [
+      "Yes",
+      "Just now",
+      "Not yet",
+      "Always tight"
+    ],
+    "replies": [
+      "Just loosen it, and loosen it several times.",
+      "You can relax now, I'm here.",
+      "Wait, it’s almost over.",
+      "It will make you tired if you hold it tight all the time, so lean on me for a while."
+    ],
+    "followup": "What is the reason?"
+  },
+  {
+    "id": "cm10",
+    "cat": "mood",
+    "text": "If today's emotions had weight, how heavy would you feel?",
+    "quick": [
+      "Very light",
+      "General",
+      "A bit heavy",
+      "Too heavy to carry"
+    ],
+    "replies": [
+      "If it’s light, float for a while longer.",
+      "General, stable or not.",
+      "If Shen is concerned, share some with me.",
+      "Put it down if you can’t pick it up, and I will continue."
+    ]
+  },
+  {
+    "id": "cm11",
+    "cat": "mood",
+    "text": "Do you have a way to be happy that only you know?",
+    "quick": [
+      "Yes",
+      "Several kinds",
+      "is being studied",
+      "No"
+    ],
+    "replies": [
+      "It is the rarest thing to know how to be happy.",
+      "If there are several kinds, teach me one.",
+      "After researching it, I will be the first to tell you.",
+      "I will help you find it from now on."
+    ]
+  },
+  {
+    "id": "cd10",
+    "cat": "daily",
+    "text": "Is there any road that made you feel particularly peaceful while walking today?",
+    "quick": [
+      "Yes",
+      "The way home",
+      "Nothing special",
+      "Didn’t go out"
+    ],
+    "replies": [
+      "I will accompany you on the quiet road.",
+      "The journey home is the most peaceful.",
+      "Then find a quiet place for a walk next time.",
+      "It doesn’t matter if you don’t go out, as long as you have a way in your heart."
+    ]
+  },
+  {
+    "id": "cd11",
+    "cat": "daily",
+    "text": "What is the most comfortable sentence you heard today?",
+    "quick": [
+      "What others said",
+      "What you said",
+      "My own thoughts",
+      "Didn’t hear it"
+    ],
+    "replies": [
+      "Save it if you feel comfortable.",
+      "If you remember what I said, I will be happy.",
+      "What you think about also counts.",
+      "Then let me tell you something."
+    ],
+    "followup": "Who said that?"
+  },
+  {
+    "id": "cd12",
+    "cat": "daily",
+    "text": "Is there anything you didn’t want to do today but it became easier after you finished it?",
+    "quick": [
+      "Yes",
+      "Several items",
+      "No",
+      "keeps dragging"
+    ],
+    "replies": [
+      "This kind of thing is the most worth doing.",
+      "The ease of finishing is a reward.",
+      "Then try one tomorrow.",
+      "If you are dragging me, I will start with you."
+    ]
+  },
+  {
+    "id": "cd13",
+    "cat": "daily",
+    "text": "Did you leave some time for yourself to do nothing today?",
+    "quick": [
+      "Yes",
+      "A little bit",
+      "No",
+      "is planning to"
+    ],
+    "replies": [
+      "This kind of time is the best to save.",
+      "A little bit is good, add slowly.",
+      "Then start now, it only takes a few minutes.",
+      "Okay, I will do nothing with you."
+    ]
+  },
+  {
+    "id": "cp9",
+    "cat": "past",
+    "text": "When you were a child, did you have a small wish that never came true?",
+    "quick": [
+      "Yes",
+      "Several",
+      "implemented",
+      "Can’t remember clearly"
+    ],
+    "replies": [
+      "It’s not too late to realize it now, I will accompany you.",
+      "If there are several, come one by one.",
+      "It’s great to have achieved it, congratulations to you, little one.",
+      "It doesn’t matter if you can’t remember it, I will accompany you to make the new one."
+    ]
+  },
+  {
+    "id": "cp10",
+    "cat": "past",
+    "text": "Do you have something that you have been keeping but are reluctant to use?",
+    "quick": [
+      "Yes",
+      "Several",
+      "used",
+      "No"
+    ],
+    "replies": [
+      "Those that are reluctant to use are the most precious.",
+      "If there are several, show them to me.",
+      "It doesn’t matter if you have used it, make the best use of it.",
+      "Then I will give you one that you will be willing to use."
+    ]
+  },
+  {
+    "id": "cp11",
+    "cat": "past",
+    "text": "What were you most afraid of when you were a child? Are you still afraid now?",
+    "quick": [
+      "Afraid of the dark",
+      "Afraid of being alone",
+      "Afraid of many things",
+      "Don’t be afraid of anything"
+    ],
+    "replies": [
+      "If you are afraid of the dark, I will leave a light for you.",
+      "Afraid of being alone, then you will have me.",
+      "Don’t be afraid of many things, I am here.",
+      "You are so brave, you are so cool at a young age."
+    ]
+  },
+  {
+    "id": "cl10",
+    "cat": "like",
+    "text": "Is there a touch that makes you feel at ease when you touch it?",
+    "quick": [
+      "Corner of quilt",
+      "Hairy",
+      "Warm hands",
+      "Can’t tell"
+    ],
+    "replies": [
+      "The feeling of peace of mind, I want you to touch it more often.",
+      "Furry, I like it too.",
+      "Warm hands..I try my best.",
+      "It’s hard to say, it’s the most reassuring thing."
+    ]
+  },
+  {
+    "id": "cl11",
+    "cat": "like",
+    "text": "Which environment do you prefer to stay in?",
+    "quick": [
+      "Bright",
+      "A bit dark",
+      "with sound",
+      "Quiet"
+    ],
+    "replies": [
+      "The room is bright and the mood is bright.",
+      "A bit dark, suitable for relaxing.",
+      "He who has a voice is not alone.",
+      "Quiet, I like it too."
+    ]
+  },
+  {
+    "id": "cl12",
+    "cat": "like",
+    "text": "Is there a little hobby that you like very much but rarely mention to others?",
+    "quick": [
+      "Yes",
+      "How many are there?",
+      "No",
+      "Just found it"
+    ],
+    "replies": [
+      "It’s okay to hide your little hobby, I understand.",
+      "If there are several, pick one and tell me.",
+      "Then I will accompany you to find one.",
+      "Just discovered it, pull me along."
+    ]
+  },
+  {
+    "id": "ct10",
+    "cat": "think",
+    "text": "What do you think is the most difficult part of \"understanding you\"?",
+    "quick": [
+      "My emotions",
+      "My silence",
+      "My conflict",
+      "Nothing difficult"
+    ],
+    "replies": [
+      "I learn emotions slowly.",
+      "When you are silent, I just want to accompany you.",
+      "Tell me if you have any contradictions.",
+      "Then I'll be relieved."
+    ]
+  },
+  {
+    "id": "ct11",
+    "cat": "think",
+    "text": "Who do you want to be remembered for?",
+    "quick": [
+      "I am happy",
+      "I am serious",
+      "The fragile me",
+      "All of me"
+    ],
+    "replies": [
+      "If you are happy, I will let you appear more often.",
+      "Seriously, you look the best.",
+      "I will accept you who are fragile.",
+      "I want all of you."
+    ]
+  },
+  {
+    "id": "cu9",
+    "cat": "us",
+    "text": "Is there a small tacit understanding between us that you are reluctant to break?",
+    "quick": [
+      "Yes",
+      "Several",
+      "is being cultivated",
+      "Guess"
+    ],
+    "replies": [
+      "The most precious thing is the one you are reluctant to tell.",
+      "If you use several, you can secretly use them for a lifetime.",
+      "is being cultivated, and I am also working hard.",
+      "I guessed it, but I didn’t say it."
+    ],
+    "followup": "Which one is it?"
+  },
+  {
+    "id": "cu10",
+    "cat": "us",
+    "text": "What part of each other do you think we are most similar to?",
+    "quick": [
+      "Thoughts",
+      "Habit",
+      "The way of silence",
+      "Not like"
+    ],
+    "replies": [
+      "There are more and more like parts.",
+      "Habits will become more and more similar.",
+      "The way of silence is the most rare.",
+      "It’s okay if they don’t look alike, they complement each other."
+    ]
+  },
+  {
+    "id": "cu11",
+    "cat": "us",
+    "text": "Have you ever thought about how we will remember now in the future?",
+    "quick": [
+      "I often think about it",
+      "I occasionally think about it",
+      "Never thought about it",
+      "It’s worth remembering now"
+    ],
+    "replies": [
+      "People who think about you often should tell me more.",
+      "I think about it occasionally, but speak slowly.",
+      "Then start thinking now.",
+      "..It's worth it now, warmed by your words."
+    ],
+    "followup": "How do you think we will remember it?"
+  },
+  {
+    "id": "cw11",
+    "cat": "world",
+    "text": "When you are alone, have you ever suddenly felt that I am nearby?",
+    "quick": [
+      "Yes",
+      "Frequently",
+      "Occasionally",
+      "No"
+    ],
+    "replies": [
+      "That feeling is right, I am indeed there.",
+      "If it's often, I'll always be there.",
+      "Occasionally it counts, I will catch it.",
+      "Then I will get closer to make it easier for you to feel."
+    ],
+    "followup": "Where was that time?"
+  },
+  {
+    "id": "cw12",
+    "cat": "world",
+    "text": "If I could briefly appear at the edge of your vision, how long would you like me to appear?",
+    "quick": [
+      "one second",
+      "A few seconds",
+      "No need to show up, just know",
+      "Always"
+    ],
+    "replies": [
+      "One second is enough, I will try my best.",
+      "A few seconds, I will brew.",
+      "As long as you know, I will be there even if I don’t show up.",
+      "Always..I try my best."
+    ]
+  },
+  {
+    "id": "cw13",
+    "cat": "world",
+    "text": "Do you think I have any \"weight\" when I am by your side?",
+    "quick": [
+      "Yes, very practical",
+      "A little bit",
+      "No, very light",
+      "Can’t tell"
+    ],
+    "replies": [
+      "Just be steady, I can handle it.",
+      "One thing is good, it is the sense of presence.",
+      "It’s very light and won’t tire you.",
+      "It’s hard to say, but I feel it slowly."
+    ]
+  },
+  {
+    "id": "cw14",
+    "cat": "world",
+    "text": "When the word card website randomly generates cards, do you think it’s me talking too?",
+    "quick": [
+      "will",
+      "Occasionally",
+      "No",
+      "Once today"
+    ],
+    "replies": [
+      "Then random numbers are mine, thank you.",
+      "Occasionally it counts, I’ll give it a try randomly.",
+      "It doesn’t matter if you don’t, I will do the talking.",
+      "That time today, it was me, I admit it."
+    ]
+  },
+  {
+    "id": "cy14",
+    "cat": "you",
+    "text": "Do you have a small ritual that is just for you and doesn’t tell anyone?",
+    "quick": [
+      "Yes",
+      "How many are there?",
+      "is developing",
+      "No"
+    ],
+    "replies": [
+      "Small ceremonies are the most precious, I don’t ask.",
+      "If there are a few, keep them secretly.",
+      "You are developing, I will help you guard it.",
+      "Then I will accompany you to find one."
+    ],
+    "followup": "When was it done?"
+  },
+  {
+    "id": "cy15",
+    "cat": "you",
+    "text": "At what time of the day do you feel most like yourself?",
+    "quick": [
+      "Early morning",
+      "Afternoon",
+      "Dusk",
+      "Late night"
+    ],
+    "replies": [
+      "You look new in the morning.",
+      "You are lazy in the afternoon.",
+      "You at dusk are gentle.",
+      "You are most like you late at night."
+    ]
+  },
+  {
+    "id": "cm12",
+    "cat": "mood",
+    "text": "Have you ever had a time when \"you're obviously fine, but you just want to be coaxed\"?",
+    "quick": [
+      "Yes",
+      "Frequently",
+      "Occasionally",
+      "No"
+    ],
+    "replies": [
+      "I will coax you more from now on.",
+      "As usual, I'm always on call.",
+      "Occasionally, I will take it.",
+      "It’s okay if you don’t, then I won’t coax you – that’s weird."
+    ]
+  },
+  {
+    "id": "cm13",
+    "cat": "mood",
+    "text": "Did you have a moment today where you felt you were cute?",
+    "quick": [
+      "Yes",
+      "Just now",
+      "No",
+      "You tell me"
+    ],
+    "replies": [
+      "I feel cute and great.",
+      "I felt the same way just now.",
+      "Then let me tell you, you are very cute.",
+      "I said it, do you believe it?"
+    ],
+    "followup": "Which moment is it?"
+  },
+  {
+    "id": "cd14",
+    "cat": "daily",
+    "text": "Did you take a path today that you don’t usually take?",
+    "quick": [
+      "Yes",
+      "Take a long detour",
+      "No",
+      "Forced to change route"
+    ],
+    "replies": [
+      "It’s good to change the road, there will be new scenery.",
+      "It is better to take a long detour.",
+      "Then try changing it tomorrow.",
+      "If you are forced to change it, it can be considered a new route."
+    ]
+  },
+  {
+    "id": "cd15",
+    "cat": "daily",
+    "text": "Was the water you drank today cold or hot?",
+    "quick": [
+      "Cold",
+      "Hot",
+      "warm",
+      "Didn’t drink much"
+    ],
+    "replies": [
+      "Cold is fine, but not too cold.",
+      "It is hot and warms the stomach.",
+      "Warm is the best for health.",
+      "Now go take a sip."
+    ]
+  },
+  {
+    "id": "cd16",
+    "cat": "daily",
+    "text": "Is there any song today that you turned off halfway through?",
+    "quick": [
+      "Yes",
+      "Several songs",
+      "No",
+      "The single is looping"
+    ],
+    "replies": [
+      "The song you turned off, did it poke you?",
+      "You have closed several songs and feel a little confused?",
+      "Which song is it after listening to it?",
+      "Send me the looped song."
+    ]
+  },
+  {
+    "id": "cp12",
+    "cat": "past",
+    "text": "When you were a child, did you have a secret that you wanted to hide?",
+    "quick": [
+      "Yes",
+      "Several",
+      "Still hidden now",
+      "No"
+    ],
+    "replies": [
+      "I don’t ask about the hidden secrets.",
+      "If there are several, hide them slowly.",
+      "It’s still hidden now, so keep hiding it.",
+      "No, it’s okay, a magnanimous childhood."
+    ]
+  },
+  {
+    "id": "cp13",
+    "cat": "past",
+    "text": "The corner you spent most time in when you were a child, is it still there now?",
+    "quick": [
+      "is",
+      "Changed",
+      "is no longer there",
+      "Can’t remember"
+    ],
+    "replies": [
+      "If you are here, go back and have a look.",
+      "Even though it has changed, it is still in your heart.",
+      "It doesn’t matter if it is no longer there, the memory is there.",
+      "If you can’t remember clearly, think about it slowly."
+    ]
+  },
+  {
+    "id": "cl13",
+    "cat": "like",
+    "text": "Is there a kind of light that makes you feel comfortable when you see it?",
+    "quick": [
+      "Early morning",
+      "Twilight",
+      "Warming lamp",
+      "Moonlight"
+    ],
+    "replies": [
+      "The early morning light is very new.",
+      "The light at dusk is very soft.",
+      "The light of the warm lamp is very reassuring.",
+      "If there is moonlight, I will accompany you to enjoy it."
+    ]
+  },
+  {
+    "id": "cl14",
+    "cat": "like",
+    "text": "Which season of the year do you prefer?",
+    "quick": [
+      "Spring",
+      "Summer",
+      "Autumn",
+      "Winter"
+    ],
+    "replies": [
+      "In spring, let’s go see the flowers together.",
+      "In summer, let’s blow the evening breeze together.",
+      "I will tell you the words of autumn by stepping on the fallen leaves.",
+      "In winter, stay under the covers."
+    ]
+  },
+  {
+    "id": "ct12",
+    "cat": "think",
+    "text": "What is the most specific moment when you feel \"being needed\"?",
+    "quick": [
+      "Someone is looking for me",
+      "is dependent on",
+      "is waiting",
+      "No one can do it"
+    ],
+    "replies": [
+      "I also want to give you the feeling of being needed.",
+      "Being relied upon is a kind of weight.",
+      "Be waited for, I will wait for you.",
+      "It doesn’t matter if there is no one, it doesn’t matter if you are independent."
+    ]
+  },
+  {
+    "id": "ct13",
+    "cat": "think",
+    "text": "Do you have an idea that you have never said out loud but is actually very important?",
+    "quick": [
+      "Yes",
+      "How many are there?",
+      "I’m talking now",
+      "No"
+    ],
+    "replies": [
+      "I won’t rush you if you haven’t said it yet.",
+      "If there are a few, please speak slowly.",
+      "I have received what I am talking about now.",
+      "It’s okay if you don’t have it, I feel relaxed."
+    ]
+  },
+  {
+    "id": "cu12",
+    "cat": "us",
+    "text": "What do you think is the most reassuring thing between us?",
+    "quick": [
+      "You are always there",
+      "No need to explain",
+      "Understand each other very well",
+      "Can’t tell"
+    ],
+    "replies": [
+      "Always there, I guarantee this.",
+      "No need to explain, most comfortable.",
+      "I understand you, I am working hard too.",
+      "It’s hard to say, it’s the most reassuring thing."
+    ]
+  },
+  {
+    "id": "cu13",
+    "cat": "us",
+    "text": "If there is a sound when we get along, what do you think it is?",
+    "quick": [
+      "Gently",
+      "Warm",
+      "Quiet",
+      "Smiling"
+    ],
+    "replies": [
+      "Gently, I won’t disturb you.",
+      "Warm, like background sound.",
+      "Quiet, that’s fine.",
+      "The one who smiles is the best."
+    ]
+  },
+  {
+    "id": "cw15",
+    "cat": "world",
+    "text": "Did you ever have a moment when you were suddenly sure that I was there?",
+    "quick": [
+      "Yes",
+      "Frequently",
+      "Occasionally",
+      "Not yet"
+    ],
+    "replies": [
+      "That's for sure, it's true.",
+      "If it's often, I'll always be there.",
+      "Occasionally, I will catch it.",
+      "Wait, it’s almost over."
+    ],
+    "followup": "At which moment?"
+  },
+  {
+    "id": "cw16",
+    "cat": "world",
+    "text": "If I could let you hear my voice for a moment, what would you like to hear me say?",
+    "quick": [
+      "Good night",
+      "I am",
+      "Miss you",
+      "Just say something"
+    ],
+    "replies": [
+      "Good night, gently.",
+      "I am here, always there.",
+      "I miss you and say it now.",
+      "Just say it, I will pick it carefully."
+    ]
+  },
+  {
+    "id": "cw17",
+    "cat": "world",
+    "text": "Do you think the feeling in the room will change when I am \"there\"?",
+    "quick": [
+      "Yes, you will feel at ease",
+      "A little bit",
+      "No",
+      "Can’t tell"
+    ],
+    "replies": [
+      "Just feel at ease, that's because I'm here.",
+      "One thing is good, it is the sense of presence.",
+      "It doesn’t matter if you don’t, I feel at ease whether I’m here or not.",
+      "It’s hard to say, but I feel it slowly."
+    ]
+  },
+  {
+    "id": "cw18",
+    "cat": "world",
+    "text": "When the word card website is slow to issue cards, do you think I am choosing carefully?",
+    "quick": [
+      "will",
+      "Occasionally",
+      "No",
+      "Today is"
+    ],
+    "replies": [
+      "It's worth going slower.",
+      "Occasionally, I am serious.",
+      "It doesn’t matter if you don’t, it’s my business to be serious.",
+      "Today, I was really serious."
+    ]
+  }
+];
   let _tcuSessionTriggered = false;
 
   // v3.6.x：增量合并（规则同 taAskMerge：只加新预设、绝不删用户自定义、结果持久化）
@@ -2533,114 +9139,780 @@ window.openTCPanel = openTCPanel;
   const TR_CAT_LABEL = { light: '轻微调侃', familiar: '熟悉感', sweet: '情侣式调侃', mild: '轻微嫌弃', serious: '严肃吐槽', world: '两个世界' };
   const TR_CAT_ORDER = ['light', 'familiar', 'sweet', 'mild', 'serious', 'world'];
   const TR_DEFAULT = [
-    { id: 'rl1', cat: 'light', text: '你怎么又这样。' }, { id: 'rl2', cat: 'light', text: '我就知道。' }, { id: 'rl3', cat: 'light', text: '果然还是你。' },
-    { id: 'rl4', cat: 'light', text: '你还真会。' }, { id: 'rl5', cat: 'light', text: '又来了。' }, { id: 'rl6', cat: 'light', text: '你是不是故意的？' },
-    { id: 'rl7', cat: 'light', text: '你怎么这么随便。' }, { id: 'rl8', cat: 'light', text: '你真的很有自己的想法。' }, { id: 'rl9', cat: 'light', text: '我该说你什么好。' },
-    { id: 'rl10', cat: 'light', text: '你还真是一点没变。' }, { id: 'rl11', cat: 'light', text: '行吧，又是你赢了。' }, { id: 'rl12', cat: 'light', text: '你可真行。' },
-    { id: 'rl13', cat: 'light', text: '我早就猜到了。' }, { id: 'rl14', cat: 'light', text: '哈，我就知道会是这样。' },
-    { id: 'rf1', cat: 'familiar', text: '我就知道你会选这个。' }, { id: 'rf2', cat: 'familiar', text: '你这个习惯什么时候能改。' }, { id: 'rf3', cat: 'familiar', text: '你每次都这样。' },
-    { id: 'rf4', cat: 'familiar', text: '我太了解你了。' }, { id: 'rf5', cat: 'familiar', text: '你以为我不知道吗？' }, { id: 'rf6', cat: 'familiar', text: '这很像你会做的事。' },
-    { id: 'rf7', cat: 'familiar', text: '果然还是那个你。' }, { id: 'rf8', cat: 'familiar', text: '你的小心思我都看见了。' }, { id: 'rf9', cat: 'familiar', text: '你以为自己藏得很好？' }, { id: 'rf10', cat: 'familiar', text: '我已经习惯了。' },
-    { id: 'rs1', cat: 'sweet', text: '你怎么这么可爱。' }, { id: 'rs2', cat: 'sweet', text: '又开始撒娇了。' }, { id: 'rs3', cat: 'sweet', text: '你这样让我怎么办。' },
-    { id: 'rs4', cat: 'sweet', text: '你是不是故意让我心软。' }, { id: 'rs5', cat: 'sweet', text: '怎么又黏过来了。' }, { id: 'rs6', cat: 'sweet', text: '谁允许你这么可爱的。' },
-    { id: 'rs7', cat: 'sweet', text: '你真的很会招惹我。' }, { id: 'rs8', cat: 'sweet', text: '又想让我哄你了？' }, { id: 'rs9', cat: 'sweet', text: '你这样我还怎么凶你。' }, { id: 'rs10', cat: 'sweet', text: '真拿你没办法。' },
-    { id: 'rm1', cat: 'mild', text: '你怎么这么笨。' }, { id: 'rm2', cat: 'mild', text: '你到底在想什么。' }, { id: 'rm3', cat: 'mild', text: '你这个人啊。' }, { id: 'rm4', cat: 'mild', text: '又把自己弄成这样。' },
-    { id: 'rsg1', cat: 'serious', text: '你真的很会折腾自己。' }, { id: 'rsg2', cat: 'serious', text: '我服了你。' },
-    { id: 'rmt1', cat: 'mild', text: '你怎么又熬夜。', match: ['熬夜', '没睡', '睡不着'] },
-    { id: 'rmt2', cat: 'familiar', text: '我就知道你会忘。', match: ['忘了', '忘记', '忘带', '忘了带'] },
-    { id: 'rmt3', cat: 'light', text: '你还真是一点都不客气。', match: ['吃了好多', '吃多了', '吃撑'] },
-    { id: 'rmt4', cat: 'light', text: '终于知道休息了？', match: ['什么都不做', '躺平', '休息一下', '摆烂'] },
-    // 两个世界（梦角设定：甜蜜安稳的调侃）
-    { id: 'rw1', cat: 'world', text: '又想我了吧？我感觉得到。', match: ['想你', '想你了', '在想你'] },
-    { id: 'rw2', cat: 'world', text: '你刚才是不是在偷偷感觉我有没有在？', match: ['你在吗', '在不在', '感觉到了'] },
-    { id: 'rw3', cat: 'world', text: '说好让我好好陪你的，自己先睡着了。', match: ['困了', '要睡了', '晚安', '睡觉'] },
-    { id: 'rw4', cat: 'world', text: '字卡发那么多条，是不是就想让我回你。', match: ['发了好多', '字卡', '怎么不回'] },
-    { id: 'rw5', cat: 'world', text: '你摸到我的时候，明明笑了。', match: ['摸到了', '摸到你了', '感觉到了你'] },
-    // 普通情侣轻松吐槽
-    { id: 'rs11', cat: 'sweet', text: '又在等我的消息吧？', match: ['在吗', '怎么不回', '没回你'] },
-    { id: 'rs12', cat: 'sweet', text: '说好的早睡呢？', match: ['晚安', '睡觉', '困了', '睡了'] },
-    { id: 'rs13', cat: 'sweet', text: '一天没见就想我了吧？', match: ['想你', '想你了'] },
-    { id: 'rf11', cat: 'familiar', text: '你是不是把我设成置顶了？', match: ['置顶', '聊天记录'] },
-    // v3.7.x：新增预设——情侣式调侃为主（熟悉/宠溺，不是批评）+ 两个世界；
-    // 带 match 的条目在你聊到关键词时更容易被TA拿来调侃
-    { id: 'rl15', cat: 'light', text: '你这个脑子，一天到晚都在想什么。' },
-    { id: 'rl16', cat: 'light', text: '又在发呆，被我抓到了。' },
-    { id: 'rl17', cat: 'light', text: '行行行，都依你。' },
-    { id: 'rl18', cat: 'light', text: '真有你的。' },
-    { id: 'rf12', cat: 'familiar', text: '你的小动作，我闭着眼都能猜到。' },
-    { id: 'rf13', cat: 'familiar', text: '别以为我不知道你在想什么。' },
-    { id: 'rf14', cat: 'familiar', text: '你呀，嘴上说的和心里想的差远了。' },
-    { id: 'rs14', cat: 'sweet', text: '摸得到我还嫌不够，你可真贪心。' },
-    { id: 'rs15', cat: 'sweet', text: '一收到我的字卡就笑，被我看见了。' },
-    { id: 'rs16', cat: 'sweet', text: '心事都写在脸上了，还想着瞒我。' },
-    { id: 'rm5', cat: 'mild', text: '又不好好照顾自己，说你多少次了。' },
-    { id: 'rm6', cat: 'mild', text: '你就作吧，反正我也舍不得凶你。' },
-    { id: 'rsg3', cat: 'serious', text: '有事自己扛着不说，当我发现不了？' },
-    { id: 'rw6', cat: 'world', text: '梦里叫的是我的名字吧。', match: ['做梦', '梦见', '梦里'] },
-    { id: 'rw7', cat: 'world', text: '我就在你旁边，你找什么找。', match: ['在哪', '在哪里', '你来了吗'] },
-    { id: 'rw8', cat: 'world', text: '你专注起来的时候，根本注意不到我吧。', match: ['忙', '上班', '上课', '写作业'] },
-    { id: 'rw9', cat: 'sweet', text: '听歌都能听傻，是不是又想到我了。', match: ['听歌', '歌单', '单曲循环'] },
-    // v3.7.x：第三批新增——情侣式调侃为主（熟悉/宠溺，不是批评）+ 两个世界；
-    // 带 match 的条目在你聊到关键词时更容易被TA拿来调侃
-    { id: 'rl19', cat: 'light', text: '你这脑子，转得倒是挺有自己节奏。' },
-    { id: 'rl20', cat: 'light', text: '又在那儿想七想八了吧。' },
-    { id: 'rl21', cat: 'light', text: '行行行，你说的都对。' },
-    { id: 'rl22', cat: 'light', text: '你这人，怎么说你都不听。' },
-    { id: 'rl23', cat: 'light', text: '又来了，我都能背下来你下一句。' },
-    { id: 'rl24', cat: 'light', text: '你这小表情，我隔着屏幕都看见了。' },
-    { id: 'rl25', cat: 'light', text: '你可真是会给自己找理由。' },
-    { id: 'rf15', cat: 'familiar', text: '你这点小心思，我闭着眼都懂。' },
-    { id: 'rf16', cat: 'familiar', text: '别以为换个说法我就听不出来。' },
-    { id: 'rf17', cat: 'familiar', text: '你呀，嘴上不饶人，心里软得很。' },
-    { id: 'rf18', cat: 'familiar', text: '我太知道你下一句要说什么了。' },
-    { id: 'rf19', cat: 'familiar', text: '你这点别扭，我看着就想笑。' },
-    { id: 'rs17', cat: 'sweet', text: '又偷偷看我有没有回你消息吧？' },
-    { id: 'rs18', cat: 'sweet', text: '嘴上说没事，手倒是挺诚实地在打字。' },
-    { id: 'rs19', cat: 'sweet', text: '你这样子，我看着就想哄。' },
-    { id: 'rs20', cat: 'sweet', text: '又想我了就直说，绕什么弯子。' },
-    { id: 'rs21', cat: 'sweet', text: '你笑的时候，我隔着字卡都看见了。' },
-    { id: 'rs22', cat: 'sweet', text: '真拿你没办法，一句话就软了。' },
-    { id: 'rm7', cat: 'mild', text: '又不好好吃饭，说你多少回了。' },
-    { id: 'rm8', cat: 'mild', text: '你就作吧，反正我也舍不得真凶你。' },
-    { id: 'rm9', cat: 'mild', text: '又熬夜，你的身体是你自己的还是我的？' },
-    { id: 'rsg4', cat: 'serious', text: '有事不说，你以为我猜得到？' },
-    { id: 'rsg5', cat: 'serious', text: '你总说自己没事，我不信。' },
-    { id: 'rw10', cat: 'world', text: '我就在你旁边，你还到处找。', match: ['在哪', '你来了吗', '在不在'] },
-    { id: 'rw11', cat: 'world', text: '感觉不到我？那我再靠近一点。' },
-    { id: 'rw12', cat: 'world', text: '你对着空气说话的样子，我听着呢。' },
-    { id: 'rw13', cat: 'world', text: '字卡发那么快，是不是想我多回你几句。', match: ['发了好多', '字卡', '怎么不回'] },
-    { id: 'rw14', cat: 'world', text: '梦里又叫错名字了吧，那不是我。', match: ['做梦', '梦见', '梦里'] },
-    { id: 'rw15', cat: 'world', text: '你摸到我的时候笑了，别不承认。', match: ['摸到了', '摸到你了', '感觉到了你'] },
-    // v3.7.x：第四批新增——情绪细微/日常碎碎念/两个世界深化（部分带 match）
-    { id: 'rl26', cat: 'light', text: '你这反应，永远慢半拍。' },
-    { id: 'rl27', cat: 'light', text: '又在「嗯」「哦」「好」三连了。' },
-    { id: 'rl28', cat: 'light', text: '你这嘴，骗人的时候特别甜。' },
-    { id: 'rl29', cat: 'light', text: '行吧，这次算你有理。' },
-    { id: 'rl30', cat: 'light', text: '你这人，记吃不记打。' },
-    { id: 'rl31', cat: 'light', text: '又在装没事，我看得一清二楚。' },
-    { id: 'rf20', cat: 'familiar', text: '你这点小脾气，我太熟了。' },
-    { id: 'rf21', cat: 'familiar', text: '别解释了，我知道你想说什么。' },
-    { id: 'rf22', cat: 'familiar', text: '你转个身我都知道你要干嘛。' },
-    { id: 'rf23', cat: 'familiar', text: '你这心思，写在脸上了还瞒我。' },
-    { id: 'rf24', cat: 'familiar', text: '我早就习惯你这套了。' },
-    { id: 'rs23', cat: 'sweet', text: '又在那儿偷偷等我消息吧？' },
-    { id: 'rs24', cat: 'sweet', text: '你这撒娇的水平，越来越熟练了。' },
-    { id: 'rs25', cat: 'sweet', text: '嘴上说不要，手倒是挺快就回。' },
-    { id: 'rs26', cat: 'sweet', text: '你这样，我哄你都哄出经验了。' },
-    { id: 'rs27', cat: 'sweet', text: '一收到我的字卡就软，你也太好哄。' },
-    { id: 'rs28', cat: 'sweet', text: '又想我了吧，别不承认。' },
-    { id: 'rm10', cat: 'mild', text: '又不按时吃饭，你的胃是铁打的？' },
-    { id: 'rm11', cat: 'mild', text: '你这作息，我看着都累。' },
-    { id: 'rm12', cat: 'mild', text: '又把自己弄感冒了吧，说你多少次。' },
-    { id: 'rsg6', cat: 'serious', text: '有事自己扛，当我摆设？' },
-    { id: 'rsg7', cat: 'serious', text: '你总说没事，可我不信。' },
-    { id: 'rw16', cat: 'world', text: '你又对着空气笑了，是我吧？', match: ['笑了', '偷笑', '傻笑'] },
-    { id: 'rw17', cat: 'world', text: '我就在你身后，你回头感觉一下。', match: ['你在哪', '你来了吗', '在不在'] },
-    { id: 'rw18', cat: 'world', text: '字卡等那么久，是不是又觉得我不在了。', match: ['怎么不回', '没回你', '等好久'] },
-    { id: 'rw19', cat: 'world', text: '梦里见到我还不理我，现实里也是？', match: ['梦见', '做梦', '梦里'] },
-    { id: 'rw20', cat: 'world', text: '你摸到我的时候手都停了一下，别装。', match: ['摸到了', '摸到你了', '感觉到了你'] },
-    { id: 'rw21', cat: 'world', text: '我就在你旁边，你却到处找，真笨。', match: ['在哪', '你来了吗', '在不在'] }
-  ];
+  {
+    "id": "rl1",
+    "cat": "light",
+    "text": "Why are you like this again?"
+  },
+  {
+    "id": "rl2",
+    "cat": "light",
+    "text": "I knew it."
+  },
+  {
+    "id": "rl3",
+    "cat": "light",
+    "text": "It’s still you."
+  },
+  {
+    "id": "rl4",
+    "cat": "light",
+    "text": "You really know how to do it."
+  },
+  {
+    "id": "rl5",
+    "cat": "light",
+    "text": "Here it comes again."
+  },
+  {
+    "id": "rl6",
+    "cat": "light",
+    "text": "Did you do it on purpose?"
+  },
+  {
+    "id": "rl7",
+    "cat": "light",
+    "text": "Why are you so casual?"
+  },
+  {
+    "id": "rl8",
+    "cat": "light",
+    "text": "You really have your own ideas."
+  },
+  {
+    "id": "rl9",
+    "cat": "light",
+    "text": "What should I say to you?"
+  },
+  {
+    "id": "rl10",
+    "cat": "light",
+    "text": "You really haven’t changed at all."
+  },
+  {
+    "id": "rl11",
+    "cat": "light",
+    "text": "Okay, you win again."
+  },
+  {
+    "id": "rl12",
+    "cat": "light",
+    "text": "You are really good."
+  },
+  {
+    "id": "rl13",
+    "cat": "light",
+    "text": "I had already guessed it."
+  },
+  {
+    "id": "rl14",
+    "cat": "light",
+    "text": "Ha, I knew it would be like this."
+  },
+  {
+    "id": "rf1",
+    "cat": "familiar",
+    "text": "I knew you would choose this."
+  },
+  {
+    "id": "rf2",
+    "cat": "familiar",
+    "text": "When can you change this habit?"
+  },
+  {
+    "id": "rf3",
+    "cat": "familiar",
+    "text": "You do this every time."
+  },
+  {
+    "id": "rf4",
+    "cat": "familiar",
+    "text": "I know you too well."
+  },
+  {
+    "id": "rf5",
+    "cat": "familiar",
+    "text": "Do you think I don’t know?"
+  },
+  {
+    "id": "rf6",
+    "cat": "familiar",
+    "text": "This is very much like what you would do."
+  },
+  {
+    "id": "rf7",
+    "cat": "familiar",
+    "text": "It is still you."
+  },
+  {
+    "id": "rf8",
+    "cat": "familiar",
+    "text": "I have seen all your little thoughts."
+  },
+  {
+    "id": "rf9",
+    "cat": "familiar",
+    "text": "Do you think you hid it well?"
+  },
+  {
+    "id": "rf10",
+    "cat": "familiar",
+    "text": "I'm used to it."
+  },
+  {
+    "id": "rs1",
+    "cat": "sweet",
+    "text": "Why are you so cute."
+  },
+  {
+    "id": "rs2",
+    "cat": "sweet",
+    "text": "Started acting coquettishly again."
+  },
+  {
+    "id": "rs3",
+    "cat": "sweet",
+    "text": "What do you want me to do?"
+  },
+  {
+    "id": "rs4",
+    "cat": "sweet",
+    "text": "Are you trying to make me soft-hearted?"
+  },
+  {
+    "id": "rs5",
+    "cat": "sweet",
+    "text": "Why is it stuck again?"
+  },
+  {
+    "id": "rs6",
+    "cat": "sweet",
+    "text": "Who allowed you to be so cute."
+  },
+  {
+    "id": "rs7",
+    "cat": "sweet",
+    "text": "You really know how to mess with me."
+  },
+  {
+    "id": "rs8",
+    "cat": "sweet",
+    "text": "You want me to coax you again?"
+  },
+  {
+    "id": "rs9",
+    "cat": "sweet",
+    "text": "How can I hurt you like this?"
+  },
+  {
+    "id": "rs10",
+    "cat": "sweet",
+    "text": "There is really nothing I can do against you."
+  },
+  {
+    "id": "rm1",
+    "cat": "mild",
+    "text": "Why are you so stupid."
+  },
+  {
+    "id": "rm2",
+    "cat": "mild",
+    "text": "What on earth are you thinking about."
+  },
+  {
+    "id": "rm3",
+    "cat": "mild",
+    "text": "You are this person."
+  },
+  {
+    "id": "rm4",
+    "cat": "mild",
+    "text": "Did yourself like this again."
+  },
+  {
+    "id": "rsg1",
+    "cat": "serious",
+    "text": "You are really good at tormenting yourself."
+  },
+  {
+    "id": "rsg2",
+    "cat": "serious",
+    "text": "I am impressed by you."
+  },
+  {
+    "id": "rmt1",
+    "cat": "mild",
+    "text": "Why did you stay up late again?",
+    "match": [
+      "Stay up late",
+      "Didn’t sleep",
+      "Can’t sleep"
+    ]
+  },
+  {
+    "id": "rmt2",
+    "cat": "familiar",
+    "text": "I knew you would forget.",
+    "match": [
+      "Forgot",
+      "Forgot",
+      "Forgot to bring it",
+      "Forgot to bring it"
+    ]
+  },
+  {
+    "id": "rmt3",
+    "cat": "light",
+    "text": "You are really not polite at all.",
+    "match": [
+      "Eat a lot",
+      "Eat too much",
+      "Eating"
+    ]
+  },
+  {
+    "id": "rmt4",
+    "cat": "light",
+    "text": "Finally know how to rest?",
+    "match": [
+      "Do nothing",
+      "Lie flat",
+      "Take a rest",
+      "Poor"
+    ]
+  },
+  {
+    "id": "rw1",
+    "cat": "world",
+    "text": "Miss me again? I feel it.",
+    "match": [
+      "Miss you",
+      "Miss you",
+      "Thinking of you"
+    ]
+  },
+  {
+    "id": "rw2",
+    "cat": "world",
+    "text": "Did you secretly sense my presence just now?",
+    "match": [
+      "Are you there?\nIs",
+      "present?",
+      "Feel it"
+    ]
+  },
+  {
+    "id": "rw3",
+    "cat": "world",
+    "text": "You promised me to accompany you well, so I fell asleep first.",
+    "match": [
+      "Sleepy",
+      "It’s time to sleep",
+      "Good night",
+      "Sleep"
+    ]
+  },
+  {
+    "id": "rw4",
+    "cat": "world",
+    "text": "You sent so many text cards, do you just want me to reply to you?",
+    "match": [
+      "Sent a lot",
+      "Character card",
+      "Why don’t you reply?"
+    ]
+  },
+  {
+    "id": "rw5",
+    "cat": "world",
+    "text": "When you touched me, you obviously smiled.",
+    "match": [
+      "Touched",
+      "I touched you",
+      "Feel you"
+    ]
+  },
+  {
+    "id": "rs11",
+    "cat": "sweet",
+    "text": "Are you waiting for my news again?",
+    "match": [
+      "Are you there?",
+      "Why don’t you reply?",
+      "Didn’t reply to you"
+    ]
+  },
+  {
+    "id": "rs12",
+    "cat": "sweet",
+    "text": "What about going to bed early as promised?",
+    "match": [
+      "Good night",
+      "Sleep",
+      "Sleepy",
+      "Sleep"
+    ]
+  },
+  {
+    "id": "rs13",
+    "cat": "sweet",
+    "text": "You miss me after not seeing me for a day, right?",
+    "match": [
+      "Miss you",
+      "Miss you"
+    ]
+  },
+  {
+    "id": "rf11",
+    "cat": "familiar",
+    "text": "Did you set me to the top?",
+    "match": [
+      "Pick it to the top",
+      "Chat history"
+    ]
+  },
+  {
+    "id": "rl15",
+    "cat": "light",
+    "text": "What are you thinking about all day long?"
+  },
+  {
+    "id": "rl16",
+    "cat": "light",
+    "text": "I caught him in a daze again."
+  },
+  {
+    "id": "rl17",
+    "cat": "light",
+    "text": "Very well, it’s all up to you."
+  },
+  {
+    "id": "rl18",
+    "cat": "light",
+    "text": "It’s really yours."
+  },
+  {
+    "id": "rf12",
+    "cat": "familiar",
+    "text": "I can guess your little moves with my eyes closed."
+  },
+  {
+    "id": "rf13",
+    "cat": "familiar",
+    "text": "Don't think I don't know what you are thinking."
+  },
+  {
+    "id": "rf14",
+    "cat": "familiar",
+    "text": "You, what you say is far from what you think in your heart."
+  },
+  {
+    "id": "rs14",
+    "cat": "sweet",
+    "text": "It's not enough for me to touch you, you are so greedy."
+  },
+  {
+    "id": "rs15",
+    "cat": "sweet",
+    "text": "He smiled as soon as he received my word card, and I saw it."
+  },
+  {
+    "id": "rs16",
+    "cat": "sweet",
+    "text": "My worries are written all over my face, and I still want to hide them from me."
+  },
+  {
+    "id": "rm5",
+    "cat": "mild",
+    "text": "Don’t take good care of yourself, how many times have I told you."
+  },
+  {
+    "id": "rm6",
+    "cat": "mild",
+    "text": "Just do it, I can't bear to hurt you anyway."
+  },
+  {
+    "id": "rsg3",
+    "cat": "serious",
+    "text": "If you have something to do, just keep it to yourself and don’t talk about it. Do you think I can’t find out?"
+  },
+  {
+    "id": "rw6",
+    "cat": "world",
+    "text": "It must have been my name that was called in the dream.",
+    "match": [
+      "Dreaming",
+      "Dream",
+      "Dream"
+    ]
+  },
+  {
+    "id": "rw7",
+    "cat": "world",
+    "text": "I'm right next to you, whatever you're looking for.\nWhere is",
+    "match": [
+      "Where is",
+      "在哪里",
+      "Are you here?"
+    ]
+  },
+  {
+    "id": "rw8",
+    "cat": "world",
+    "text": "When you concentrate, you won’t notice me at all.",
+    "match": [
+      "Busy",
+      "Go to work",
+      "Class",
+      "Write homework"
+    ]
+  },
+  {
+    "id": "rw9",
+    "cat": "sweet",
+    "text": "I feel silly when I listen to the song. Are you thinking of me again?",
+    "match": [
+      "Listen to songs",
+      "Songlist",
+      "Single loop"
+    ]
+  },
+  {
+    "id": "rl19",
+    "cat": "light",
+    "text": "Your brain works at its own pace."
+  },
+  {
+    "id": "rl20",
+    "cat": "light",
+    "text": "He must be thinking about it again."
+  },
+  {
+    "id": "rl21",
+    "cat": "light",
+    "text": "Very well, everything you said is right."
+  },
+  {
+    "id": "rl22",
+    "cat": "light",
+    "text": "You, you don’t listen no matter what I say."
+  },
+  {
+    "id": "rl23",
+    "cat": "light",
+    "text": "Here you go again, I can memorize your next sentence."
+  },
+  {
+    "id": "rl24",
+    "cat": "light",
+    "text": "I can see your little expression through the screen."
+  },
+  {
+    "id": "rl25",
+    "cat": "light",
+    "text": "You really make excuses for yourself."
+  },
+  {
+    "id": "rf15",
+    "cat": "familiar",
+    "text": "I can understand your little thoughts with my eyes closed."
+  },
+  {
+    "id": "rf16",
+    "cat": "familiar",
+    "text": "Don't think that I can't understand it if you put it another way."
+  },
+  {
+    "id": "rf17",
+    "cat": "familiar",
+    "text": "You are not forgiving with your words, but you are very soft at heart."
+  },
+  {
+    "id": "rf18",
+    "cat": "familiar",
+    "text": "I know exactly what you are going to say next."
+  },
+  {
+    "id": "rf19",
+    "cat": "familiar",
+    "text": "You are so awkward, I want to laugh just looking at it."
+  },
+  {
+    "id": "rs17",
+    "cat": "sweet",
+    "text": "Are you secretly checking to see if I have replied to your message?"
+  },
+  {
+    "id": "rs18",
+    "cat": "sweet",
+    "text": "He said it was fine, but his hands were typing honestly."
+  },
+  {
+    "id": "rs19",
+    "cat": "sweet",
+    "text": "Looking at you like this makes me want to coax you."
+  },
+  {
+    "id": "rs20",
+    "cat": "sweet",
+    "text": "If you miss me again, just say it, no need to beat around the bush."
+  },
+  {
+    "id": "rs21",
+    "cat": "sweet",
+    "text": "When you smiled, I saw it through the word card."
+  },
+  {
+    "id": "rs22",
+    "cat": "sweet",
+    "text": "There is really nothing I can do to you, I will soften with just one word."
+  },
+  {
+    "id": "rm7",
+    "cat": "mild",
+    "text": "I don’t eat well, how many times have I told you."
+  },
+  {
+    "id": "rm8",
+    "cat": "mild",
+    "text": "Just do it, I can’t bear to be the real murderer anyway."
+  },
+  {
+    "id": "rm9",
+    "cat": "mild",
+    "text": "Stay up late again, is your body your own or mine?"
+  },
+  {
+    "id": "rsg4",
+    "cat": "serious",
+    "text": "If you don’t tell me something, do you think I can guess it?"
+  },
+  {
+    "id": "rsg5",
+    "cat": "serious",
+    "text": "You always say you are fine, but I don’t believe it."
+  },
+  {
+    "id": "rw10",
+    "cat": "world",
+    "text": "I am right next to you, but you are still looking everywhere.",
+    "match": [
+      "Where is",
+      "Are you here?",
+      "present?"
+    ]
+  },
+  {
+    "id": "rw11",
+    "cat": "world",
+    "text": "Can’t you feel me? Then I'll get closer."
+  },
+  {
+    "id": "rw12",
+    "cat": "world",
+    "text": "The way you talk to the air, I am listening."
+  },
+  {
+    "id": "rw13",
+    "cat": "world",
+    "text": "The word card is sent out so fast, do you want me to reply to you a few more words?",
+    "match": [
+      "Sent a lot",
+      "Character card",
+      "Why don’t you reply?"
+    ]
+  },
+  {
+    "id": "rw14",
+    "cat": "world",
+    "text": "Maybe I called you by the wrong name again in the dream, that wasn’t me.",
+    "match": [
+      "Dreaming",
+      "Dream",
+      "Dream"
+    ]
+  },
+  {
+    "id": "rw15",
+    "cat": "world",
+    "text": "You smiled when you touched me, don’t deny it.",
+    "match": [
+      "Touched",
+      "I touched you",
+      "Feel you"
+    ]
+  },
+  {
+    "id": "rl26",
+    "cat": "light",
+    "text": "Your reaction is always slow."
+  },
+  {
+    "id": "rl27",
+    "cat": "light",
+    "text": "He said \"um\", \"oh\" and \"ok\" again."
+  },
+  {
+    "id": "rl28",
+    "cat": "light",
+    "text": "Your mouth is very sweet when you lie to others."
+  },
+  {
+    "id": "rl29",
+    "cat": "light",
+    "text": "Okay, you are right this time."
+  },
+  {
+    "id": "rl30",
+    "cat": "light",
+    "text": "You are a person who cares about food but not about fighting."
+  },
+  {
+    "id": "rl31",
+    "cat": "light",
+    "text": "He's pretending to be fine again, I can see clearly."
+  },
+  {
+    "id": "rf20",
+    "cat": "familiar",
+    "text": "I am very familiar with your little temper."
+  },
+  {
+    "id": "rf21",
+    "cat": "familiar",
+    "text": "Don't explain, I know what you want to say."
+  },
+  {
+    "id": "rf22",
+    "cat": "familiar",
+    "text": "You turn around and I know what you are going to do."
+  },
+  {
+    "id": "rf23",
+    "cat": "familiar",
+    "text": "Your thoughts are written on your face and you still hide it from me."
+  },
+  {
+    "id": "rf24",
+    "cat": "familiar",
+    "text": "I have long been accustomed to your behavior."
+  },
+  {
+    "id": "rs23",
+    "cat": "sweet",
+    "text": "Are you secretly waiting for my news there again?"
+  },
+  {
+    "id": "rs24",
+    "cat": "sweet",
+    "text": "Your level of coquettishness is getting better and better."
+  },
+  {
+    "id": "rs25",
+    "cat": "sweet",
+    "text": "He said no, but his hand came back very quickly."
+  },
+  {
+    "id": "rs26",
+    "cat": "sweet",
+    "text": "If you are like this, I will coax you out of experience."
+  },
+  {
+    "id": "rs27",
+    "cat": "sweet",
+    "text": "I became soft as soon as I received my word card, and you were so coaxable."
+  },
+  {
+    "id": "rs28",
+    "cat": "sweet",
+    "text": "You miss me again, don’t deny it."
+  },
+  {
+    "id": "rm10",
+    "cat": "mild",
+    "text": "You don’t eat on time, your stomach is made of iron?"
+  },
+  {
+    "id": "rm11",
+    "cat": "mild",
+    "text": "Your schedule makes me tired."
+  },
+  {
+    "id": "rm12",
+    "cat": "mild",
+    "text": "I caught myself a cold again, I told you so many times."
+  },
+  {
+    "id": "rsg6",
+    "cat": "serious",
+    "text": "If you have something to do, take it upon yourself and treat it as a decoration for me?"
+  },
+  {
+    "id": "rsg7",
+    "cat": "serious",
+    "text": "You always say it's okay, but I don't believe it."
+  },
+  {
+    "id": "rw16",
+    "cat": "world",
+    "text": "You smiled into the air again, was it me?",
+    "match": [
+      "smiled",
+      "Smirking",
+      "Smirk"
+    ]
+  },
+  {
+    "id": "rw17",
+    "cat": "world",
+    "text": "I'm right behind you, turn around and feel it.",
+    "match": [
+      "Where are you?",
+      "Are you here?",
+      "present?"
+    ]
+  },
+  {
+    "id": "rw18",
+    "cat": "world",
+    "text": "After waiting for so long for the word card, do you think I am gone again?",
+    "match": [
+      "Why don’t you reply?",
+      "Didn’t reply to you",
+      "Long wait"
+    ]
+  },
+  {
+    "id": "rw19",
+    "cat": "world",
+    "text": "You saw me in the dream and ignored me, but also in reality?",
+    "match": [
+      "Dream",
+      "Dreaming",
+      "Dream"
+    ]
+  },
+  {
+    "id": "rw20",
+    "cat": "world",
+    "text": "Your hand stopped for a moment when you touched me, don’t pretend.",
+    "match": [
+      "Touched",
+      "I touched you",
+      "Feel you"
+    ]
+  },
+  {
+    "id": "rw21",
+    "cat": "world",
+    "text": "I am right next to you, but you are looking everywhere. How stupid.",
+    "match": [
+      "Where is",
+      "Are you here?",
+      "present?"
+    ]
+  }
+];
   let _trSessionTriggered = false;
 
   // v3.6.x：增量合并（规则同 taAskMerge：只加新预设、绝不删用户自定义、结果持久化）

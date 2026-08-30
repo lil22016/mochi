@@ -467,9 +467,67 @@
   }
 
 // ================= 寻踪（TA 的日常）=================
-const DEF_PLACES = ['在家', '在公司', '在咖啡店', '在公园', '在图书馆', '在路上', '在朋友家', '在健身房', '在超市', '在电影院', '在便利店', '在书店', '在地铁上', '在阳台', '在河边', '在小区楼下', '在面包店', '在车站', '在自习室'];
-const DEF_ACTIONS = ['刷手机', '看书', '发呆', '听歌', '写东西', '吃零食', '喝奶茶', '散步', '玩游戏', '想你', '看电影', '追剧', '刷视频', '等快递', '收拾房间', '洗衣服', '做饭', '泡茶', '吃水果', '拍照'];
-const DEF_CHECK_MSGS = ['想你了', '记得按时吃饭', '今天也很喜欢你', '早点休息', '有空给我回消息', '别太累', '喝水了吗', '今天开心吗', '我今天有点累', '我今天很开心', '我今天有点想你', '我今天有点无聊', '今天过得怎么样', '记得多穿点', '路上注意安全', '晚安'];
+const DEF_PLACES = [
+  "At home",
+  "At the company",
+  "In a coffee shop",
+  "In the park",
+  "in the library",
+  "On the way",
+  "At a friend’s house",
+  "In the gym",
+  "In the supermarket",
+  "In the cinema",
+  "In a convenience store",
+  "In the bookstore",
+  "On the subway",
+  "On the balcony",
+  "by the river",
+  "Downstairs in the community",
+  "In the bakery",
+  "At the station",
+  "In the study room"
+];
+const DEF_ACTIONS = [
+  "Flash your phone",
+  "Read a book",
+  "In a daze",
+  "Listen to songs",
+  "Write something",
+  "Eat snacks",
+  "Drink milk tea",
+  "Take a walk",
+  "Play games",
+  "Miss you",
+  "Watch a movie",
+  "Chasing dramas",
+  "Brush videos",
+  "Waiting for express delivery",
+  "Clean up the room",
+  "Doing laundry",
+  "Cooking",
+  "Making tea",
+  "Eat fruit",
+  "Take photos"
+];
+const DEF_CHECK_MSGS = [
+  "Miss you",
+  "Remember to eat on time",
+  "I like you very much today too",
+  "Go to bed early",
+  "Reply me a message when you have time",
+  "Don’t be too tired",
+  "Did you drink water?",
+  "Are you happy today?",
+  "I'm a little tired today",
+  "I am very happy today",
+  "I miss you a little today",
+  "I'm a little bored today",
+  "How are you doing today?",
+  "Remember to wear more clothes",
+  "Pay attention to safety on the road",
+  "Good night"
+];
 // 寻踪日常字卡（可自定义，localStorage 持久化；空则用默认）
 // v3.6.x：是否使用系统预设字卡（默认开启；关闭后寻踪只从用户添加的字卡里抽）
 const CK_DEF_KEY = 'checkin-cards-default';
@@ -1356,23 +1414,75 @@ if (ckRefresh) {
   //      位置面板词源 = 该库（系统预设开关 + 单卡开关过滤 + 我的添加），此处经 window.locLib* 读取 ----
   // 方位/感知/彩蛋 → 光点落点（相对视口 0~1）
   const DIR_POS = {
-    '在你左边': { x: 0.08, y: 0.5 },
-    '在你右边': { x: 0.92, y: 0.5 },
-    '在你身后': { x: 0.5, y: 0.08 },
-    '在你前面': { x: 0.5, y: 0.92 },
-    '离你两步': { x: 0.5, y: 0.38 },
-    '抬头就能看到': { x: 0.5, y: 0.12 },
-    '在你看不到的地方偷看你': { x: 0.86, y: 0.16 },
-    '在你看不到的地方': { x: 0.72, y: 0.28 },
-    '隔着世界在你身边': { x: 0.5, y: 0.5, center: true },
-    '感觉到了吗': { x: 0.5, y: 0.5, center: true },
-    '能摸到我吗': { x: 0.5, y: 0.5, center: true },
-    '一直没走远': { x: 0.5, y: 0.45 },
-    '隐约在你身旁': { x: 0.55, y: 0.5 },
-    '在你心里': { x: 0.5, y: 0.5, center: true }
-  };
+  "on your left": {
+    "x": 0.08,
+    "y": 0.5
+  },
+  "on your right": {
+    "x": 0.92,
+    "y": 0.5
+  },
+  "Behind you": {
+    "x": 0.5,
+    "y": 0.08
+  },
+  "in front of you": {
+    "x": 0.5,
+    "y": 0.92
+  },
+  "Two steps away from you": {
+    "x": 0.5,
+    "y": 0.38
+  },
+  "You can see it when you look up": {
+    "x": 0.5,
+    "y": 0.12
+  },
+  "Peeping at you where you can’t see it": {
+    "x": 0.86,
+    "y": 0.16
+  },
+  "Where you can’t see it": {
+    "x": 0.72,
+    "y": 0.28
+  },
+  "Beside you across the world": {
+    "x": 0.5,
+    "y": 0.5,
+    "center": true
+  },
+  "Do you feel it?": {
+    "x": 0.5,
+    "y": 0.5,
+    "center": true
+  },
+  "Can you touch me?": {
+    "x": 0.5,
+    "y": 0.5,
+    "center": true
+  },
+  "Never gone far": {
+    "x": 0.5,
+    "y": 0.45
+  },
+  "looming beside you": {
+    "x": 0.55,
+    "y": 0.5
+  },
+  "In your heart": {
+    "x": 0.5,
+    "y": 0.5,
+    "center": true
+  }
+};
   // 距离卡微调：往中心靠（正）/ 往边缘退（负）
-  const DIST_ADJUST = { '再近一点': 0.15, '再远一点': -0.15, '就停这儿': 0, '马上到你身边': 0.3, '一直在原地等你': 0 };
+  const DIST_ADJUST = {
+  "A little closer": 0.15,
+  "A little further": -0.15,
+  "Stop here": 0,
+  "I will be with you immediately": 0.3,
+  "I’ve been waiting for you where you are": 0
+};
   function adjustTowardCenter(pos, amount) {
     return { x: pos.x + (0.5 - pos.x) * amount, y: pos.y + (0.5 - pos.y) * amount, center: pos.center };
   }
@@ -1728,8 +1838,23 @@ if (ckRefresh) {
     { k: '左侧',   arrow: '←', angle: 180 },
     { k: '左前方', arrow: '↖', angle: 225 }
   ];
-  const NEAR_WORDS = ['在你身边', '一直没走远', '隔着世界在你身边', '能摸到我吗', '陪你走着', '停下来等你', '抬头就能看到', '在你前面', '原地等你'];
-  const FAR_WORDS = ['在你看不到的地方', '在你看不到的地方偷看你', '再远一点', '就停这儿'];
+  const NEAR_WORDS = [
+  "by your side",
+  "Never gone far",
+  "Beside you across the world",
+  "Can you touch me?",
+  "Walking with you",
+  "Stop and wait for you",
+  "You can see it when you look up",
+  "in front of you",
+  "Waiting for you right where you are"
+];
+  const FAR_WORDS = [
+  "Where you can’t see it",
+  "Peeping at you where you can’t see it",
+  "A little further",
+  "Stop here"
+];
   // v3.26.x：从位置卡文本推导 8 方向（消除「感知↗ 位置↘」矛盾——感知方向与最近位置卡对齐）
   function dirFromText(t) {
     if (!t) return '';
@@ -2059,8 +2184,19 @@ if (ckRefresh) {
   }, true);
 
   // 打卡字卡：他递来一张；低概率"没控制住"配温柔解读。cb(card|null)，card={text, miss?}
-  const CHECKIN_TA_CARDS = ['你今天也努力了', '我一直看着你呢', '又一起过了一天', '辛苦啦，过来抱抱', '嗯，今天也好好过来了', '你在，我就安心'];
-  const CHECKIN_TA_MISS = ['（字卡有限，他想说的比这张多）', '（这张好像不是他想说的，别在意）', '（他没控制住，意思不全是这个）'];
+  const CHECKIN_TA_CARDS = [
+  "You also worked hard today",
+  "I've been looking at you",
+  "Another day spent together",
+  "Thank you for your hard work, come here and give me a hug.",
+  "Well, I had a good time today too.",
+  "You are here, I feel at ease"
+];
+  const CHECKIN_TA_MISS = [
+  "(Word cards are limited, he wants to say more than this one)",
+  "(This doesn’t seem to be what he wants to say, don’t worry)",
+  "(He couldn’t control it, that’s not all he meant)"
+];
   window.checkinTaCard = function (cb) {
     if (!window.taChimeAllow('checkin-ta', { cooldown: 24 * 3600 * 1000, dailyMax: 1 })) { if (cb) cb(null); return; }
     window.taChimeUse('checkin-ta');
@@ -2186,7 +2322,16 @@ if (ckRefresh) {
   }
 
   // ---- 同频页 ----
-  const DEF_STATUS = ['在听雨', '在看你写东西', '没睡，在发呆', '刚路过你身边', '在想你', '在发呆', '在看你', '在等你看我'];
+  const DEF_STATUS = [
+  "Listening to the rain",
+  "I’m watching you write.",
+  "Not sleeping, in a daze",
+  "I just passed by you",
+  "Thinking of you",
+  "In a daze",
+  "is looking at you",
+  "Waiting for you to look at me"
+];
   const tpPage = document.createElement('div');
   tpPage.className = 'page'; tpPage.id = 'page-tongpin'; tpPage.hidden = true;
   tpPage.innerHTML =
@@ -2253,7 +2398,14 @@ if (ckRefresh) {
   if (tpSendBtn) { tpSendBtn.textContent = '发到聊天：' + (tpSendOn() ? '开' : '关'); tpSendBtn.addEventListener('click', () => { const s = curStore(); const on = !tpSendOn(); if (s) try { s.set('tongpin-send-chat', on ? '1' : '0'); } catch (e) {} tpSendBtn.textContent = '发到聊天：' + (on ? '开' : '关'); }); }
 
   // ---- 伸手页 ----
-  const DEF_WHISPER = ['被你抓到了', '嗯，在', '刚路过你', '我在', '摸到了吧', '没走远'];
+  const DEF_WHISPER = [
+  "You caught me",
+  "Yes, in",
+  "I just passed you",
+  "I am",
+  "You can touch it",
+  "Not far away"
+];
   const ssPage = document.createElement('div');
   ssPage.className = 'page'; ssPage.id = 'page-shenshou'; ssPage.hidden = true;
   ssPage.innerHTML =
@@ -2272,10 +2424,46 @@ if (ckRefresh) {
   function ssSetCount(n) { const s = curStore(); if (s) try { s.set('shenshou-count', '' + n); } catch (e) {} }
   function ssRenderCount() { const el = document.getElementById('ss-count'); if (el) el.textContent = '摸到 ' + ssCount() + ' 次'; }
   const SS_FEEL = [
-    { label: '温热', vib: [80], cls: 'hot', cards: ['好暖', '嗯，在', '靠着你', '体温'] },
-    { label: '微凉', vib: [30], cls: 'cold', cards: ['有点凉', '刚吹过风', '指尖凉'] },
-    { label: '发丝', vib: [10, 20, 10], cls: 'soft', cards: ['痒痒的', '发丝擦过', '轻轻的'] }
-  ];
+  {
+    "label": "Warm",
+    "vib": [
+      80
+    ],
+    "cls": "hot",
+    "cards": [
+      "So warm",
+      "Yes, in",
+      "Lean on you",
+      "Body temperature"
+    ]
+  },
+  {
+    "label": "Slightly cool",
+    "vib": [
+      30
+    ],
+    "cls": "cold",
+    "cards": [
+      "A bit cold",
+      "The wind just blew",
+      "Fingertips are cold"
+    ]
+  },
+  {
+    "label": "Hair",
+    "vib": [
+      10,
+      20,
+      10
+    ],
+    "cls": "soft",
+    "cards": [
+      "Itchy",
+      "Hair brushed",
+      "Gently"
+    ]
+  }
+];
   function ssSendOn() { const s = curStore(); try { return s.get('shenshou-send-chat') !== '0'; } catch (e) { return true; } }
   function ssTry() {
     if (editingNow()) return;
@@ -2326,15 +2514,48 @@ if (ckRefresh) {
   if (ssSendBtn) { ssSendBtn.textContent = '发到聊天：' + (ssSendOn() ? '开' : '关'); ssSendBtn.addEventListener('click', () => { const s = curStore(); const on = !ssSendOn(); if (s) try { s.set('shenshou-send-chat', on ? '1' : '0'); } catch (e) {} ssSendBtn.textContent = '发到聊天：' + (on ? '开' : '关'); }); }
 
   // ---- 喝水页 ----
-  const DEF_WATER_MSGS = ['该喝水了', '别忘了喝水', '喝口水吧', '你今天水喝够了吗'];
-  const DEF_WATER_PRAISE = ['今天喝够啦', '真棒', '完成了', '好乖'];
-  const DEF_WATER_ENCOURAGE = ['再来一杯', '继续', '嗯', '快了'];
-  const DEF_WATER_TA = ['TA 说：{m}', 'TA 让我提醒你：{m}', 'TA 念着：{m}', 'TA 托我带句话：{m}'];
+  const DEF_WATER_MSGS = [
+  "It’s time to drink water",
+  "Don’t forget to drink water",
+  "Drink some water",
+  "Did you drink enough water today?"
+];
+  const DEF_WATER_PRAISE = [
+  "Drink enough today",
+  "Awesome",
+  "Complete",
+  "So good"
+];
+  const DEF_WATER_ENCOURAGE = [
+  "One more drink",
+  "Continue",
+  "Hmm",
+  "Soon"
+];
+  const DEF_WATER_TA = [
+  "you said: {m}",
+  "you Let me remind you: {m}",
+  "you is saying: {m}",
+  "you asked me to bring you a sentence: {m}"
+];
   // 世界观：他视角提醒（灵体在身边，字卡语态）；偶尔出得不准配温柔解读
-  const DEF_WATER_TA_GENTLE = ['水凉了，喝一口？', '你忘了吧，喝一口', '我在呢，先喝口水', '嗯，去喝一口好不好', '别忙忘了喝水'];
+  const DEF_WATER_TA_GENTLE = [
+  "The water is cold, take a sip?",
+  "Forget it, take a sip",
+  "I'm here, drink some water first",
+  "Well, how about you go take a sip?",
+  "Don’t forget to drink water in a hurry"
+];
   // v3.14.x：梦角催喝水兜底池（同 default-cards-data.js「梦角催喝水」分组，
   // 正常走 libPool('water','梦角催喝水') 同源+逐张开关，数据缺失才用这里）
-  const DEF_WATER_CHAT_REMIND = ['该喝水啦，我看着你呢', '去喝口水吧，我在这儿等你回来', '半天没听见你倒水的声音了', '杯子是不是空了很久了？', '别光顾着忙，润润嗓子好不好', '水就放在手边，伸伸手就够到了'];
+  const DEF_WATER_CHAT_REMIND = [
+  "It’s time to drink water, I’m looking at you",
+  "Go and have a drink of water, I'll wait here for you to come back",
+  "I haven’t heard the sound of you pouring water for a long time.",
+  "Has the cup been empty for a long time?",
+  "Don’t be too busy, please moisturize your throat, okay?",
+  "The water is at hand, you can reach it by stretching out your hand"
+];
   const waterPage = document.createElement('div');
   waterPage.className = 'page'; waterPage.id = 'page-water'; waterPage.hidden = true;
   waterPage.innerHTML =
@@ -2563,9 +2784,43 @@ if (ckRefresh) {
   document.getElementById('water-add-msg').addEventListener('click', () => { if (!window.openModal) return; window.openModal('添加提醒字卡', '', (v) => { if (v) { const a = waterMsgs(); a.push(v); waterSaveMsgs(a); toast('已添加'); } }); });
 
   // ---- 吃什么页 ----
-  const DEF_EAT_DISHES = ['番茄炒蛋', '红烧肉', '清蒸鱼', '麻婆豆腐', '宫保鸡丁', '酸辣土豆丝', '蛋炒饭', '牛肉面', '饺子', '馄饨', '皮蛋瘦肉粥', '可乐鸡翅', '糖醋排骨', '清炒时蔬', '蛋花汤', '凉拌黄瓜', '回锅肉', '水煮肉片', '鱼香肉丝', '葱油拌面'];
-  const DEF_EAT_COMMENTS = ['就吃这个吧', '听起来不错', '我想吃这个', '可以', '这个好吃', '嗯，就这个', '想吃'];
-  const EAT_ASK_MSGS = ['今晚吃 {0} 怎么样？', '{0}，想吃吗？', '要不要吃 {0}？', '今天吃 {0} 好不好？'];
+  const DEF_EAT_DISHES = [
+  "Tomato scrambled eggs",
+  "Braised Pork",
+  "Steamed fish",
+  "Mapo Tofu",
+  "Kung Pao Chicken",
+  "Hot and sour potato shreds",
+  "Egg Fried Rice",
+  "Beef Noodles",
+  "Dumplings",
+  "Wontons",
+  "Preserved egg and lean meat porridge",
+  "Cola Chicken Wings",
+  "Sweet and Sour Pork Ribs",
+  "Stir-fried seasonal vegetables",
+  "Egg Drop Soup",
+  "Cold cucumber",
+  "Twice-cooked Pork",
+  "Boiled Pork Slices",
+  "Fish-flavored shredded pork",
+  "Scallion oil noodles"
+];
+  const DEF_EAT_COMMENTS = [
+  "Just eat this",
+  "Sounds good",
+  "I want to eat this",
+  "Yes",
+  "This is delicious",
+  "Well, that’s it",
+  "Want to eat"
+];
+  const EAT_ASK_MSGS = [
+  "How about eating {0} tonight?",
+  "{0}, do you want to eat?",
+  "Do you want to eat {0}?",
+  "Is it okay to eat {0} today?"
+];
   const eatPage = document.createElement('div');
   eatPage.className = 'page'; eatPage.id = 'page-eat'; eatPage.hidden = true;
   eatPage.innerHTML =
@@ -2882,12 +3137,49 @@ if (ckRefresh) {
   // 世界观同喝水「他视角温柔提醒」：梦角是灵体，饭点偶尔冒出来催你吃饭。
   // 话术池与字卡库【系统预设字卡 → 吃什么】tab 同源（DEFAULT_CARD_DATA.eat，
   // 分组「提醒吃饭/追问关心」），逐张开关（dc-off-eat:*）经 libPool 过滤后参与抽取。
-  const DEF_EAT_REMIND = ['到饭点啦，去吃饭吧', '该吃饭了哦，别饿着', '今天吃 {d} 怎么样？就它了', '{d} 挺好的，去吃这个吧', '记得吃热乎的，别随便对付一口', '去吃饭吧，吃完跟我说说吃了什么', '别忙忘了吃饭，胃是自己的', '我看着呢，快去吃饭', '放下手里的事，先吃饭好不好', '饭要按时吃，我才会放心', '好好吃饭的人，运气不会太差哦', '饿了就去做点吃的，别硬撑'];
-  const DEF_EAT_REMIND_CARE = ['吃了什么呀？说给我听听', '吃饱了吗？没饱再去添一点', '吃得合胃口吗？', '慢慢吃，不着急', '记得配点汤汤水水', '吃完了就休息一会儿吧'];
+  const DEF_EAT_REMIND = [
+  "It’s dinner time, let’s go eat",
+  "It’s time to eat, don’t be hungry",
+  "How about eating {d} today? That's it",
+  "{d} Very good, go and eat this",
+  "Remember to eat hot food, don’t just take a bite",
+  "Go and eat. After you finish, tell me what you ate.",
+  "Don’t forget to eat when you are busy, your stomach is your own",
+  "I'm watching, go and eat quickly",
+  "Put down what you are doing and eat first, okay?",
+  "I have to eat on time so that I can rest assured",
+  "Those who eat well will not have bad luck.",
+  "Make something to eat when you are hungry, don’t hold on"
+];
+  const DEF_EAT_REMIND_CARE = [
+  "What did you eat? Tell me",
+  "Are you full? If you're not full, add some more",
+  "Does the food suit your appetite?",
+  "Eat slowly, don’t rush",
+  "Remember to have some soup, soup, water",
+  "Have a rest after eating."
+];
   // v3.26.x：夜宵窗口（21:30–23:30）专属话术——与字卡库【吃什么】tab「夜宵提醒/夜宵关心」
   // 分组同源（default-cards-data.js），深夜不再复用「按时吃饭」文案；仍可逐张开关（dc-off-eat:*）
-  const DEF_EAT_REMIND_NIGHT = ['夜深了，饿不饿？想吃点夜宵吗', '这个点还没睡呀，要不要来点夜宵', '饿着肚子睡觉可不好，去弄点吃的吧', '夜宵别吃太撑，留点肚子给梦', '偷偷问一句，今晚想吃夜宵吗', '去煮碗热乎的面吧，我陪你吃', '深夜的胃，也该被好好对待', '别只啃饼干，夜宵也要认真吃', '吃夜宵的人，今晚会做甜甜的梦', '要不要我给你留一盏灯，你去觅食'];
-  const DEF_EAT_REMIND_NIGHT_CARE = ['夜宵吃的什么呀？说给我听听', '吃饱了就快去睡，别熬太晚', '吃完夜宵记得刷个牙再睡哦', '太晚就别吃太辣的，伤胃', '夜宵吃完了就躺下吧，我守着'];
+  const DEF_EAT_REMIND_NIGHT = [
+  "It’s late at night, are you hungry? Want some late night snack?",
+  "I’m still awake at this point. Would you like some midnight snacks?",
+  "It’s not good to go to bed hungry. Go get something to eat.",
+  "Don’t eat too much at night, leave some room for dreams",
+  "I want to ask secretly, do you want to have a late-night snack tonight?",
+  "Go and make a bowl of hot noodles, I will eat with you",
+  "The stomach in the middle of the night should be treated well",
+  "Don’t just nibble on biscuits, eat snacks carefully as well",
+  "Those who eat late night snacks will have sweet dreams tonight",
+  "Do you want me to leave a light for you while you go look for food?"
+];
+  const DEF_EAT_REMIND_NIGHT_CARE = [
+  "What are you having for midnight snack? Tell me",
+  "Go to bed as soon as you are full and don’t stay up too late",
+  "After your late night snack, remember to brush your teeth before going to bed.",
+  "Don’t eat anything too spicy if it’s too late, it will hurt your stomach.",
+  "After you finish your supper, just lie down, I'll watch over you"
+];
   // 饭点窗口（分钟）：早 06:30–09:30 / 午 11:00–13:30 / 晚 17:00–19:30 / 夜宵 21:30–23:30
   const EAT_REMIND_WINDOWS = [['breakfast', 390, 570], ['lunch', 660, 810], ['dinner', 1020, 1170], ['nightcap', 1290, 1410]];
   function eatDayKey() { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
@@ -2964,9 +3256,21 @@ if (ckRefresh) {
   // ---- 番茄钟页 ----
   // 专注/小憩/长休三档倒计时 + 圆环进度；完成专注记一个 🍅（今日/累计），可发到聊天。
   // 计时基于 endAt 时间戳（不依赖 interval 精度），离开页面后台照走、熄屏回来时间正确。
-  const DEF_POMO_PRAISE = ['专注的你最棒了', '认真的人最好看', '加油，我在陪你', '嗯嗯，我安静陪着', '专注完抱一下'];
+  const DEF_POMO_PRAISE = [
+  "You are the best when you are focused",
+  "Serious people are the best looking",
+  "Come on, I'm with you",
+  "Hmm, I'll stay with you quietly",
+  "Give me a hug after concentrating"
+];
   // 世界观：他此刻近时，专注完成用近状态语（灵体在旁边静静陪）
-  const DEF_POMO_NEAR = ['你专注的时候，我就静静待在旁边', '认真完啦，过来靠靠你', '我一直在旁边看着你呢', '专注完啦，抱一下', '你在认真，我在旁边，挺好'];
+  const DEF_POMO_NEAR = [
+  "When you are focused, I will stay by your side quietly.",
+  "I’m done with my seriousness, come here and lean on you",
+  "I have been watching you from the side",
+  "Finished concentrating, give me a hug",
+  "You are serious and I am beside you, it’s good"
+];
   const POMO_MODES = { focus: { name: '专注', def: 25 }, short: { name: '小憩', def: 5 }, long: { name: '长休', def: 15 } };
   const POMO_RING_C = 552.92; // 2π×88 圆环周长
   const pomoPage = document.createElement('div');
@@ -3196,15 +3500,52 @@ if (ckRefresh) {
   // 世界观：两个人一起攒的小金库（所有桌面/联系人共用一份，同 period/fish-log 全局先例）；
   // TA 是灵体，久未打开时有概率「塞给你」一枚硬币——纯彩蛋提示不入账，由你决定要不要存；
   // 存钱/取钱时用碎碎念字卡回应，攒够目标会庆祝。
-  const DEF_PIGGY_IN = ['叮～又攒下一点啦', '小猪替你收好了', '离目标更近了哦', '嗯嗯，我看着呢', '慢慢攒，不着急'];
-  const DEF_PIGGY_OUT = ['该花的花，别太省', '买什么了呀？', '咦，少了一点点', '没关系，再攒回来'];
-  const DEF_PIGGY_FULL = ['我们存够啦！！', '目标达成，真棒', '攒够了！想好怎么花了吗'];
+  const DEF_PIGGY_IN = [
+  "Ding~ I saved some more",
+  "Little Pig put it away for you",
+  "closer to the target",
+  "Hmm, I'm watching",
+  "Save slowly, don’t be in a hurry"
+];
+  const DEF_PIGGY_OUT = [
+  "Don’t be too economical on the flowers you should spend.",
+  "What did you buy?",
+  "Hey, a little bit missing",
+  "It doesn’t matter, save it later"
+];
+  const DEF_PIGGY_FULL = [
+  "We have saved enough!!",
+  "Goal achieved, awesome",
+  "I’ve saved enough! Have you figured out how to spend it?"
+];
   // 里程碑（存到目标的 25/50/75% 时各庆祝一次，标记存在心愿对象上防重复）
-  const PIGGY_MS = [{ p: 25, t: '已经攒到四分之一啦' }, { p: 50, t: '过半啦，好厉害' }, { p: 75, t: '就差一点点了' }];
+  const PIGGY_MS = [
+  {
+    "p": 25,
+    "t": "Already saved a quarter"
+  },
+  {
+    "p": 50,
+    "t": "More than halfway, so awesome"
+  },
+  {
+    "p": 75,
+    "t": "Just a little bit closer"
+  }
+];
   // 取款后 TA 的关心追问（可回复一句）
-  const PIGGY_CARE = ['花在哪了呀？', '买什么了？跟我说说嘛', '没乱花钱吧？', '钱去哪啦，说来听听'];
+  const PIGGY_CARE = [
+  "Where are the flowers?",
+  "What did you buy? Tell me about it",
+  "You didn’t spend money randomly, did you?",
+  "Where did the money go? Let me tell you."
+];
   const PIGGY_TA_COINS = [0.52, 5.2, 5.21, 6.66, 8.88, 9.99, 13.14];
-  const PIGGY_TA_NOTES = ['偷偷塞了一点', '给你也存了一份', '嘿嘿，别问哪来的'];
+  const PIGGY_TA_NOTES = [
+  "secretly stuffed a little",
+  "I also saved a copy for you.",
+  "Hey, don’t ask where it came from"
+];
   const piggyPage = document.createElement('div');
   piggyPage.className = 'page'; piggyPage.id = 'page-piggy'; piggyPage.hidden = true;
   piggyPage.innerHTML =
@@ -3593,11 +3934,39 @@ if (ckRefresh) {
   // ---- 番茄钟 · 陪伴模式 ----
   // 专属聊天窗（#page-pmp-chat）：陪伴期间所有对话只进独立小窗，不写普通聊天记录；
   // 普通聊天页仅保留倒计时状态条。会话持久化（endAt 时间戳，刷新/重开继续）；切联系人自动退出。
-  const PMP_GREET = ['好，我陪着你', '去吧，我在这等你', '专注吧，我不吵你', '嗯，一起加油'];
-  const PMP_ENC = ['在呢', '继续哦', '摸摸头', '嗯嗯，陪你', '快了快了', '我在看你专注'];
-  const PMP_DONE = ['🍅 完成一个！为你骄傲', '🍅 太棒了，去休息一下吧', '🍅 收工！今天也超认真'];
-  const PMP_REPLIES = ['嗯嗯，我在', '专心哦，我看着你呢', '加油，很快就完成了', '嗯，陪你', '别分心呀，专注完再聊', '好，一起加油', '我在呢，安心专注'];
-  const PMP_TIRED = ['累就先歇口气，深呼吸一下', '辛苦啦，摸摸头，再坚持一小会儿', '累了就慢一点，我不催你'];
+  const PMP_GREET = [
+  "Okay, I'll accompany you",
+  "Go, I'll wait for you here",
+  "Concentrate, I won’t disturb you",
+  "Well, let’s work together"
+];
+  const PMP_ENC = [
+  "Here you are",
+  "Continue",
+  "Touch your head",
+  "Hmm, let me accompany you",
+  "It’s fast, it’s fast",
+  "I'm watching you concentrate"
+];
+  const PMP_DONE = [
+  "🍅 Complete one! proud of you",
+  "🍅 Great, go take a rest",
+  "🍅 Call it a day! I’m super serious today too"
+];
+  const PMP_REPLIES = [
+  "Hmm, I'm here",
+  "Concentrate, I’m watching you",
+  "Come on, it will be done soon",
+  "Yes, I will accompany you",
+  "Don't be distracted. Let's talk after you concentrate.",
+  "Okay, let’s work together",
+  "I'm here, feel free to focus"
+];
+  const PMP_TIRED = [
+  "If you are tired, take a breath first and take a deep breath.",
+  "Thank you for your hard work, pat your head and hold on for a little while longer",
+  "Slow down when you are tired, I won’t rush you"
+];
   let pmpRec = null;
   try { pmpRec = JSON.parse((pomoStore() && pomoStore().get('pomo-companion')) || 'null'); } catch (e) { pmpRec = null; }
   if (!pmpRec || typeof pmpRec !== 'object') pmpRec = null;
@@ -3928,15 +4297,17 @@ if (ckRefresh) {
   let lastTa = null;
   // v3.13.x：浮字/抓包回应改走系统预设字卡池（DEFAULT_CARD_DATA.fish，字卡库「摸鱼浮字」
   // tab 同源可查看/逐张开关）；过滤用户已关闭的卡片，池缺失时回退内置兜底
-  const FISH_NOTE_FALLBACK = ['ta在那边也偷了个懒'];
+  const FISH_NOTE_FALLBACK = [
+  "She was lazy over there too"
+];
   const CATCH_REPLIES = [
-    '呀…被你看到了',
-    '才、才没有偷懒…好吧，被抓到了',
-    '被你抓包了……脸有点烫',
-    '哼，下次偷偷的，不让你发现',
-    '抓到就抓到……要抱一下才肯继续摸',
-    '……罚我陪你十分钟行不行'
-  ];
+  "Yeah..you saw it",
+  "I-I wasn’t lazy..Okay, I got caught",
+  "I got caught by you..my face is a little hot",
+  "Hmph, I’ll do it secretly next time so you won’t find out.",
+  "If you catch it, you will catch it..you have to hug it before you continue to touch it.",
+  ".. Can you punish me to accompany you for ten minutes?"
+];
   function fishPool(name, fallback) {
     let arr = (window.getFishPool ? window.getFishPool(name, fallback) : fallback).slice();
     if (window.isDefaultCardOff) arr = arr.filter(c => !window.isDefaultCardOff('fish', c));

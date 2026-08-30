@@ -2705,7 +2705,15 @@ retractMsg(target, side);
 // v3.26.x：字卡池为空的最终兜底——原单条硬编码「收到～」会让联系人在没有可用
 // 字卡时每条回复都一模一样（用户反馈联系人一直/重复发【收到~】）。改用一个小型
 // 通用池随机抽，避免机械复读；真实的根因仍要查该联系人的字卡库是否为 & 默认字卡开关。
-const FALLBACK_REPLY_POOL = ['收到～', '好呀', '好～', '嗯嗯', '知道啦', '好哒', '嗯嗯，我在听'];
+const FALLBACK_REPLY_POOL = [
+  "Received~",
+  "Very well.",
+  "Okay~",
+  "Hmm",
+  "Got it",
+  "Very well.",
+  "Hmm, I'm listening"
+];
 function genReplyText(c) {
 const pool = getPool();
 let reply = '', type = 'text';
@@ -3006,11 +3014,27 @@ window.rescheduleAutoSend = function () { try { scheduleAutoSend(); } catch (e) 
 document.addEventListener('contact-switched', function () {
 try { if (window.replyCfg) scheduleAutoSend(); } catch (e) {}
 });
-const INVITE_DECLINE = ['下次吧，现在不太想玩~', '等会儿再陪我玩好不好', '先不玩啦，待会儿再说', '现在没状态，下次一定'];
+const INVITE_DECLINE = [
+  "Next time, I don’t really want to play now~",
+  "Can you play with me later?",
+  "Don’t play now, we’ll talk about it later.",
+  "No status now, will do it next time"
+];
 // v3.14.x：贴贴邀请（cuddle）——正常情侣贴贴互动（贴/抱/牵手/靠着），没有游戏半框：
 // 同意后轻震动一下（体感反馈），TA 稍后回应一句贴贴的话；婉拒用专属文案
-const CUDDLE_DECLINE = ['下次再贴吧，先记着这笔~', '等会儿补给你，说话算数', '先欠着，攒到晚上一起还~', '今天想先自己待会儿，明天加倍还你'];
-const CUDDLE_REPLIES = ['嗯……蹭到了。暖暖的，很喜欢。', '那我要贴很久哦，不许偷偷跑掉。', '手被握住了，就这样待一会儿。', '感觉到了，你在旁边。很安心。', '贴贴充电中……好，满格了。'];
+const CUDDLE_DECLINE = [
+  "I will post this next time, remember this first~",
+  "I’ll replenish you later, keep your word",
+  "I owe it first, save it and pay it back together in the evening~",
+  "I want to stay by myself for a while today, and I will pay you back twice as much tomorrow."
+];
+const CUDDLE_REPLIES = [
+  "Hmm.. I got it. It's warm, I like it very much.",
+  "Then I will post it for a long time, and you are not allowed to run away secretly.",
+  "The hand was held and stayed like this for a while.",
+  "I feel it, you are next to me. Very reassuring.",
+  "TieTie is charging..Okay, it's full."
+];
 function openInviteConfirm(title, staticText, onAccept, declinePool) {
 const mask = document.getElementById('modal-mask');
 if ((mask && !mask.hidden) || !window.openModal) { onAccept(); return; }
@@ -3266,8 +3290,22 @@ const pokeList = document.getElementById('poke-list');
 const pokeClose = document.getElementById('poke-card-close');
 const pokeName = document.getElementById('poke-partner-name');
 const POKE_PRESETS = {
-ta: ['拍了拍我', '戳了戳我的脸蛋', '弹了一下我的额头', '揉了揉我的头发', '捏了捏我的脸颊', '拍了拍我的肩膀'],
-mine: ['拍了拍你', '戳了戳你的脸蛋', '弹了一下你的额头', '揉了揉你的头发', '捏了捏你的脸颊', '拍了拍你的肩膀']
+  "ta": [
+    "patted me",
+    "Poke my cheek",
+    "flicked my forehead",
+    "ruffled my hair",
+    "Pinched my cheek",
+    "patted my shoulder"
+  ],
+  "mine": [
+    "patted you",
+    "Poke your cheek",
+    "flicked your forehead",
+    "ruffled your hair",
+    "Pinched your cheek",
+    "patted your shoulder"
+  ]
 };
 function pokeUserGroupsKey(kind) { return window.activePrefix() + ':poke-groups-' + kind; }
 function pokeUserGroupsLoad(kind) {

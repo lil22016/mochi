@@ -1,283 +1,1007 @@
-// ===== 【TA的心情】字卡库（AI-A 业务域） =====
-// 定位：梦角在正常聊天过程中，有概率主动告诉你自己现在的心情/状态/今天的一点感受。
-// 发送方式与普通聊天字卡一致——不是"报告情绪"，不是"主动索取"，以分享为主。
-// 数据由用户设计文档原文落地（15 类 233 张）。
-// 权重（用户文档「二十三」核心比例）：
-//   普通近况/平静 40%（平静15 + 今日近况20 + 不太想说15）
-//   开心/轻松/满足 20%（开心15 + 轻松15 + 满足15）
-//   疲惫/困/烦躁/低落 20%（疲惫18 + 困倦15 + 烦躁15 + 低落15）
-//   想你/想陪你 15%（想你18 + 想陪你15）
-//   突然感觉/小期待/情绪变化 5%（突然的感觉20 + 小期待15 + 情绪变化15）
-// 分组名即字卡库页 chips 展示名；weights 中未列出的分组取默认 weight 1（展示用）。
-// 单卡开关键：tm-off-<分组>:<内容>（'1' 关闭）；总开关键：tm-enabled。
+// ===== Loki English TA mood cards =====
 window.TA_MOOD_DATA = {
-  groups: [
-    { group: '平静', weight: 15 },
-    { group: '开心', weight: 15 },
-    { group: '轻松', weight: 15 },
-    { group: '满足', weight: 15 },
-    { group: '疲惫', weight: 18 },
-    { group: '困倦', weight: 15 },
-    { group: '烦躁', weight: 15 },
-    { group: '低落', weight: 15 },
-    { group: '想你', weight: 18 },
-    { group: '想陪你', weight: 15 },
-    { group: '小期待', weight: 15 },
-    { group: '突然的感觉', weight: 20 },
-    { group: '今日近况', weight: 20 },
-    { group: '不太想说', weight: 15 },
-    { group: '情绪变化', weight: 15 }
+  "groups": [
+    {
+      "group": "平静",
+      "weight": 15
+    },
+    {
+      "group": "开心",
+      "weight": 15
+    },
+    {
+      "group": "轻松",
+      "weight": 15
+    },
+    {
+      "group": "满足",
+      "weight": 15
+    },
+    {
+      "group": "疲惫",
+      "weight": 18
+    },
+    {
+      "group": "困倦",
+      "weight": 15
+    },
+    {
+      "group": "烦躁",
+      "weight": 15
+    },
+    {
+      "group": "低落",
+      "weight": 15
+    },
+    {
+      "group": "想你",
+      "weight": 18
+    },
+    {
+      "group": "想陪你",
+      "weight": 15
+    },
+    {
+      "group": "小期待",
+      "weight": 15
+    },
+    {
+      "group": "突然的感觉",
+      "weight": 20
+    },
+    {
+      "group": "今日近况",
+      "weight": 20
+    },
+    {
+      "group": "不太想说",
+      "weight": 15
+    },
+    {
+      "group": "情绪变化",
+      "weight": 15
+    }
   ],
-  cards: [
-    // ---- 平静（15）----
-    { group: '平静', content: '今天挺安静的。' },
-    { group: '平静', content: '今天心情很平静。' },
-    { group: '平静', content: '现在感觉还不错。' },
-    { group: '平静', content: '今天没什么特别的事。' },
-    { group: '平静', content: '今天状态还算不错。' },
-    { group: '平静', content: '今天感觉很轻松。' },
-    { group: '平静', content: '现在挺舒服的。' },
-    { group: '平静', content: '今天没有什么烦心事。' },
-    { group: '平静', content: '今天过得还挺平稳。' },
-    { group: '平静', content: '现在心里挺安静的。' },
-    { group: '平静', content: '今天感觉什么都刚刚好。' },
-    { group: '平静', content: '今天没什么想折腾的。' },
-    { group: '平静', content: '今天就是很普通的一天。' },
-    { group: '平静', content: '今天感觉挺自在的。' },
-    // ---- 开心（15）----
-    { group: '开心', content: '今天心情不错。' },
-    { group: '开心', content: '今天挺开心的。' },
-    { group: '开心', content: '刚刚心情突然变好了。' },
-    { group: '开心', content: '今天有点高兴。' },
-    { group: '开心', content: '今天感觉还挺好的。' },
-    { group: '开心', content: '不知道为什么，今天心情很好。' },
-    { group: '开心', content: '刚才突然觉得挺开心。' },
-    { group: '开心', content: '今天有种莫名的好心情。' },
-    { group: '开心', content: '今天好像特别容易开心。' },
-    { group: '开心', content: '刚刚想到一件开心的事。' },
-    { group: '开心', content: '今天心情比想象中好。' },
-    { group: '开心', content: '今天过得还挺开心。' },
-    { group: '开心', content: '现在心情很好。' },
-    { group: '开心', content: '今天有一点小开心。' },
-    { group: '开心', content: '突然就开心起来了。' },
-    // ---- 轻松（15）----
-    { group: '轻松', content: '今天感觉挺轻松的。' },
-    { group: '轻松', content: '现在终于可以放松一下了。' },
-    { group: '轻松', content: '今天没那么忙。' },
-    { group: '轻松', content: '现在什么都不想管。' },
-    { group: '轻松', content: '今天感觉没什么压力。' },
-    { group: '轻松', content: '现在这样待着挺舒服。' },
-    { group: '轻松', content: '今天难得有点清闲。' },
-    { group: '轻松', content: '刚刚终于闲下来了。' },
-    { group: '轻松', content: '今天感觉时间过得挺慢。' },
-    { group: '轻松', content: '现在不用想太多。' },
-    { group: '轻松', content: '今天意外地很悠闲。' },
-    { group: '轻松', content: '今天有种偷懒的感觉。' },
-    { group: '轻松', content: '现在只想安安静静待着。' },
-    { group: '轻松', content: '今天挺适合发呆的。' },
-    { group: '轻松', content: '今天什么都慢一点也没关系。' },
-    // ---- 满足（15）----
-    { group: '满足', content: '今天已经挺满足了。' },
-    { group: '满足', content: '现在这样就很好。' },
-    { group: '满足', content: '今天过得还算满意。' },
-    { group: '满足', content: '刚刚突然觉得很满足。' },
-    { group: '满足', content: '今天有种踏实的感觉。' },
-    { group: '满足', content: '现在心里挺充实的。' },
-    { group: '满足', content: '今天感觉没什么遗憾。' },
-    { group: '满足', content: '这样待着就挺好的。' },
-    { group: '满足', content: '今天有一点小小的满足。' },
-    { group: '满足', content: '现在觉得这样很好。' },
-    { group: '满足', content: '今天过得比想象中好。' },
-    { group: '满足', content: '刚刚突然觉得，今天也不错。' },
-    { group: '满足', content: '今天有种被填满的感觉。' },
-    { group: '满足', content: '现在心里挺踏实。' },
-    { group: '满足', content: '今天这样就已经很好了。' },
-    // ---- 疲惫（18）----
-    { group: '疲惫', content: '今天有点累。' },
-    { group: '疲惫', content: '今天感觉有点疲惫。' },
-    { group: '疲惫', content: '今天事情有点多。' },
-    { group: '疲惫', content: '刚刚突然觉得好累。' },
-    { group: '疲惫', content: '今天有点没精神。' },
-    { group: '疲惫', content: '现在只想休息一会儿。' },
-    { group: '疲惫', content: '今天比想象中累。' },
-    { group: '疲惫', content: '感觉今天消耗有点大。' },
-    { group: '疲惫', content: '今天好像一直没停下来。' },
-    { group: '疲惫', content: '现在有点累了。' },
-    { group: '疲惫', content: '今天真的有点辛苦。' },
-    { group: '疲惫', content: '刚刚闲下来，才发现自己挺累。' },
-    { group: '疲惫', content: '今天脑子有点累。' },
-    { group: '疲惫', content: '现在不太想动。' },
-    { group: '疲惫', content: '今天想早点休息。' },
-    { group: '疲惫', content: '今天有点撑不住精神了。' },
-    { group: '疲惫', content: '感觉今天的电量快没了。' },
-    { group: '疲惫', content: '现在只想安静待一会儿。' },
-    // ---- 困倦（15）----
-    { group: '困倦', content: '突然有点困。' },
-    { group: '困倦', content: '今天好想睡觉。' },
-    { group: '困倦', content: '刚刚差点睡着。' },
-    { group: '困倦', content: '现在有点睁不开眼了。' },
-    { group: '困倦', content: '不知道为什么，今天特别困。' },
-    { group: '困倦', content: '我好像开始犯困了。' },
-    { group: '困倦', content: '今天一直有点想睡。' },
-    { group: '困倦', content: '现在只想躺一会儿。' },
-    { group: '困倦', content: '感觉眼睛都快睁不开了。' },
-    { group: '困倦', content: '今天的睡意来得特别早。' },
-    { group: '困倦', content: '刚刚打了个哈欠。' },
-    { group: '困倦', content: '现在脑子有点慢。' },
-    { group: '困倦', content: '困得不太想思考。' },
-    { group: '困倦', content: '今天好像特别适合睡觉。' },
-    { group: '困倦', content: '我现在需要一点睡眠。' },
-    // ---- 烦躁（15）----
-    { group: '烦躁', content: '今天有点烦。' },
-    { group: '烦躁', content: '现在有一点烦躁。' },
-    { group: '烦躁', content: '今天不知道为什么有点不耐烦。' },
-    { group: '烦躁', content: '刚刚有点被弄烦了。' },
-    { group: '烦躁', content: '今天耐心好像少了一点。' },
-    { group: '烦躁', content: '现在有点不想处理事情。' },
-    { group: '烦躁', content: '今天有些事情让我挺烦的。' },
-    { group: '烦躁', content: '刚刚心情有点乱。' },
-    { group: '烦躁', content: '今天感觉什么都不太顺。' },
-    { group: '烦躁', content: '现在不太想听太多东西。' },
-    { group: '烦躁', content: '今天有点容易烦。' },
-    { group: '烦躁', content: '刚才有点不爽。' },
-    { group: '烦躁', content: '现在有一点闷。' },
-    { group: '烦躁', content: '今天好像特别容易被打扰。' },
-    { group: '烦躁', content: '我现在需要安静一会儿。' },
-    // ---- 低落（15）----
-    { group: '低落', content: '今天心情有一点低。' },
-    { group: '低落', content: '今天没什么精神。' },
-    { group: '低落', content: '不知道为什么，今天有点闷。' },
-    { group: '低落', content: '今天好像提不起劲。' },
-    { group: '低落', content: '现在心情不是特别好。' },
-    { group: '低落', content: '今天有一点小小的失落。' },
-    { group: '低落', content: '刚刚突然有点低落。' },
-    { group: '低落', content: '今天感觉有点空。' },
-    { group: '低落', content: '现在不太想说太多。' },
-    { group: '低落', content: '今天好像有点安静过头了。' },
-    { group: '低落', content: '不知道怎么了，今天有点没劲。' },
-    { group: '低落', content: '今天心情有点淡。' },
-    { group: '低落', content: '刚刚突然不太开心了。' },
-    { group: '低落', content: '现在只想自己待一会儿。' },
-    { group: '低落', content: '今天好像少了一点精神。' },
-    // ---- 想你（18）----
-    { group: '想你', content: '今天有点想你。' },
-    { group: '想你', content: '刚刚突然想到你。' },
-    { group: '想你', content: '不知道为什么，今天特别想找你。' },
-    { group: '想你', content: '刚才突然想起你了。' },
-    { group: '想你', content: '今天好像有点想见你。' },
-    { group: '想你', content: '刚刚脑子里突然出现你。' },
-    { group: '想你', content: '今天总感觉会想到你。' },
-    { group: '想你', content: '刚才有一瞬间很想找你。' },
-    { group: '想你', content: '今天有点想和你说话。' },
-    { group: '想你', content: '不知道为什么，就是想来找你。' },
-    { group: '想你', content: '刚刚突然想听你说话。' },
-    { group: '想你', content: '今天好像比平时更想你一点。' },
-    { group: '想你', content: '刚才想到你，心情突然好了点。' },
-    { group: '想你', content: '今天一直有点想找你。' },
-    { group: '想你', content: '我刚刚又想到你了。' },
-    { group: '想你', content: '突然有点想待在你旁边。' },
-    { group: '想你', content: '今天有点想靠近你。' },
-    { group: '想你', content: '刚才突然很想见你。' },
-    // ---- 想陪你（15）----
-    { group: '想陪你', content: '今天有点想陪你。' },
-    { group: '想陪你', content: '现在想和你待一会儿。' },
-    { group: '想陪你', content: '突然想陪你说说话。' },
-    { group: '想陪你', content: '今天想和你多待一会儿。' },
-    { group: '想陪你', content: '现在不太想一个人待着。' },
-    { group: '想陪你', content: '想和你安静待着。' },
-    { group: '想陪你', content: '今天想让你陪着。' },
-    { group: '想陪你', content: '突然想和你待在一起。' },
-    { group: '想陪你', content: '现在有点想靠着你。' },
-    { group: '想陪你', content: '今天想和你一起消磨时间。' },
-    { group: '想陪你', content: '现在想找你待一会儿。' },
-    { group: '想陪你', content: '什么都不做，陪我一会儿也好。' },
-    { group: '想陪你', content: '今天想和你多说几句话。' },
-    { group: '想陪你', content: '突然觉得有你在会很好。' },
-    { group: '想陪你', content: '今天想把一点时间留给你。' },
-    // ---- 小期待（15）----
-    { group: '小期待', content: '今天有一点期待。' },
-    { group: '小期待', content: '刚刚突然有点期待起来了。' },
-    { group: '小期待', content: '今天感觉会发生点什么。' },
-    { group: '小期待', content: '我有一点小期待。' },
-    { group: '小期待', content: '现在有件事让我挺期待的。' },
-    { group: '小期待', content: '今天好像会有好事。' },
-    { group: '小期待', content: '不知道为什么，今天有点期待。' },
-    { group: '小期待', content: '刚刚突然有了点盼头。' },
-    { group: '小期待', content: '现在心里有一点小小的期待。' },
-    { group: '小期待', content: '今天好像有值得期待的东西。' },
-    { group: '小期待', content: '我已经开始有点期待了。' },
-    { group: '小期待', content: '想到那件事就有点开心。' },
-    { group: '小期待', content: '今天好像会是不错的一天。' },
-    { group: '小期待', content: '有一点想看看接下来会发生什么。' },
-    { group: '小期待', content: '现在突然有点期待明天。' },
-    // ---- 突然的感觉（20）----
-    { group: '突然的感觉', content: '刚刚突然觉得，你还挺重要的。' },
-    { group: '突然的感觉', content: '刚才突然有点想你。' },
-    { group: '突然的感觉', content: '不知道为什么，刚刚心情突然很好。' },
-    { group: '突然的感觉', content: '刚刚突然觉得今天挺好的。' },
-    { group: '突然的感觉', content: '刚才突然想和你说句话。' },
-    { group: '突然的感觉', content: '突然有点想靠近你。' },
-    { group: '突然的感觉', content: '刚刚突然觉得很安静。' },
-    { group: '突然的感觉', content: '不知道为什么，现在心情很好。' },
-    { group: '突然的感觉', content: '刚才突然有一点失落。' },
-    { group: '突然的感觉', content: '突然觉得有你在挺好的。' },
-    { group: '突然的感觉', content: '刚刚脑子里突然冒出一个念头。' },
-    { group: '突然的感觉', content: '刚才突然很想找你。' },
-    { group: '突然的感觉', content: '不知道为什么，突然有点开心。' },
-    { group: '突然的感觉', content: '刚刚突然想起一件事。' },
-    { group: '突然的感觉', content: '突然想和你待一会儿。' },
-    { group: '突然的感觉', content: '刚才突然觉得时间过得很快。' },
-    { group: '突然的感觉', content: '不知道为什么，突然有点困。' },
-    { group: '突然的感觉', content: '突然有一点想抱你。' },
-    { group: '突然的感觉', content: '刚才突然觉得，今天其实还不错。' },
-    // ---- 今日近况（20）----
-    { group: '今日近况', content: '今天过得还行。' },
-    { group: '今日近况', content: '今天还挺忙的。' },
-    { group: '今日近况', content: '今天没做什么特别的事。' },
-    { group: '今日近况', content: '今天过得挺普通。' },
-    { group: '今日近况', content: '今天意外地很清闲。' },
-    { group: '今日近况', content: '今天发生了点有意思的事。' },
-    { group: '今日近况', content: '今天感觉时间过得很快。' },
-    { group: '今日近况', content: '今天一天都挺安静的。' },
-    { group: '今日近况', content: '今天比昨天轻松一点。' },
-    { group: '今日近况', content: '今天状态还不错。' },
-    { group: '今日近况', content: '今天有点忙乱。' },
-    { group: '今日近况', content: '今天终于闲下来了。' },
-    { group: '今日近况', content: '今天感觉过得挺快。' },
-    { group: '今日近况', content: '今天有一点小收获。' },
-    { group: '今日近况', content: '今天发现了件挺有意思的事。' },
-    { group: '今日近况', content: '今天没什么特别值得说的。' },
-    { group: '今日近况', content: '今天有点乱，但还好。' },
-    { group: '今日近况', content: '今天总体来说还不错。' },
-    // ---- 不太想说（15）----
-    { group: '不太想说', content: '今天不太想说太多。' },
-    { group: '不太想说', content: '现在有点不想解释。' },
-    { group: '不太想说', content: '今天想安静一点。' },
-    { group: '不太想说', content: '现在不太想说发生了什么。' },
-    { group: '不太想说', content: '有点事情，但暂时不想说。' },
-    { group: '不太想说', content: '今天只想安静待着。' },
-    { group: '不太想说', content: '现在让我缓一会儿。' },
-    { group: '不太想说', content: '今天不太想动脑子。' },
-    { group: '不太想说', content: '现在有点懒得说话。' },
-    { group: '不太想说', content: '今天想少说一点。' },
-    { group: '不太想说', content: '暂时不想想那些事情。' },
-    { group: '不太想说', content: '我自己待一会儿就好。' },
-    { group: '不太想说', content: '等我缓过来再说。' },
-    // ---- 情绪变化（15）----
-    { group: '情绪变化', content: '刚刚心情突然好了。' },
-    { group: '情绪变化', content: '刚才还有点烦，现在好多了。' },
-    { group: '情绪变化', content: '刚刚有点低落，现在已经没事了。' },
-    { group: '情绪变化', content: '刚才还挺困，现在突然清醒了。' },
-    { group: '情绪变化', content: '不知道为什么，刚刚突然开心起来。' },
-    { group: '情绪变化', content: '刚才有点烦，现在已经缓过来了。' },
-    { group: '情绪变化', content: '刚刚突然觉得轻松了很多。' },
-    { group: '情绪变化', content: '刚才还有点乱，现在好多了。' },
-    { group: '情绪变化', content: '刚刚突然有了点精神。' },
-    { group: '情绪变化', content: '刚才有点不开心，现在已经好多了。' },
-    { group: '情绪变化', content: '不知道什么时候，心情已经变好了。' },
-    { group: '情绪变化', content: '刚刚还没什么感觉，现在突然有点开心。' },
-    { group: '情绪变化', content: '刚才有点累，现在舒服多了。' },
-    { group: '情绪变化', content: '刚刚突然想通了一点。' },
-    { group: '情绪变化', content: '现在比刚才好多了。' }
+  "cards": [
+    {
+      "group": "平静",
+      "content": "It's quite quiet today."
+    },
+    {
+      "group": "平静",
+      "content": "I feel very calm today."
+    },
+    {
+      "group": "平静",
+      "content": "Feeling pretty good now."
+    },
+    {
+      "group": "平静",
+      "content": "Nothing special happened today."
+    },
+    {
+      "group": "平静",
+      "content": "My condition is pretty good today."
+    },
+    {
+      "group": "平静",
+      "content": "I feel very relaxed today."
+    },
+    {
+      "group": "平静",
+      "content": "It’s quite comfortable now."
+    },
+    {
+      "group": "平静",
+      "content": "There is nothing to worry about today."
+    },
+    {
+      "group": "平静",
+      "content": "Today was pretty smooth."
+    },
+    {
+      "group": "平静",
+      "content": "I feel quite peaceful now."
+    },
+    {
+      "group": "平静",
+      "content": "Everything feels just right today."
+    },
+    {
+      "group": "平静",
+      "content": "There is nothing to worry about today."
+    },
+    {
+      "group": "平静",
+      "content": "Today is a very ordinary day."
+    },
+    {
+      "group": "平静",
+      "content": "I feel quite comfortable today."
+    },
+    {
+      "group": "开心",
+      "content": "I'm in a good mood today."
+    },
+    {
+      "group": "开心",
+      "content": "I am very happy today."
+    },
+    {
+      "group": "开心",
+      "content": "My mood suddenly improved just now."
+    },
+    {
+      "group": "开心",
+      "content": "I'm a little happy today."
+    },
+    {
+      "group": "开心",
+      "content": "I feel pretty good today."
+    },
+    {
+      "group": "开心",
+      "content": "I don’t know why, but I’m in a good mood today."
+    },
+    {
+      "group": "开心",
+      "content": "I suddenly felt very happy just now."
+    },
+    {
+      "group": "开心",
+      "content": "I feel in an inexplicable good mood today."
+    },
+    {
+      "group": "开心",
+      "content": "It seems very easy to be happy today."
+    },
+    {
+      "group": "开心",
+      "content": "I just thought of a happy thing."
+    },
+    {
+      "group": "开心",
+      "content": "My mood is better than expected today."
+    },
+    {
+      "group": "开心",
+      "content": "I had a great time today."
+    },
+    {
+      "group": "开心",
+      "content": "I am in a good mood now."
+    },
+    {
+      "group": "开心",
+      "content": "A little happy today."
+    },
+    {
+      "group": "开心",
+      "content": "Suddenly I became happy."
+    },
+    {
+      "group": "轻松",
+      "content": "I feel quite relaxed today."
+    },
+    {
+      "group": "轻松",
+      "content": "Now I can finally relax."
+    },
+    {
+      "group": "轻松",
+      "content": "Not so busy today."
+    },
+    {
+      "group": "轻松",
+      "content": "I don’t want to worry about anything now."
+    },
+    {
+      "group": "轻松",
+      "content": "I feel no pressure today."
+    },
+    {
+      "group": "轻松",
+      "content": "It's quite comfortable to stay like this."
+    },
+    {
+      "group": "轻松",
+      "content": "It’s rare to have some leisure time today."
+    },
+    {
+      "group": "轻松",
+      "content": "I finally had some free time just now."
+    },
+    {
+      "group": "轻松",
+      "content": "Time seems to be passing very slowly today."
+    },
+    {
+      "group": "轻松",
+      "content": "Don't think too much now."
+    },
+    {
+      "group": "轻松",
+      "content": "Today is surprisingly leisurely."
+    },
+    {
+      "group": "轻松",
+      "content": "I feel like I'm lazy today."
+    },
+    {
+      "group": "轻松",
+      "content": "Now I just want to stay quietly."
+    },
+    {
+      "group": "轻松",
+      "content": "Today is a good day to be in a daze."
+    },
+    {
+      "group": "轻松",
+      "content": "It’s okay if everything is a little slower today."
+    },
+    {
+      "group": "满足",
+      "content": "I am quite satisfied today."
+    },
+    {
+      "group": "满足",
+      "content": "That's fine now."
+    },
+    {
+      "group": "满足",
+      "content": "I am quite satisfied with my day today."
+    },
+    {
+      "group": "满足",
+      "content": "I suddenly felt very satisfied just now."
+    },
+    {
+      "group": "满足",
+      "content": "I feel at ease today."
+    },
+    {
+      "group": "满足",
+      "content": "I feel quite fulfilled now."
+    },
+    {
+      "group": "满足",
+      "content": "I feel no regrets today."
+    },
+    {
+      "group": "满足",
+      "content": "It’s good to stay like this."
+    },
+    {
+      "group": "满足",
+      "content": "I feel a little satisfied today."
+    },
+    {
+      "group": "满足",
+      "content": "I think this is good now."
+    },
+    {
+      "group": "满足",
+      "content": "Today was better than expected."
+    },
+    {
+      "group": "满足",
+      "content": "I just suddenly felt that today is not bad."
+    },
+    {
+      "group": "满足",
+      "content": "I feel filled up today."
+    },
+    {
+      "group": "满足",
+      "content": "I feel quite at ease now."
+    },
+    {
+      "group": "满足",
+      "content": "This is good enough today."
+    },
+    {
+      "group": "疲惫",
+      "content": "A little tired today."
+    },
+    {
+      "group": "疲惫",
+      "content": "I feel a little tired today."
+    },
+    {
+      "group": "疲惫",
+      "content": "There are a lot of things going on today."
+    },
+    {
+      "group": "疲惫",
+      "content": "I suddenly felt very tired just now."
+    },
+    {
+      "group": "疲惫",
+      "content": "I feel a little down today."
+    },
+    {
+      "group": "疲惫",
+      "content": "Now I just want to rest for a while."
+    },
+    {
+      "group": "疲惫",
+      "content": "Today is more tiring than expected."
+    },
+    {
+      "group": "疲惫",
+      "content": "I feel like I spent a lot today."
+    },
+    {
+      "group": "疲惫",
+      "content": "It seems like it hasn’t stopped today."
+    },
+    {
+      "group": "疲惫",
+      "content": "I'm a little tired now."
+    },
+    {
+      "group": "疲惫",
+      "content": "Today is really hard."
+    },
+    {
+      "group": "疲惫",
+      "content": "Just after I had some free time, I realized that I was very tired."
+    },
+    {
+      "group": "疲惫",
+      "content": "My mind is a little tired today."
+    },
+    {
+      "group": "疲惫",
+      "content": "I don’t want to move much now."
+    },
+    {
+      "group": "疲惫",
+      "content": "I want to go to bed early today."
+    },
+    {
+      "group": "疲惫",
+      "content": "I can’t keep my spirits up today."
+    },
+    {
+      "group": "疲惫",
+      "content": "It feels like the battery is running low today."
+    },
+    {
+      "group": "疲惫",
+      "content": "Now I just want to stay quiet for a while."
+    },
+    {
+      "group": "困倦",
+      "content": "Suddenly I felt sleepy."
+    },
+    {
+      "group": "困倦",
+      "content": "I really want to sleep today."
+    },
+    {
+      "group": "困倦",
+      "content": "I almost fell asleep just now."
+    },
+    {
+      "group": "困倦",
+      "content": "I can’t open my eyes now."
+    },
+    {
+      "group": "困倦",
+      "content": "I don’t know why, but I feel very sleepy today."
+    },
+    {
+      "group": "困倦",
+      "content": "I seem to be getting sleepy."
+    },
+    {
+      "group": "困倦",
+      "content": "I've been feeling sleepy today."
+    },
+    {
+      "group": "困倦",
+      "content": "Now I just want to lie down for a while."
+    },
+    {
+      "group": "困倦",
+      "content": "I feel like I can hardly open my eyes."
+    },
+    {
+      "group": "困倦",
+      "content": "I feel sleepy very early today."
+    },
+    {
+      "group": "困倦",
+      "content": "I just yawned."
+    },
+    {
+      "group": "困倦",
+      "content": "My mind is a little slow now."
+    },
+    {
+      "group": "困倦",
+      "content": "I am too sleepy to think."
+    },
+    {
+      "group": "困倦",
+      "content": "Today seems to be a good time to sleep."
+    },
+    {
+      "group": "困倦",
+      "content": "I need some sleep now."
+    },
+    {
+      "group": "烦躁",
+      "content": "I'm a little annoyed today."
+    },
+    {
+      "group": "烦躁",
+      "content": "I’m a little irritable now."
+    },
+    {
+      "group": "烦躁",
+      "content": "I feel a little impatient today for some reason."
+    },
+    {
+      "group": "烦躁",
+      "content": "I just got a little annoyed."
+    },
+    {
+      "group": "烦躁",
+      "content": "I seem to be a little less patient today."
+    },
+    {
+      "group": "烦躁",
+      "content": "I don’t want to deal with things right now."
+    },
+    {
+      "group": "烦躁",
+      "content": "Some things bother me today."
+    },
+    {
+      "group": "烦躁",
+      "content": "I was feeling a little confused just now."
+    },
+    {
+      "group": "烦躁",
+      "content": "Nothing feels right today."
+    },
+    {
+      "group": "烦躁",
+      "content": "I don’t want to hear too much right now."
+    },
+    {
+      "group": "烦躁",
+      "content": "I feel a little annoyed today."
+    },
+    {
+      "group": "烦躁",
+      "content": "I was a little unhappy just now."
+    },
+    {
+      "group": "烦躁",
+      "content": "It’s a little boring now."
+    },
+    {
+      "group": "烦躁",
+      "content": "I seem to be particularly easily disturbed today."
+    },
+    {
+      "group": "烦躁",
+      "content": "I need some quiet time now."
+    },
+    {
+      "group": "低落",
+      "content": "My mood is a little low today."
+    },
+    {
+      "group": "低落",
+      "content": "I am not very energetic today."
+    },
+    {
+      "group": "低落",
+      "content": "I don’t know why, but I’m a little bored today."
+    },
+    {
+      "group": "低落",
+      "content": "I can’t seem to get excited today."
+    },
+    {
+      "group": "低落",
+      "content": "I’m not in a particularly good mood right now."
+    },
+    {
+      "group": "低落",
+      "content": "I feel a little disappointed today."
+    },
+    {
+      "group": "低落",
+      "content": "I suddenly felt a little down just now."
+    },
+    {
+      "group": "低落",
+      "content": "I feel a little empty today."
+    },
+    {
+      "group": "低落",
+      "content": "I don’t want to say too much now."
+    },
+    {
+      "group": "低落",
+      "content": "It seems a little too quiet today."
+    },
+    {
+      "group": "低落",
+      "content": "I don’t know what’s wrong, I’m a little bored today."
+    },
+    {
+      "group": "低落",
+      "content": "My mood is a bit light today."
+    },
+    {
+      "group": "低落",
+      "content": "I suddenly felt unhappy just now."
+    },
+    {
+      "group": "低落",
+      "content": "Now I just want to stay by myself for a while."
+    },
+    {
+      "group": "低落",
+      "content": "I seem to have lost a little energy today."
+    },
+    {
+      "group": "想你",
+      "content": "I miss you a little today."
+    },
+    {
+      "group": "想你",
+      "content": "I just suddenly thought of you."
+    },
+    {
+      "group": "想你",
+      "content": "I don’t know why, but I especially want to find you today."
+    },
+    {
+      "group": "想你",
+      "content": "I suddenly thought of you just now."
+    },
+    {
+      "group": "想你",
+      "content": "I feel like I want to see you today."
+    },
+    {
+      "group": "想你",
+      "content": "You suddenly appeared in my mind just now."
+    },
+    {
+      "group": "想你",
+      "content": "I always think of you today."
+    },
+    {
+      "group": "想你",
+      "content": "I wanted to find you for a moment just now."
+    },
+    {
+      "group": "想你",
+      "content": "I kind of want to talk to you today."
+    },
+    {
+      "group": "想你",
+      "content": "I don’t know why, I just want to come to you."
+    },
+    {
+      "group": "想你",
+      "content": "I just suddenly wanted to hear you talk."
+    },
+    {
+      "group": "想你",
+      "content": "I seem to miss you more than usual today."
+    },
+    {
+      "group": "想你",
+      "content": "I just thought of you and my mood suddenly felt better."
+    },
+    {
+      "group": "想你",
+      "content": "I’ve been wanting to find you a little bit today."
+    },
+    {
+      "group": "想你",
+      "content": "I just thought of you again."
+    },
+    {
+      "group": "想你",
+      "content": "Suddenly I want to be next to you."
+    },
+    {
+      "group": "想你",
+      "content": "I want to be close to you today."
+    },
+    {
+      "group": "想你",
+      "content": "I suddenly wanted to see you just now."
+    },
+    {
+      "group": "想陪你",
+      "content": "I kind of want to accompany you today."
+    },
+    {
+      "group": "想陪你",
+      "content": "I want to stay with you for a while now."
+    },
+    {
+      "group": "想陪你",
+      "content": "I suddenly want to talk to you."
+    },
+    {
+      "group": "想陪你",
+      "content": "I want to stay with you for a little longer today."
+    },
+    {
+      "group": "想陪你",
+      "content": "I don’t want to be alone now."
+    },
+    {
+      "group": "想陪你",
+      "content": "I want to stay quietly with you."
+    },
+    {
+      "group": "想陪你",
+      "content": "I want you to accompany me today."
+    },
+    {
+      "group": "想陪你",
+      "content": "Suddenly want to stay with you."
+    },
+    {
+      "group": "想陪你",
+      "content": "I want to lean on you now."
+    },
+    {
+      "group": "想陪你",
+      "content": "I want to spend time with you today."
+    },
+    {
+      "group": "想陪你",
+      "content": "I want to stay with you for a while now."
+    },
+    {
+      "group": "想陪你",
+      "content": "Don't do anything, just stay with me for a while."
+    },
+    {
+      "group": "想陪你",
+      "content": "I want to say a few more words to you today."
+    },
+    {
+      "group": "想陪你",
+      "content": "Suddenly I feel like it would be nice to have you around."
+    },
+    {
+      "group": "想陪你",
+      "content": "I want to leave some time for you today."
+    },
+    {
+      "group": "小期待",
+      "content": "There is something to look forward to today."
+    },
+    {
+      "group": "小期待",
+      "content": "I suddenly felt a little excited just now."
+    },
+    {
+      "group": "小期待",
+      "content": "I feel like something is going to happen today."
+    },
+    {
+      "group": "小期待",
+      "content": "I have a little expectation."
+    },
+    {
+      "group": "小期待",
+      "content": "Now there is something I am looking forward to."
+    },
+    {
+      "group": "小期待",
+      "content": "It seems like something good will happen today."
+    },
+    {
+      "group": "小期待",
+      "content": "I don’t know why, but I am looking forward to it today."
+    },
+    {
+      "group": "小期待",
+      "content": "I suddenly felt a little hopeful just now."
+    },
+    {
+      "group": "小期待",
+      "content": "Now I have a little expectation in my heart."
+    },
+    {
+      "group": "小期待",
+      "content": "There seems to be something worth looking forward to today."
+    },
+    {
+      "group": "小期待",
+      "content": "I'm already looking forward to it."
+    },
+    {
+      "group": "小期待",
+      "content": "I feel a little happy thinking about that."
+    },
+    {
+      "group": "小期待",
+      "content": "Today looks like it will be a good day."
+    },
+    {
+      "group": "小期待",
+      "content": "A little bit curious to see what happens next."
+    },
+    {
+      "group": "小期待",
+      "content": "Now I suddenly look forward to tomorrow."
+    },
+    {
+      "group": "突然的感觉",
+      "content": "I just suddenly felt that you are quite important."
+    },
+    {
+      "group": "突然的感觉",
+      "content": "I suddenly missed you just now."
+    },
+    {
+      "group": "突然的感觉",
+      "content": "I don’t know why, but I was suddenly in a good mood just now."
+    },
+    {
+      "group": "突然的感觉",
+      "content": "I just suddenly felt that today was a good day."
+    },
+    {
+      "group": "突然的感觉",
+      "content": "I suddenly wanted to have a word with you just now."
+    },
+    {
+      "group": "突然的感觉",
+      "content": "Suddenly I want to be close to you."
+    },
+    {
+      "group": "突然的感觉",
+      "content": "I suddenly felt very quiet just now."
+    },
+    {
+      "group": "突然的感觉",
+      "content": "I don’t know why, but I’m in a good mood now."
+    },
+    {
+      "group": "突然的感觉",
+      "content": "I suddenly felt a little disappointed just now."
+    },
+    {
+      "group": "突然的感觉",
+      "content": "Suddenly it feels good to have you around."
+    },
+    {
+      "group": "突然的感觉",
+      "content": "An idea suddenly came to my mind just now."
+    },
+    {
+      "group": "突然的感觉",
+      "content": "I suddenly wanted to find you just now."
+    },
+    {
+      "group": "突然的感觉",
+      "content": "I don’t know why, but I feel a little happy suddenly."
+    },
+    {
+      "group": "突然的感觉",
+      "content": "I just suddenly remembered something."
+    },
+    {
+      "group": "突然的感觉",
+      "content": "I suddenly want to stay with you for a while."
+    },
+    {
+      "group": "突然的感觉",
+      "content": "I suddenly felt that time passed very quickly just now."
+    },
+    {
+      "group": "突然的感觉",
+      "content": "I don’t know why, but I feel sleepy suddenly."
+    },
+    {
+      "group": "突然的感觉",
+      "content": "Suddenly I want to hug you."
+    },
+    {
+      "group": "突然的感觉",
+      "content": "I just suddenly felt that today was actually not bad."
+    },
+    {
+      "group": "今日近况",
+      "content": "I had a good day today."
+    },
+    {
+      "group": "今日近况",
+      "content": "quite busy today."
+    },
+    {
+      "group": "今日近况",
+      "content": "Nothing special happened today."
+    },
+    {
+      "group": "今日近况",
+      "content": "I had a pretty ordinary day today."
+    },
+    {
+      "group": "今日近况",
+      "content": "I am surprisingly free today."
+    },
+    {
+      "group": "今日近况",
+      "content": "Something interesting happened today."
+    },
+    {
+      "group": "今日近况",
+      "content": "Time seems to fly by very quickly today."
+    },
+    {
+      "group": "今日近况",
+      "content": "It's been pretty quiet today."
+    },
+    {
+      "group": "今日近况",
+      "content": "Today is a little easier than yesterday."
+    },
+    {
+      "group": "今日近况",
+      "content": "I'm in pretty good shape today."
+    },
+    {
+      "group": "今日近况",
+      "content": "A bit busy today."
+    },
+    {
+      "group": "今日近况",
+      "content": "I finally have some free time today."
+    },
+    {
+      "group": "今日近况",
+      "content": "Today feels like it’s going by pretty fast."
+    },
+    {
+      "group": "今日近况",
+      "content": "There is a little gain today."
+    },
+    {
+      "group": "今日近况",
+      "content": "I discovered something interesting today."
+    },
+    {
+      "group": "今日近况",
+      "content": "There is nothing special worth saying today."
+    },
+    {
+      "group": "今日近况",
+      "content": "A little messy today, but okay."
+    },
+    {
+      "group": "今日近况",
+      "content": "Today was generally pretty good."
+    },
+    {
+      "group": "不太想说",
+      "content": "I don’t want to say too much today."
+    },
+    {
+      "group": "不太想说",
+      "content": "I don’t want to explain it now."
+    },
+    {
+      "group": "不太想说",
+      "content": "I want to be quiet today."
+    },
+    {
+      "group": "不太想说",
+      "content": "I don’t want to say what happened now."
+    },
+    {
+      "group": "不太想说",
+      "content": "There is something going on, but I don’t want to talk about it yet."
+    },
+    {
+      "group": "不太想说",
+      "content": "I just want to be quiet today."
+    },
+    {
+      "group": "不太想说",
+      "content": "Give me a moment now."
+    },
+    {
+      "group": "不太想说",
+      "content": "I don’t really want to use my brain today."
+    },
+    {
+      "group": "不太想说",
+      "content": "I'm a little too lazy to talk now."
+    },
+    {
+      "group": "不太想说",
+      "content": "I want to talk less today."
+    },
+    {
+      "group": "不太想说",
+      "content": "Don’t think about those things for the time being."
+    },
+    {
+      "group": "不太想说",
+      "content": "I'll just stay by myself for a while."
+    },
+    {
+      "group": "不太想说",
+      "content": "Wait until I recover."
+    },
+    {
+      "group": "情绪变化",
+      "content": "My mood suddenly improved just now."
+    },
+    {
+      "group": "情绪变化",
+      "content": "It was a little annoying just now, but it's much better now."
+    },
+    {
+      "group": "情绪变化",
+      "content": "I was a little down just now, but I'm fine now."
+    },
+    {
+      "group": "情绪变化",
+      "content": "I was quite sleepy just now, but now I am suddenly awake."
+    },
+    {
+      "group": "情绪变化",
+      "content": "I don’t know why, but I suddenly felt happy just now."
+    },
+    {
+      "group": "情绪变化",
+      "content": "I was a little annoyed just now, but I have recovered now."
+    },
+    {
+      "group": "情绪变化",
+      "content": "I suddenly felt a lot more relaxed just now."
+    },
+    {
+      "group": "情绪变化",
+      "content": "It was a little messy just now, but it's much better now."
+    },
+    {
+      "group": "情绪变化",
+      "content": "I suddenly felt a little energetic just now."
+    },
+    {
+      "group": "情绪变化",
+      "content": "I was a little unhappy just now, but I am much better now."
+    },
+    {
+      "group": "情绪变化",
+      "content": "I don’t know when, but my mood has improved."
+    },
+    {
+      "group": "情绪变化",
+      "content": "I didn’t feel much just now, but now I suddenly feel a little happy."
+    },
+    {
+      "group": "情绪变化",
+      "content": "I was a little tired just now, but I feel much more comfortable now."
+    },
+    {
+      "group": "情绪变化",
+      "content": "I just suddenly figured something out."
+    },
+    {
+      "group": "情绪变化",
+      "content": "It's much better now than before."
+    }
   ]
 };
