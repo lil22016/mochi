@@ -8227,15 +8227,15 @@ font-size: 15px; color: #c0566b; padding: 2px 4px; line-height: 1.4;
 [data-theme="dark"] .do-coin { color: #d9a83e; border-color: rgba(217,168,62,.35); }
 
 /* ===== iOS 主屏幕模式视口修复 =====
-   iOS PWA 有时会让 100vh 使用偏短的旧布局视口；原来的 body 又会把
-   .phone 垂直居中，于是界面整体上移、底部留下无法点击的空白。
-   主屏幕模式下直接把应用外壳固定到 viewport 四边，避免依赖 100vh。 */
+   WebKit Bug 254868：standalone + viewport-fit=cover 时，inset:0、svh、
+   visualViewport.height 可能扣掉 safe-area；但 100vh 会包含完整屏幕。
+   因此只固定 top/left，明确使用 100vh，不再用受影响的 bottom/inset。 */
 @supports (-webkit-touch-callout: none) {
   html.ios-pwa-standalone,
   html.ios-pwa-standalone body {
     width: 100%;
-    height: 100%;
-    min-height: 100%;
+    height: 100vh;
+    min-height: 100vh;
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -8245,11 +8245,13 @@ font-size: 15px; color: #c0566b; padding: 2px 4px; line-height: 1.4;
   html.ios-pwa-standalone .phone,
   html.tablet.ios-pwa-standalone .phone {
     position: fixed;
-    inset: 0;
+    inset: auto;
+    top: 0;
+    left: 0;
     width: 100%;
     max-width: none;
-    height: auto !important;
-    min-height: 0;
+    height: 100vh !important;
+    min-height: 100vh;
     margin: 0;
     border-radius: 0;
     box-shadow: none;
