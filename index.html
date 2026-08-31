@@ -8430,9 +8430,9 @@ transition-duration: .01ms !important;
     <!-- v3.8.y：底部统一装进一个卡片框（版本/加载/提示/按钮成一整体，与顶部品牌卡片呼应） -->
     <div class="splash-footcard">
       <!-- v3.8.y：底部版本块——两行：名称+版本 / 部署时间+实时秒数（实时秒写入 #splash-ver-live） -->
-      <div class="splash-ver" id="splash-ver" data-build-ts="1788139223347">
+      <div class="splash-ver" id="splash-ver" data-build-ts="1788139734214">
         <span class="sv-app">Mochi 字卡传讯 <b>v3.26.359</b></span>
-        <span class="sv-deploy">部署于 2026-08-31 10:20<span id="splash-ver-live"></span></span>
+        <span class="sv-deploy">部署于 2026-08-31 10:28<span id="splash-ver-live"></span></span>
       </div>
       <!-- v3.5.120：数据（IndexedDB 回填）加载完成前不显示「点击进入」按钮，
            只显示加载提示；就绪后按钮才出现（clock.js 控制显隐） -->
@@ -22806,7 +22806,24 @@ const r = addIn(text, opts);
 if (opts && opts.enter && !chatVisible()) enterChat();
 return r;
 };
-window.chatAddGift = function (rec) { if (!rec.ts) rec.ts = Date.now(); return addRec(rec); };
+window.chatAddGift = function (rec) {
+rec = rec || {};
+if (!rec.ts) rec.ts = Date.now();
+if (!rec.text) {
+const n = String(rec.giftName || '礼物');
+const w = String(rec.giftWish || '').trim();
+rec.text = 'Sent you: ' + n + (w ? ' — ' + w : '');
+}
+const el = addRec(rec);
+if (rec.side === 'out') {
+lastMineText = rec.text;
+try { if (window.cjianNoteChat) window.cjianNoteChat(); } catch (e) {}
+try { if (window.playSfx) window.playSfx('out'); } catch (e) {}
+try { window.__replyOnceDiag = 0; } catch (e) {}
+scheduleReply();
+}
+return el;
+};
 window.chatAppendToDeskMsg = function (cid, text, opts) {
 opts = opts || {};
 const cur = window.__activeCid || 'default';

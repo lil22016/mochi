@@ -242,6 +242,7 @@ const FIX_SENTINELS = [
   { name: '音乐·TA 暂停再播放字卡数据（「TA 暂停播放/TA 恢复播放」两组进系统预设字卡【其他互动功能字卡→音乐】）', file: 'js/default-cards-data.js', needle: 'TA 暂停播放' },
   { name: 'Loki 英文系统字卡包（默认字卡+情绪+TA互动+功能兜底全部进入构建产物）', file: 'js/default-cards-data.js', needle: 'Caught me, did you? You look terribly pleased with yourself.' },
   { name: 'Loki 英文文案校正层（修中式直译、高频人设与伸手错池）', file: 'js/loki-card-polish.js', needle: 'You reached for me. How could I resist?' },
+  { name: '商城送礼卡进入正常消息回复链（可触发回复或已读不回）', file: 'js/chat.js', needle: "if (rec.side === 'out') {\nlastMineText = rec.text;" },
   { name: '桌面图标 IDB 回填并行（Promise.all 一次读完 app-icon-*，修更新后首启「上传的图标图片消失数秒刷新才回来」）', file: 'js/personalize.js', needle: 'Promise.all(iconKeys.map' },
 
 ];
