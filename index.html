@@ -8430,9 +8430,9 @@ transition-duration: .01ms !important;
     <!-- v3.8.y：底部统一装进一个卡片框（版本/加载/提示/按钮成一整体，与顶部品牌卡片呼应） -->
     <div class="splash-footcard">
       <!-- v3.8.y：底部版本块——两行：名称+版本 / 部署时间+实时秒数（实时秒写入 #splash-ver-live） -->
-      <div class="splash-ver" id="splash-ver" data-build-ts="1788139734214">
+      <div class="splash-ver" id="splash-ver" data-build-ts="1788184945857">
         <span class="sv-app">Mochi 字卡传讯 <b>v3.26.359</b></span>
-        <span class="sv-deploy">部署于 2026-08-31 10:28<span id="splash-ver-live"></span></span>
+        <span class="sv-deploy">部署于 2026-08-31 22:02<span id="splash-ver-live"></span></span>
       </div>
       <!-- v3.5.120：数据（IndexedDB 回填）加载完成前不显示「点击进入」按钮，
            只显示加载提示；就绪后按钮才出现（clock.js 控制显隐） -->
@@ -23064,40 +23064,21 @@ bindToggle(b, side);
 function splitCardSegs(text) {
 const str = String(text || '').trim();
 if (!str) return [];
-const isWord = (ch) => /[\u4e00-\u9fffA-Za-z0-9]/.test(ch);
 const out = [];
 let cur = '';
 for (let i = 0; i < str.length; i++) {
 const ch = str[i];
-if ('。！？；\n!?;'.indexOf(ch) >= 0) {
+if ('。！？；\n!?;'.indexOf(ch) >= 0 || ch === '.') {
 cur += ch;
 if (cur.trim()) out.push(cur.trim());
 cur = '';
 continue;
 }
-if (ch === ' ' || ch === '，' || ch === ',') {
-const seg = cur.trim();
-const nextStart = str.slice(i + 1).trimStart()[0] || '';
-const segEnd = seg[seg.length - 1] || '';
-const canSplit = seg.length >= 2 && isWord(segEnd) && isWord(nextStart);
-if (canSplit) {
-if (seg) out.push(seg);
-cur = '';
-} else {
-cur += ch; // 并入当前段（保护颜文字/符号）
-}
-continue;
-}
 cur += ch;
 }
 if (cur.trim()) out.push(cur.trim());
-const filtered = [];
-out.forEach(s => {
-if (s.length <= 1 && filtered.length) filtered[filtered.length - 1] += ' ' + s;
-else filtered.push(s);
-});
-if (filtered.length < 2 && str.trim()) return [str.trim()];
-return filtered;
+if (out.length < 2) return [str];
+return out;
 }
 function partialRetractMsg(msgEl, side) {
 const idx = parseInt(msgEl.dataset.idx, 10);
@@ -34274,6 +34255,12 @@ const exact = new Map(Object.entries({
 'is not a tag.': 'You are not a label someone else gets to define.',
 'is not an imagination.': 'You are real, complicated, and entirely yourself.',
 'Thinking of you will make you feel at ease.': 'Thinking of you steadies me more than I care to admit.'
+,'Sit down, but my heart still can’t calm down.': 'I sat down, but my heart still refuses to settle.'
+,'New cups will also be available.': 'There will be other chances.'
+,'I am willing to catch your emotions.': 'Let me hold what you are feeling for a while.'
+,'You don’t have to bear everything for me.': 'You need not carry everything alone—certainly not for my sake.'
+,'Don’t always bear everything yourself.': 'Stop trying to carry everything alone. Let me take some of it.'
+,'Today is really hard.': 'Today has been rather merciless.'
 }));
 function polish(value) {
 if (typeof value === 'string') return exact.get(value) || value;
