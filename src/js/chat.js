@@ -1215,8 +1215,10 @@ const doSend = () => {
 const v = (inp.value || '').trim();
 if (!v) return;
 if (type === 'curious' && window.chatCuriousReply) {
-const replies = (rec.curiousReplies && rec.curiousReplies.length) ? rec.curiousReplies : ['嗯，我记住了。', '原来是这样。', '好，我记住了。'];
-const reply = (window.pickAskCardReply ? window.pickAskCardReply(replies) : replies[Math.floor(Math.random() * replies.length)]);
+const replies = ['Interesting. Go on—I want the part you nearly left out.', 'There you are. Another secret surrendered to me.', 'I heard you. I will not treat the answer carelessly.'];
+const reply = window.resolveCuriousReply
+? window.resolveCuriousReply(rec, v)
+: replies[Math.floor(Math.random() * replies.length)];
 const fw = (rec.curiousFollowup && Math.random() < 0.3) ? rec.curiousFollowup : null;
 window.chatCuriousReply(idx, v, reply, fw);
 } else if (type === 'roast' && window.chatRoastReply) {

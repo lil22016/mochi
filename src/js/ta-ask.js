@@ -6679,14 +6679,14 @@ window.openTCPanel = openTCPanel;
   const TCU_CAT_LABEL = { you: '关于你', mood: '情绪', daily: '日常', past: '过去', like: '喜好', think: '想法', us: '你和TA', world: '两个世界' };
   const TCU_CAT_ORDER = ['you', 'mood', 'daily', 'past', 'like', 'think', 'us', 'world'];
   const TCU_FALLBACK = [
-  "So that’s it.",
-  "I really don’t know this.",
-  "Suddenly I want to hear more from you.",
-  "Yes, I remember.",
-  "I didn’t expect you to be like this.",
-  "Talking to you about this, I feel like I understand you a little bit more.",
-  "That's it, that's good.",
-  "Okay, I remember what you said."
+  "Interesting. Go on—I want the part you nearly left out.",
+  "There you are. Another secret surrendered to me.",
+  "I suspected as much. I do pay attention, darling.",
+  "Noted. You may be surprised by how well I remember you.",
+  "That explains rather a lot about you.",
+  "Mm. I know you a little better now, and I find that dangerously satisfying.",
+  "A revealing answer. I approve.",
+  "I heard you. I will not treat the answer carelessly."
 ];
   const TCU_DEFAULT = [
   {
@@ -8037,18 +8037,18 @@ window.openTCPanel = openTCPanel;
   {
     "id": "cd13",
     "cat": "daily",
-    "text": "Did you leave some time for yourself to do nothing today?",
+    "text": "Did you give yourself any time to do absolutely nothing today?",
     "quick": [
-      "Yes",
-      "A little bit",
-      "No",
-      "is planning to"
+      "Plenty",
+      "A little",
+      "Not at all",
+      "I was about to"
     ],
     "replies": [
-      "This kind of time is the best to save.",
-      "A little bit is good, add slowly.",
-      "Then start now, it only takes a few minutes.",
-      "Okay, I will do nothing with you."
+      "Good. Being gloriously unproductive now and then is practically an art form.",
+      "Only a little? I suppose I shall have to steal more of your time for you.",
+      "Nothing at all? Then stop. The world can survive without you for ten minutes.",
+      "How convenient. Begin now—I will keep you company and demand absolutely nothing."
     ]
   },
   {
@@ -8671,6 +8671,29 @@ window.openTCPanel = openTCPanel;
     let d = null;
     try { d = JSON.parse(store.get(KEY3) || 'null'); } catch (e) { d = null; }
     if (!d || typeof d !== 'object' || Array.isArray(d)) d = {};
+    // System presets used to be copied into local storage once and never refreshed.
+    // Consequently an upgraded English build could keep serving the old Chinese
+    // questions/replies forever.  Refresh preset-owned fields by id while preserving
+    // the user's enabled state, favourites/history, custom questions and groups.
+    const TCU_PRESET_REV = 1;
+    if (Array.isArray(d.questions) && Number(d.presetRevision || 0) < TCU_PRESET_REV) {
+      const latest = {};
+      const knownPresetIds = new Set(Array.isArray(d.mergedIds) ? d.mergedIds : []);
+      TCU_DEFAULT.forEach(q => { if (q && q.id) latest[q.id] = q; });
+      let refreshed = false;
+      d.questions.forEach(q => {
+        const src = q && (q.isPreset === true || knownPresetIds.has(q.id)) ? latest[q.id] : null;
+        if (!src) return;
+        q.cat = src.cat;
+        q.text = src.text;
+        q.quick = (src.quick || []).slice();
+        q.replies = (src.replies || []).slice();
+        q.followup = src.followup || '';
+        refreshed = true;
+      });
+      d.presetRevision = TCU_PRESET_REV;
+      if (refreshed) { try { store.set(KEY3, JSON.stringify(d)); } catch (e) {} }
+    }
     // 迁移：快捷项人称修正（已存数据与历史答案同步修正）——
     // cw4「你身边」→「我身边」；cp6「再等等，会遇到我」→「再等等，会遇到你」；
     // cy11「只给我看」→「只给你看」
@@ -8835,9 +8858,7 @@ window.openTCPanel = openTCPanel;
       rec = getCardAt(msgIdx);
     }
     if (!rec || rec.special !== 'ask-curious' || rec.curiousStatus === 'answered') return;
-    const replies = (rec.curiousReplies && rec.curiousReplies.length) ? rec.curiousReplies : TCU_FALLBACK.slice();
-    // v3.7.x：回应 = 题预设 replies 池 + 字卡库自定义字卡 混合随机
-    const reply = window.pickAskCardReply ? window.pickAskCardReply(replies) : replies[Math.floor(Math.random() * replies.length)];
+    const reply = resolveCuriousReply(rec, answer);
     // v3.5.128：不再预写 rec 字段——getChatMsgs 是 chat.js 内存对象引用，
     // 预写会让 chatCuriousReply 的 curiousStatus 守卫早退（回答消息丢失）
     const d = tcuLoad();
@@ -8854,6 +8875,33 @@ window.openTCPanel = openTCPanel;
     document.getElementById('qa-mask').hidden = true;
     if (window.openTC) { /* noop */ }
   }
+  function resolveCuriousReply(rec, answer) {
+    rec = rec || {};
+    answer = String(answer || '').trim();
+    // A pending card can itself have been written by an older build. Resolve its
+    // preset id against the current source before replying so stale Chinese or
+    // machine-translated answers do not survive inside an already-open card.
+    const currentPreset = rec.curiousQid ? TCU_DEFAULT.find(q => q && q.id === rec.curiousQid) : null;
+    const shownQuicks = Array.isArray(rec.curiousQuick) ? rec.curiousQuick : [];
+    const currentQuicks = currentPreset && Array.isArray(currentPreset.quick) ? currentPreset.quick : [];
+    let quickIndex = shownQuicks.indexOf(answer);
+    if (quickIndex < 0) quickIndex = currentQuicks.indexOf(answer);
+    let reply;
+    if (quickIndex >= 0) {
+      // replies[i] is authored for quick[i]. The old random draw was the direct
+      // cause of semantically unrelated answers.
+      const matchedReplies = currentPreset && currentPreset.replies && currentPreset.replies.length
+        ? currentPreset.replies
+        : (rec.curiousReplies || []);
+      reply = matchedReplies[quickIndex] || matchedReplies[0] || TCU_FALLBACK[0];
+    } else {
+      // Free-form input cannot safely be matched to one of four option-specific
+      // canned replies. Use a deliberately open, in-character acknowledgement.
+      reply = TCU_FALLBACK[Math.floor(Math.random() * TCU_FALLBACK.length)];
+    }
+    return reply;
+  }
+  window.resolveCuriousReply = resolveCuriousReply;
   function showCuriousResult(msgIdx) {
     let rec = null;
     try {
