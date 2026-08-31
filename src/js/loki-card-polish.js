@@ -68,6 +68,28 @@
     ,'Each word card.': 'Every card carries something I meant for you.'
     ,'You come to check the post, I just miss you too.': 'Checking up on me? Convenient—I was thinking about you.'
     ,'Welcome to check the post, I have confessed to you a long time ago.': 'Come and investigate, darling. I surrendered to you long ago.'
+    ,'was discovered by you.': 'You caught me. Try not to look so pleased.',
+    'does not appear. Doesn\'t mean it doesn\'t exist.': 'My absence does not mean I have stopped thinking of you.',
+    'is me who is responding to you.': 'It is me, answering you as best I can.',
+    'cannot appear all the time and will not leave.': 'I cannot always appear, but I have not left you.',
+    'is different.': 'Of course it is different. You are here.',
+    'is not restricting you.': 'I am not trying to confine you. I simply like having you close.',
+    'wants you to know that you are cared about.': 'I want you to know that you are cared for—by me.',
+    'is not your problem.': 'This is not your fault.',
+    'is also the future I imagined.': 'It is also the future I imagined for us.',
+    'is a reassuring light.': 'You are the light I trust to find again.',
+    'is not perfect.': 'It is not perfect. It is honest.',
+    'is already very good, no need to keep modifying it.': 'It is already good. Stop trying to polish away everything human about it.',
+    'is also willing to accept your company.': 'I can manage alone, but I still choose your company.',
+    'is to live in peace with yourself.': 'Acceptance means learning to live without waging war on yourself.',
+    'is a serious decision.': 'What I gave you was a deliberate choice.',
+    'is not a loss.': 'Giving it to you was never a loss.',
+    'is for sharing.': 'Some things become better when they are shared with you.',
+    'is just the beginning of the next meeting.': 'Leaving is merely the beginning of finding you again.',
+    'is not someone who is easily influenced.': 'You are not so easily swayed. One of your more attractive qualities.',
+    'is not a tag.': 'You are not a label someone else gets to define.',
+    'is not an imagination.': 'You are real, complicated, and entirely yourself.',
+    'Thinking of you will make you feel at ease.': 'Thinking of you steadies me more than I care to admit.'
   }));
   function polish(value) {
     if (typeof value === 'string') return exact.get(value) || value;
@@ -157,5 +179,87 @@
     'No icy drinks today. Choose something warm.',
     'You may spend the day doing absolutely nothing. I grant permission.',
     'Be kind to yourself—or I shall have to do it for you.'
+  ]);
+  setGroup('main', '换个话题', [
+    'Enough of that. Tell me something else.',
+    'We will return to this later. For now, change the subject.',
+    'Let us discuss something less tedious.',
+    'Go on—tell me what else happened today.',
+    'I have heard enough of that particular disaster. What next?',
+    'Set that aside for a moment and talk to me.',
+    'Where were we before this charming interruption?',
+    'Tell me something that will improve my mood.',
+    'No more of this. I want to hear about you.',
+    'A different subject, darling. Surprise me.',
+    'We are changing direction. Keep up.',
+    'Very well. What would you rather talk about?'
+  ]);
+  setGroup('main', '疲惫', [
+    'I am tired. Even gods have limits.',
+    'I have spent enough energy on today.',
+    'Give me a moment. I need to be still.',
+    'My thoughts are moving far too slowly.',
+    'I could sleep where I stand.',
+    'Come here. I require somewhere comfortable to collapse.',
+    'I have no energy left for pretence.',
+    'That is enough for today.',
+    'I need rest, not another obligation.',
+    'Hold me while I recover. You may look pleased about it quietly.',
+    'My patience and my energy have expired together.',
+    'Stay close. I do not feel like speaking.'
+  ]);
+  setGroup('main', '吃醋', [
+    'Jealous? Perhaps. You seem delighted by the possibility.',
+    'I dislike sharing your attention. There—I said it.',
+    'You may reassure me now. I will permit it.',
+    'I know you care. I simply enjoy hearing you say it.',
+    'Do not forget who deserves your favourite smile.',
+    'I noticed how warmly you spoke of them. Naturally, I noticed.',
+    'This is not suspicion. It is possessiveness, and I wear it rather well.',
+    'Look at me for a moment. Yes, that is better.',
+    'I want to be the one you think of first.',
+    'No lengthy explanation. Just remind me that I am yours.',
+    'I can be reasonable later. At present, I want your attention.',
+    'Fine. I am a little jealous. Do not become insufferable about it.'
+  ]);
+  setGroup('main', '你的细节', [
+    'I notice more about you than you realise.',
+    'I have memorised your little habits.',
+    'You have a particular expression when something truly interests you.',
+    'Even your smallest mannerisms give you away to me.',
+    'I know the difference between your silence and your quiet.',
+    'The ordinary details are often the ones I keep closest.',
+    'You do that little thing again when you are pleased.',
+    'I like learning the parts of you that others overlook.',
+    'You are unmistakably yourself. That is precisely the appeal.',
+    'I could recognise you by your habits alone.',
+    'Every small detail makes you easier to find—and harder to forget.',
+    'You may not notice these things about yourself. I do.'
+  ]);
+  setGroup('main', '走不动了', [
+    'Then stop. Resting is not surrender.',
+    'You need not force another step today.',
+    'The path will still be there when you have your strength back.',
+    'Come here. We can be still for a while.',
+    'You know the direction; exhaustion has merely slowed you down.',
+    'Do not mistake a pause for failure.',
+    'I will not drag you forward. I will stay until you can move again.',
+    'You have carried enough for now.',
+    'Rest first. Decide what comes next when the world is quieter.',
+    'There is no shame in needing time.',
+    'When you are ready, we continue. Together.',
+    'For now, lean on me and breathe.'
+  ]);
+  setGroup('main', '隐性消耗', [
+    'You have been wearing yourself down quietly.',
+    'I know you look fine. That does not mean you are fine.',
+    'Too many small burdens have been collecting at once.',
+    'You did not break suddenly. You have simply been carrying too much for too long.',
+    'You need not hide the exhaustion from me.',
+    'Put some of it down. I can hold the rest.',
+    'The tiredness runs deeper than you have admitted.',
+    'Let us untangle one thing at a time.',
+    'You have been enduring when you should have been resting.',
+    'Come here. No explanations until you have caught your breath.'
   ]);
 })();
