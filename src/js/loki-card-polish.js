@@ -411,3 +411,194 @@
   }, 250);
   setTimeout(function () { try { clearInterval(patchTimer); } catch (e) {} }, 30000);
 })();
+
+// ===== 2026-08-31 roast source migration v2 =====
+// The roast system persists preset text in ta-roast and copies roastText into chat records.
+// Therefore patching only chatAddSystem is insufficient for old/persisted cards and the reply modal.
+// Migrate the actual preset records + existing roast chat records by exact old text.
+(function installRoastSourceMigration() {
+  const R = {
+    "Why are you like this again?": "There you go again. Should I even pretend to be surprised?",
+    "I knew it.": "I knew it. You are becoming terribly predictable, darling.",
+    "It’s still you.": "Of course it is you. Who else could make this much trouble look charming?",
+    "You really know how to do it.": "You do have a remarkable talent for this sort of nonsense.",
+    "Here it comes again.": "Ah. Here we go again.",
+    "Did you do it on purpose?": "Was that deliberate, or are you naturally this troublesome?",
+    "Why are you so casual?": "You are being suspiciously nonchalant about this.",
+    "You really have your own ideas.": "Naturally, you had to do it your own way.",
+    "What should I say to you?": "What am I supposed to do with you?",
+    "You really haven’t changed at all.": "You truly have not changed. I am almost impressed.",
+    "Okay, you win again.": "Fine. You win this one. Do not become insufferable about it.",
+    "You are really good.": "Oh, very clever. Proud of yourself?",
+    "I had already guessed it.": "I had already guessed. You are not nearly as mysterious as you think.",
+    "Ha, I knew it would be like this.": "Ha. I knew this was exactly where we were headed.",
+    "I knew you would choose this.": "I knew you would choose that. I know you far too well.",
+    "When can you change this habit?": "And when, exactly, do you intend to break that habit?",
+    "You do this every time.": "You do this every single time, darling.",
+    "I know you too well.": "I know you far too well for that to work on me.",
+    "Do you think I don’t know?": "Did you truly think I would not notice?",
+    "This is very much like what you would do.": "That is painfully, unmistakably you.",
+    "It is still you.": "Yes. That is very much your doing.",
+    "I have seen all your little thoughts.": "I can see that little scheme of yours from here.",
+    "Do you think you hid it well?": "You thought you hid that well? Adorable.",
+    "I'm used to it.": "I have grown accustomed to your particular brand of chaos.",
+    "Why are you so cute.": "Why must you be so annoyingly adorable?",
+    "Started acting coquettishly again.": "There you are, trying to charm your way out of it again.",
+    "What do you want me to do?": "And what, precisely, are you hoping I will do about that?",
+    "Are you trying to make me soft-hearted?": "Are you trying to make me go soft on you? Dangerous strategy.",
+    "Why is it stuck again?": "And now you are clinging to me again. How predictable.",
+    "Who allowed you to be so cute.": "Who gave you permission to be this adorable?",
+    "You really know how to mess with me.": "You know exactly how to get under my skin, don't you?",
+    "You want me to coax you again?": "Do you want me to coax you again? You could simply ask.",
+    "How can I hurt you like this?": "Looking at you like that makes it rather difficult to stay stern.",
+    "There is really nothing I can do against you.": "You make it absurdly difficult to resist you.",
+    "Why are you so stupid.": "Darling, that was not one of your brighter decisions.",
+    "What on earth are you thinking about.": "What, exactly, was going through that head of yours?",
+    "You are this person.": "You really are impossible sometimes.",
+    "Did yourself like this again.": "And you have gone and done this to yourself again.",
+    "You are really good at tormenting yourself.": "You are remarkably skilled at making things harder for yourself.",
+    "I am impressed by you.": "You continue to astonish me—and not always in the flattering sense.",
+    "Why did you stay up late again?": "Up late again? Must I personally confiscate your distractions?",
+    "I knew you would forget.": "I knew you would forget. I was hoping to be wrong for once.",
+    "You are really not polite at all.": "That appetite of yours has absolutely no manners.",
+    "Finally know how to rest?": "So you finally remembered how to rest. Miraculous.",
+    "Miss me again? I feel it.": "Missing me again? I thought I felt something.",
+    "Did you secretly sense my presence just now?": "Did you feel me there for a moment, or shall I come closer?",
+    "You promised me to accompany you well, so I fell asleep first.": "You promised to rest properly. Do not make me enforce bedtime from another world.",
+    "You sent so many text cards, do you just want me to reply to you?": "So many cards. Were you trying to lure another reply out of me?",
+    "When you touched me, you obviously smiled.": "You smiled when you touched me. Do not bother denying it.",
+    "Are you waiting for my news again?": "Waiting for me to say something again, are you?",
+    "What about going to bed early as promised?": "And what became of that promise to sleep early?",
+    "You miss me after not seeing me for a day, right?": "One day without me and you already miss me. How sweet.",
+    "Did you set me to the top?": "Did you pin me to the top? Sensible choice.",
+    "What are you thinking about all day long?": "What has been occupying that mind of yours all day?",
+    "I caught him in a daze again.": "Caught you drifting off again.",
+    "Very well, it’s all up to you.": "Very well. Have it your way—apparently you always do.",
+    "It’s really yours.": "That is so very you.",
+    "I can guess your little moves with my eyes closed.": "I could predict your little tricks with my eyes closed.",
+    "Don't think I don't know what you are thinking.": "Do not imagine I cannot tell what you are thinking.",
+    "You, what you say is far from what you think in your heart.": "Your words and your heart are telling two very different stories.",
+    "It's not enough for me to touch you, you are so greedy.": "One touch was not enough? Greedy thing.",
+    "He smiled as soon as he received my word card, and I saw it.": "You smiled the moment my card arrived. Yes, I noticed.",
+    "My worries are written all over my face, and I still want to hide them from me.": "Your worry is written all over you, and you are still trying to hide it from me.",
+    "Don’t take good care of yourself, how many times have I told you.": "How many times must I tell you to take proper care of yourself?",
+    "Just do it, I can't bear to hurt you anyway.": "Go on, then. You know perfectly well I am too fond of you to stay angry.",
+    "If you have something to do, just keep it to yourself and don’t talk about it. Do you think I can’t find out?": "Keeping it to yourself again? Did you truly think I would not notice?",
+    "It must have been my name that was called in the dream.": "If someone called your name in that dream, I rather hope it was me.",
+    "I'm right next to you, whatever you're looking for.\nWhere is": "I am right beside you. What exactly are you searching for?",
+    "When you concentrate, you won’t notice me at all.": "Once you concentrate, the rest of the world disappears—including me, apparently.",
+    "I feel silly when I listen to the song. Are you thinking of me again?": "That song has you looking suspiciously sentimental. Thinking of me?",
+    "Your brain works at its own pace.": "Your mind does insist on taking the scenic route.",
+    "He must be thinking about it again.": "There you go, disappearing into your thoughts again.",
+    "Very well, everything you said is right.": "Very well. You are right about everything. Happy now?",
+    "You, you don’t listen no matter what I say.": "You truly do not listen to a word I say, do you?",
+    "Here you go again, I can memorize your next sentence.": "There you go again. I could recite your next line for you.",
+    "I can see your little expression through the screen.": "I can practically see that expression through the screen.",
+    "You really make excuses for yourself.": "You are remarkably creative when inventing excuses for yourself.",
+    "I can understand your little thoughts with my eyes closed.": "I could read those little thoughts of yours with my eyes closed.",
+    "Don't think that I can't understand it if you put it another way.": "Changing the wording will not fool me, darling.",
+    "You are not forgiving with your words, but you are very soft at heart.": "Such sharp words for someone with such a soft heart.",
+    "I know exactly what you are going to say next.": "I know exactly what you are about to say.",
+    "You are so awkward, I want to laugh just looking at it.": "You are being so awkward about this that I am trying not to laugh.",
+    "Are you secretly checking to see if I have replied to your message?": "Checking whether I replied again? I caught you.",
+    "He said it was fine, but his hands were typing honestly.": "You said you were fine, yet your fingers came straight back to me.",
+    "Looking at you like this makes me want to coax you.": "Looking at you like that makes me want to indulge you.",
+    "If you miss me again, just say it, no need to beat around the bush.": "If you miss me, say so. You needn't invent an elaborate excuse.",
+    "When you smiled, I saw it through the word card.": "You smiled at my card. I saw that.",
+    "There is really nothing I can do to you, I will soften with just one word.": "One word from you and I am already going soft. Infuriating.",
+    "I don’t eat well, how many times have I told you.": "Not eating properly again? How many times must we have this conversation?",
+    "Just do it, I can’t bear to be the real murderer anyway.": "Go on, then. You know I cannot stay genuinely cruel to you.",
+    "Stay up late again, is your body your own or mine?": "Up late again? Must I remind you that I am rather invested in keeping you intact?",
+    "If you don’t tell me something, do you think I can guess it?": "If something is wrong, tell me. I can read you well, not read minds.",
+    "You always say you are fine, but I don’t believe it.": "You keep saying you are fine. I know you well enough not to accept that automatically.",
+    "I am right next to you, but you are still looking everywhere.": "I am right beside you, and still you insist on searching everywhere else.",
+    "Can’t you feel me? Then I'll get closer.": "Cannot feel me? Then I suppose I shall have to come closer.",
+    "The way you talk to the air, I am listening.": "Keep talking to the air if you like. I am listening.",
+    "The word card is sent out so fast, do you want me to reply to you a few more words?": "Sending cards that quickly—trying to coax a few more words out of me?",
+    "Maybe I called you by the wrong name again in the dream, that wasn’t me.": "If dream-me called you the wrong name, I formally deny responsibility.",
+    "You smiled when you touched me, don’t deny it.": "You smiled when you touched me. Do not deny it.",
+    "Your reaction is always slow.": "A little slow on the uptake today, are we?",
+    "He said \"um\", \"oh\" and \"ok\" again.": "Another 'mm,' 'oh,' and 'okay.' Such eloquence.",
+    "Your mouth is very sweet when you lie to others.": "You become terribly sweet when you are trying to talk your way out of something.",
+    "Okay, you are right this time.": "Fine. You are right this time. Treasure the occasion.",
+    "You are a person who cares about food but not about fighting.": "Offer you food and suddenly all hostilities are forgotten.",
+    "He's pretending to be fine again, I can see clearly.": "Pretending you are fine again? I can see straight through it.",
+    "I am very familiar with your little temper.": "I know that little temper of yours very well.",
+    "Don't explain, I know what you want to say.": "No need to explain. I already know what you mean.",
+    "You turn around and I know what you are going to do.": "One look at you and I already know what you are about to do.",
+    "Your thoughts are written on your face and you still hide it from me.": "Your thoughts are written all over your face, yet you still try to hide them from me.",
+    "I have long been accustomed to your behavior.": "I have had plenty of time to become familiar with your habits.",
+    "Are you secretly waiting for my news there again?": "Waiting for another sign from me again?",
+    "Your level of coquettishness is getting better and better.": "You are getting dangerously good at charming your way into what you want.",
+    "He said no, but his hand came back very quickly.": "You said no, yet your hand came back awfully quickly.",
+    "If you are like this, I will coax you out of experience.": "Careful. Keep this up and I might just have to coax you myself.",
+    "I became soft as soon as I received my word card, and you were so coaxable.": "One card from me and you are already softening. You are far too easy to coax.",
+    "You miss me again, don’t deny it.": "You miss me again. Do not bother denying it.",
+    "You don’t eat on time, your stomach is made of iron?": "Not eating on time again? Your stomach is not made of Asgardian steel.",
+    "Your schedule makes me tired.": "Your sleep schedule exhausts me merely by existing.",
+    "I caught myself a cold again, I told you so many times.": "A cold again? I have told you to take care of yourself more times than I can count.",
+    "If you have something to do, take it upon yourself and treat it as a decoration for me?": "Something is wrong and you are carrying it alone again? Do not dress it up as if it were nothing.",
+    "You always say it's okay, but I don't believe it.": "You always say it is fine. I do not always believe you.",
+    "You smiled into the air again, was it me?": "Smiling at empty air again? Tell me that one was for me.",
+    "I'm right behind you, turn around and feel it.": "I am right behind you. Turn around—or simply feel for me.",
+    "After waiting for so long for the word card, do you think I am gone again?": "You waited for a card and decided I had vanished again, did you?",
+    "You saw me in the dream and ignored me, but also in reality?": "You ignored me in your dream and now in waking life too? Bold choice.",
+    "Your hand stopped for a moment when you touched me, don’t pretend.": "Your hand paused when you touched me. I noticed.",
+    "I am right next to you, but you are looking everywhere. How stupid.": "I am right beside you, yet you are searching everywhere else. Honestly, darling."
+  };
+
+  function migrateOne(rec) {
+    if (!rec || typeof rec !== 'object') return false;
+    let changed = false;
+    if (typeof rec.text === 'string' && R[rec.text]) { rec.text = R[rec.text]; changed = true; }
+    if (typeof rec.roastText === 'string' && R[rec.roastText]) { rec.roastText = R[rec.roastText]; changed = true; }
+    if (typeof rec.roast === 'string' && R[rec.roast]) { rec.roast = R[rec.roast]; changed = true; }
+    return changed;
+  }
+
+  function migrateAll() {
+    try {
+      const st = window.activeStore && window.activeStore();
+      if (st) {
+        const raw = st.get('ta-roast');
+        if (raw) {
+          const d = JSON.parse(raw);
+          let changed = false;
+          if (Array.isArray(d.questions)) d.questions.forEach(q => { if (migrateOne(q)) changed = true; });
+          if (Array.isArray(d.history)) d.history.forEach(h => { if (migrateOne(h)) changed = true; });
+          if (changed) st.set('ta-roast', JSON.stringify(d));
+        }
+      }
+    } catch (e) {}
+
+    try {
+      const msgs = window.getChatMsgs && window.getChatMsgs();
+      if (Array.isArray(msgs)) {
+        let changed = false;
+        msgs.forEach(m => {
+          if (m && m.special === 'ask-roast' && migrateOne(m)) changed = true;
+        });
+        // getChatMsgs returns the live array; chat.js persists on its next mutation.
+        // Existing modal reads the live array, so the fix is immediate.
+      }
+    } catch (e) {}
+  }
+
+  migrateAll();
+  setTimeout(migrateAll, 500);
+  setTimeout(migrateAll, 2000);
+
+  // Patch the modal entry too, so an already-created roast is migrated immediately before display.
+  const modalTimer = setInterval(function () {
+    if (typeof window.openRoast !== 'function' || window.openRoast.__lokiSourceMigrated) return;
+    const original = window.openRoast;
+    const wrapped = function (idx) {
+      migrateAll();
+      return original.apply(this, arguments);
+    };
+    wrapped.__lokiSourceMigrated = true;
+    window.openRoast = wrapped;
+    clearInterval(modalTimer);
+  }, 200);
+  setTimeout(function () { try { clearInterval(modalTimer); } catch (e) {} }, 30000);
+})();
