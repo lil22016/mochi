@@ -2351,7 +2351,28 @@ const r = addIn(text, opts);
 if (opts && opts.enter && !chatVisible()) enterChat();
 return r;
 };
-window.chatAddGift = function (rec) { if (!rec.ts) rec.ts = Date.now(); return addRec(rec); };
+// 商城礼物卡也是一条真实聊天消息：旧实现只 addRec，虽然卡片会显示/持久化，
+// 却完全绕过普通发送后的 scheduleReply，因此既不会触发 TA 回复，也不会触发
+// 「已读不回」。为礼物补一段不影响卡片渲染的文本摘要，并仅在“我送出”时走
+// 正常回复调度；TA 主动送来的礼物仍只作为入站消息，不能反向触发自动回复。
+window.chatAddGift = function (rec) {
+rec = rec || {};
+if (!rec.ts) rec.ts = Date.now();
+if (!rec.text) {
+const n = String(rec.giftName || '礼物');
+const w = String(rec.giftWish || '').trim();
+rec.text = 'Sent you: ' + n + (w ? ' — ' + w : '');
+}
+const el = addRec(rec);
+if (rec.side === 'out') {
+lastMineText = rec.text;
+try { if (window.cjianNoteChat) window.cjianNoteChat(); } catch (e) {}
+try { if (window.playSfx) window.playSfx('out'); } catch (e) {}
+try { window.__replyOnceDiag = 0; } catch (e) {}
+scheduleReply();
+}
+return el;
+};
 // v3.14.x：跨桌面安全追加一条系统消息到指定联系人的聊天记录——
 // call.js notifyCallEnd / feed.js notifyFeedPostToChat / mail.js notifyMailToChat 共用。
 // 旧实现各自「idbGet → push → idbSet 整包写回」，idbGet 超时兜底返回 undefined 时
