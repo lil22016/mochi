@@ -90,6 +90,12 @@
     'is not a tag.': 'You are not a label someone else gets to define.',
     'is not an imagination.': 'You are real, complicated, and entirely yourself.',
     'Thinking of you will make you feel at ease.': 'Thinking of you steadies me more than I care to admit.'
+    ,'Sit down, but my heart still can’t calm down.': 'I sat down, but my heart still refuses to settle.'
+    ,'New cups will also be available.': 'There will be other chances.'
+    ,'I am willing to catch your emotions.': 'Let me hold what you are feeling for a while.'
+    ,'You don’t have to bear everything for me.': 'You need not carry everything alone—certainly not for my sake.'
+    ,'Don’t always bear everything yourself.': 'Stop trying to carry everything alone. Let me take some of it.'
+    ,'Today is really hard.': 'Today has been rather merciless.'
   }));
   function polish(value) {
     if (typeof value === 'string') return exact.get(value) || value;

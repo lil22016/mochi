@@ -2638,40 +2638,25 @@ bindToggle(b, side);
 function splitCardSegs(text) {
 const str = String(text || '').trim();
 if (!str) return [];
-const isWord = (ch) => /[\u4e00-\u9fffA-Za-z0-9]/.test(ch);
 const out = [];
 let cur = '';
 for (let i = 0; i < str.length; i++) {
 const ch = str[i];
-if ('。！？；\n!?;'.indexOf(ch) >= 0) {
+// A reply card is normally a complete sentence.  The old implementation also
+// split at every English space/comma, turning "Give me your hand." into three
+// separately retractable cards.  Only sentence-ending punctuation/newlines are
+// card boundaries; spaces and commas always remain part of the sentence.
+if ('。！？；\n!?;'.indexOf(ch) >= 0 || ch === '.') {
 cur += ch;
 if (cur.trim()) out.push(cur.trim());
 cur = '';
 continue;
 }
-if (ch === ' ' || ch === '，' || ch === ',') {
-const seg = cur.trim();
-const nextStart = str.slice(i + 1).trimStart()[0] || '';
-const segEnd = seg[seg.length - 1] || '';
-const canSplit = seg.length >= 2 && isWord(segEnd) && isWord(nextStart);
-if (canSplit) {
-if (seg) out.push(seg);
-cur = '';
-} else {
-cur += ch; // 并入当前段（保护颜文字/符号）
-}
-continue;
-}
 cur += ch;
 }
 if (cur.trim()) out.push(cur.trim());
-const filtered = [];
-out.forEach(s => {
-if (s.length <= 1 && filtered.length) filtered[filtered.length - 1] += ' ' + s;
-else filtered.push(s);
-});
-if (filtered.length < 2 && str.trim()) return [str.trim()];
-return filtered;
+if (out.length < 2) return [str];
+return out;
 }
 function partialRetractMsg(msgEl, side) {
 const idx = parseInt(msgEl.dataset.idx, 10);
