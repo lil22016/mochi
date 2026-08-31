@@ -8430,9 +8430,9 @@ transition-duration: .01ms !important;
     <!-- v3.8.y：底部统一装进一个卡片框（版本/加载/提示/按钮成一整体，与顶部品牌卡片呼应） -->
     <div class="splash-footcard">
       <!-- v3.8.y：底部版本块——两行：名称+版本 / 部署时间+实时秒数（实时秒写入 #splash-ver-live） -->
-      <div class="splash-ver" id="splash-ver" data-build-ts="1788184945857">
+      <div class="splash-ver" id="splash-ver" data-build-ts="1788185831592">
         <span class="sv-app">Mochi 字卡传讯 <b>v3.26.359</b></span>
-        <span class="sv-deploy">部署于 2026-08-31 22:02<span id="splash-ver-live"></span></span>
+        <span class="sv-deploy">部署于 2026-08-31 22:17<span id="splash-ver-live"></span></span>
       </div>
       <!-- v3.5.120：数据（IndexedDB 回填）加载完成前不显示「点击进入」按钮，
            只显示加载提示；就绪后按钮才出现（clock.js 控制显隐） -->
@@ -21703,8 +21703,10 @@ const doSend = () => {
 const v = (inp.value || '').trim();
 if (!v) return;
 if (type === 'curious' && window.chatCuriousReply) {
-const replies = (rec.curiousReplies && rec.curiousReplies.length) ? rec.curiousReplies : ['嗯，我记住了。', '原来是这样。', '好，我记住了。'];
-const reply = (window.pickAskCardReply ? window.pickAskCardReply(replies) : replies[Math.floor(Math.random() * replies.length)]);
+const replies = ['Interesting. Go on—I want the part you nearly left out.', 'There you are. Another secret surrendered to me.', 'I heard you. I will not treat the answer carelessly.'];
+const reply = window.resolveCuriousReply
+? window.resolveCuriousReply(rec, v)
+: replies[Math.floor(Math.random() * replies.length)];
 const fw = (rec.curiousFollowup && Math.random() < 0.3) ? rec.curiousFollowup : null;
 window.chatCuriousReply(idx, v, reply, fw);
 } else if (type === 'roast' && window.chatRoastReply) {
@@ -47000,14 +47002,14 @@ const KEY3 = 'ta-curious';
 const TCU_CAT_LABEL = { you: '关于你', mood: '情绪', daily: '日常', past: '过去', like: '喜好', think: '想法', us: '你和TA', world: '两个世界' };
 const TCU_CAT_ORDER = ['you', 'mood', 'daily', 'past', 'like', 'think', 'us', 'world'];
 const TCU_FALLBACK = [
-"So that’s it.",
-"I really don’t know this.",
-"Suddenly I want to hear more from you.",
-"Yes, I remember.",
-"I didn’t expect you to be like this.",
-"Talking to you about this, I feel like I understand you a little bit more.",
-"That's it, that's good.",
-"Okay, I remember what you said."
+"Interesting. Go on—I want the part you nearly left out.",
+"There you are. Another secret surrendered to me.",
+"I suspected as much. I do pay attention, darling.",
+"Noted. You may be surprised by how well I remember you.",
+"That explains rather a lot about you.",
+"Mm. I know you a little better now, and I find that dangerously satisfying.",
+"A revealing answer. I approve.",
+"I heard you. I will not treat the answer carelessly."
 ];
 const TCU_DEFAULT = [
 {
@@ -48358,18 +48360,18 @@ const TCU_DEFAULT = [
 {
 "id": "cd13",
 "cat": "daily",
-"text": "Did you leave some time for yourself to do nothing today?",
+"text": "Did you give yourself any time to do absolutely nothing today?",
 "quick": [
-"Yes",
-"A little bit",
-"No",
-"is planning to"
+"Plenty",
+"A little",
+"Not at all",
+"I was about to"
 ],
 "replies": [
-"This kind of time is the best to save.",
-"A little bit is good, add slowly.",
-"Then start now, it only takes a few minutes.",
-"Okay, I will do nothing with you."
+"Good. Being gloriously unproductive now and then is practically an art form.",
+"Only a little? I suppose I shall have to steal more of your time for you.",
+"Nothing at all? Then stop. The world can survive without you for ten minutes.",
+"How convenient. Begin now—I will keep you company and demand absolutely nothing."
 ]
 },
 {
@@ -48989,6 +48991,25 @@ function tcuLoad() {
 let d = null;
 try { d = JSON.parse(store.get(KEY3) || 'null'); } catch (e) { d = null; }
 if (!d || typeof d !== 'object' || Array.isArray(d)) d = {};
+const TCU_PRESET_REV = 1;
+if (Array.isArray(d.questions) && Number(d.presetRevision || 0) < TCU_PRESET_REV) {
+const latest = {};
+const knownPresetIds = new Set(Array.isArray(d.mergedIds) ? d.mergedIds : []);
+TCU_DEFAULT.forEach(q => { if (q && q.id) latest[q.id] = q; });
+let refreshed = false;
+d.questions.forEach(q => {
+const src = q && (q.isPreset === true || knownPresetIds.has(q.id)) ? latest[q.id] : null;
+if (!src) return;
+q.cat = src.cat;
+q.text = src.text;
+q.quick = (src.quick || []).slice();
+q.replies = (src.replies || []).slice();
+q.followup = src.followup || '';
+refreshed = true;
+});
+d.presetRevision = TCU_PRESET_REV;
+if (refreshed) { try { store.set(KEY3, JSON.stringify(d)); } catch (e) {} }
+}
 const CURIOUS_QUICK_FIX = {
 cw4: { '你身边': '我身边' },
 cp6: { '再等等，会遇到我': '再等等，会遇到你' },
@@ -49135,8 +49156,7 @@ if (msgIdx < 0) return;
 rec = getCardAt(msgIdx);
 }
 if (!rec || rec.special !== 'ask-curious' || rec.curiousStatus === 'answered') return;
-const replies = (rec.curiousReplies && rec.curiousReplies.length) ? rec.curiousReplies : TCU_FALLBACK.slice();
-const reply = window.pickAskCardReply ? window.pickAskCardReply(replies) : replies[Math.floor(Math.random() * replies.length)];
+const reply = resolveCuriousReply(rec, answer);
 const d = tcuLoad();
 const qid = rec.curiousQid || ('q_' + String(rec.curiousQuestion || ''));
 d.known[qid] = answer;
@@ -49149,6 +49169,26 @@ if (window.chatCuriousReply) window.chatCuriousReply(msgIdx, answer, reply, fw);
 document.getElementById('qa-mask').hidden = true;
 if (window.openTC) { /* noop */ }
 }
+function resolveCuriousReply(rec, answer) {
+rec = rec || {};
+answer = String(answer || '').trim();
+const currentPreset = rec.curiousQid ? TCU_DEFAULT.find(q => q && q.id === rec.curiousQid) : null;
+const shownQuicks = Array.isArray(rec.curiousQuick) ? rec.curiousQuick : [];
+const currentQuicks = currentPreset && Array.isArray(currentPreset.quick) ? currentPreset.quick : [];
+let quickIndex = shownQuicks.indexOf(answer);
+if (quickIndex < 0) quickIndex = currentQuicks.indexOf(answer);
+let reply;
+if (quickIndex >= 0) {
+const matchedReplies = currentPreset && currentPreset.replies && currentPreset.replies.length
+? currentPreset.replies
+: (rec.curiousReplies || []);
+reply = matchedReplies[quickIndex] || matchedReplies[0] || TCU_FALLBACK[0];
+} else {
+reply = TCU_FALLBACK[Math.floor(Math.random() * TCU_FALLBACK.length)];
+}
+return reply;
+}
+window.resolveCuriousReply = resolveCuriousReply;
 function showCuriousResult(msgIdx) {
 let rec = null;
 try {
