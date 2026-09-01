@@ -1,0 +1,51 @@
+name: Rebuild Mochi index
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'src/js/loki-card-polish.js'
+      - '.github/workflows/rebuild-mochi.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build current source into root index.html
+        run: node build.mjs
+
+      - name: Verify Loki polish reached built index
+        shell: bash
+        run: |
+          grep -Fq "Spacing out again. Caught you." index.html
+          grep -Fq "Alright, alright. Have it your way." index.html
+          grep -Fq "Some things simply fit from the start." index.html
+          grep -Fq "__replyAfterFlower" index.html
+          echo "Verified: roast, broad polish, and flower reply patch are present in index.html"
+
+      - name: Commit generated site files
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html version.json sw.js manifest.json notice.json
+          if git diff --cached --quiet; then
+            echo "No generated changes to commit."
+            exit 0
+          fi
+          git commit -m "build: apply Loki polish update"
+          git push
