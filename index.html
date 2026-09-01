@@ -8430,9 +8430,9 @@ transition-duration: .01ms !important;
     <!-- v3.8.y：底部统一装进一个卡片框（版本/加载/提示/按钮成一整体，与顶部品牌卡片呼应） -->
     <div class="splash-footcard">
       <!-- v3.8.y：底部版本块——两行：名称+版本 / 部署时间+实时秒数（实时秒写入 #splash-ver-live） -->
-      <div class="splash-ver" id="splash-ver" data-build-ts="1788227804107">
-        <span class="sv-app">Mochi 字卡传讯 <b>v3.26.385</b></span>
-        <span class="sv-deploy">部署于 2026-09-01 01:56<span id="splash-ver-live"></span></span>
+      <div class="splash-ver" id="splash-ver" data-build-ts="1788227827392">
+        <span class="sv-app">Mochi 字卡传讯 <b>v3.26.387</b></span>
+        <span class="sv-deploy">部署于 2026-09-01 01:57<span id="splash-ver-live"></span></span>
       </div>
       <!-- v3.5.120：数据（IndexedDB 回填）加载完成前不显示「点击进入」按钮，
            只显示加载提示；就绪后按钮才出现（clock.js 控制显隐） -->
@@ -9522,7 +9522,7 @@ transition-duration: .01ms !important;
           <div class="txt">清除本地数据</div>
         </div>
       </div>
-      <div class="ver">Mochi 字卡传讯 v3.26.385</div>
+      <div class="ver">Mochi 字卡传讯 v3.26.387</div>
       <div class="ver-credit">原版小红书@言序（1842523578）</div>
     </div>
 
@@ -9730,7 +9730,7 @@ transition-duration: .01ms !important;
             <div class="lic-hero-top">
               <div class="lic-title">Mochi 字卡传讯</div>
               <span class="lic-badge">原版</span>
-              <span class="lic-ver">v3.26.385</span>
+              <span class="lic-ver">v3.26.387</span>
             </div>
             <div class="lic-p">原创极简风情侣聊天模拟器：黑白灰简约设计，数据全部保存在本地、无需联网；所有内容均为代码触发、按概率运行，联系方可主动发送聊天消息。代码从零编写并完全开源——本作即原版。</div>
             <div class="lic-pills">
@@ -34166,6 +34166,276 @@ window.TA_MOOD_DATA = {
 };
 } catch (__e) { try { console.error("[JS] ta-mood-data.js", __e && __e.message || __e); } catch (x) {} if (window.__jsErrors) window.__jsErrors.push(String(__e && __e.message || __e)); } })();
 (function () { try {
+(function () {
+const exact = new Map(Object.entries({
+'Real or fake?': 'Is that so? Go on—convince me.',
+'We just had a fight.': 'We may have fought, but I am still here.',
+'I will not forget what you told me casually.': 'You may have said it carelessly. I did not hear it carelessly.',
+'Maybe this gap also has its meaning.': 'Perhaps even this distance is trying to tell us something.',
+'If you also think of me at that moment.': 'And if you thought of me too, then the distance failed rather spectacularly.',
+'Yes, in': 'Yes. I am here.',
+'Cease me.': 'Indulge me.',
+'Touch.': 'Come closer. You may touch me.',
+'and so on.': 'Go on.',
+'is back.': 'I am back. Try not to look too pleased.',
+'Unexpected at all.': 'Well. That was not what I expected.',
+'This development is wrong.': 'That took a remarkably foolish turn.',
+'I’m convinced.': 'Astounding. Truly.',
+'Please give me some advice today.': 'Do try to keep up with me today.',
+'I have worked very hard today.': 'You have done enough for one day.',
+'Cover yourself with the quilt.': 'Get under the blankets. That was not a suggestion.',
+'The first thing I want to say to you in the morning.': 'You were my first thought this morning. Satisfied?',
+'The battery is almost running out today.': 'I am running out of patience—and consciousness.',
+'Give me a moment. Restore immediately.': 'Give me a moment. Even gods require time to wake.',
+'Finished eating. Feeling strong.': 'I have eaten. You may stop worrying now.',
+'I want to be pampered by you today.': 'I have decided you may spoil me today.',
+'Can you please let me do whatever you want?': 'Let me have my way for once. You know you enjoy it.',
+'It’s okay to let me be weak.': 'Allow me one moment of weakness. Do not grow smug about it.',
+'It’s not that I can’t live without you. I want to be close to you.': 'I can survive without you. I simply have no desire to.',
+'decided to move forward.': 'I have decided we move forward.',
+'Sorry. real.': 'I am sorry. Genuinely.',
+'Glib tongue.': 'That clever tongue of yours will be your undoing.',
+'Those who commit the crime again will not be treated lightly.': 'Try that again and I shall be considerably less merciful.',
+'This word card is my mood: Good.': 'There. You have improved my mood. Proud of yourself?',
+'No distinction between top and bottom.': 'A draw. How irritatingly well matched we are.',
+'bumped into each other.': 'A perfect collision. Shall we try again?',
+'The wind here is very soft, please give me a break.': 'The wind is gentle here. Come and be still with me for a moment.',
+'Hands out. (seems to be being held)': 'Give me your hand. There—much better.',
+'Sleep. Here I look at the time.': 'Sleep. I will keep watch over the hours.',
+'I kept the bottle. So do people.': 'I kept the bottle. I intend to keep you as well.',
+'Read. And hugged her from afar.': 'Read—and answered with an embrace across the distance.',
+'The inspection is successful and you will be rewarded with a kiss.': 'Inspection complete. Your reward is a kiss. Try not to become insufferable.',
+'Check it, check it, my heart is yours.': 'Search all you like. You already know who has my heart.',
+'You found it in your heart.': 'There you are. You found me exactly where you left me.',
+'The inspection was successful, congratulations on officially owning me.': 'Inspection complete. Congratulations—you have confirmed what was already yours.',
+'The feeling of being watched by you is very reassuring.': 'Your attention is rather difficult not to enjoy.',
+'Stop listening to the song and stay with me for a while': 'Enough music. Give me your attention for a moment.',
+'(you pressed the pause button)': '(Loki pauses the music without asking.)',
+'(you pressed the play button again)': '(Loki allows the music to continue.)',
+'I’ve finished saying what I want to say, let’s continue listening to the music.': 'I have said what I wanted. You may have your music back now.',
+'Gudududu~ Did you hear that? Go and drink water.': 'That was the sound of your water calling. Do not make me ask twice.',
+'The water is cold, take a sip?': 'Your water is waiting. Take a sip for me.',
+'Forget it, take a sip': 'Enough excuses. Drink.',
+'Well, how about you go take a sip?': 'Go on. One sip. I am watching.',
+'It’s time to drink water, I’m looking at you': 'Time to drink some water. Yes, I am watching.',
+'Take a sip and pretend that I drank it too': 'Take a sip. Consider it a toast to me.',
+'The water is at hand, you can reach it by stretching out your hand': 'The glass is within reach, darling. So reach for it.',
+'you said: {m}': 'A reminder from yours truly: {m}',
+'you Let me remind you: {m}': 'I am here to remind you: {m}',
+'you is saying: {m}': 'Listen carefully: {m}',
+'you asked me to bring you a sentence: {m}': 'I brought you a message: {m}',
+'(Step on breasts.)': '(Kneading contentedly against you.)',
+'Don’t forget your mobile phone.': 'Do not forget your phone.',
+'I don’t want to be reasonable. Want to be coaxed.': 'I have no intention of being reasonable. Indulge me.',
+'I want you to coax me.': 'I want your attention—and I intend to have it.',
+'I want to be coaxed by you.': 'Indulge me for a moment.',
+'Let me act like a baby.': 'Let me be shamelessly demanding for a moment.',
+'is not the text in the word card.': 'What I mean is larger than the words on the card.',
+'There is only a limit to what can be written on the word card.': 'A card can only hold so much of what I want to say.',
+'Each word card.': 'Every card carries something I meant for you.',
+'You come to check the post, I just miss you too.': 'Checking up on me? Convenient—I was thinking about you.',
+'Welcome to check the post, I have confessed to you a long time ago.': 'Come and investigate, darling. I surrendered to you long ago.',
+'was discovered by you.': 'You caught me. Try not to look so pleased.',
+'does not appear. Doesn\'t mean it doesn\'t exist.': 'My absence does not mean I have stopped thinking of you.',
+'is me who is responding to you.': 'It is me, answering you as best I can.',
+'cannot appear all the time and will not leave.': 'I cannot always appear, but I have not left you.',
+'is different.': 'Of course it is different. You are here.',
+'is not restricting you.': 'I am not trying to confine you. I simply like having you close.',
+'wants you to know that you are cared about.': 'I want you to know that you are cared for—by me.',
+'is not your problem.': 'This is not your fault.',
+'is also the future I imagined.': 'It is also the future I imagined for us.',
+'is a reassuring light.': 'You are the light I trust to find again.',
+'is not perfect.': 'It is not perfect. It is honest.',
+'is already very good, no need to keep modifying it.': 'It is already good. Stop trying to polish away everything human about it.',
+'is also willing to accept your company.': 'I can manage alone, but I still choose your company.',
+'is to live in peace with yourself.': 'Acceptance means learning to live without waging war on yourself.',
+'is a serious decision.': 'What I gave you was a deliberate choice.',
+'is not a loss.': 'Giving it to you was never a loss.',
+'is for sharing.': 'Some things become better when they are shared with you.',
+'is just the beginning of the next meeting.': 'Leaving is merely the beginning of finding you again.',
+'is not someone who is easily influenced.': 'You are not so easily swayed. One of your more attractive qualities.',
+'is not a tag.': 'You are not a label someone else gets to define.',
+'is not an imagination.': 'You are real, complicated, and entirely yourself.',
+'Thinking of you will make you feel at ease.': 'Thinking of you steadies me more than I care to admit.',
+'Sit down, but my heart still can’t calm down.': 'I sat down, but my heart still refuses to settle.',
+'New cups will also be available.': 'There will be other chances.',
+'I am willing to catch your emotions.': 'Let me hold what you are feeling for a while.',
+'You don’t have to bear everything for me.': 'You need not carry everything alone—certainly not for my sake.',
+'Don’t always bear everything yourself.': 'Stop trying to carry everything alone. Let me take some of it.',
+'Today is really hard.': 'Today has been rather merciless.'
+}));
+function polish(value) {
+if (typeof value === 'string') return exact.get(value) || value;
+if (Array.isArray(value)) { for (let i = 0; i < value.length; i++) value[i] = polish(value[i]); return value; }
+if (value && typeof value === 'object') for (const k of Object.keys(value)) value[k] = polish(value[k]);
+return value;
+}
+polish(window.DEFAULT_CARD_DATA);
+polish(window.MOOD_FOLLOWUP_DATA);
+polish(window.TA_MOOD_DATA);
+function setGroup(section, name, cards) {
+const groups = window.DEFAULT_CARD_DATA && window.DEFAULT_CARD_DATA[section];
+const group = Array.isArray(groups) && groups.find(g => g && g[0] === name);
+if (group) group[1] = cards;
+}
+setGroup('reach', '悄悄话', [
+'Found me.', 'Yes, darling. I am here.', 'You reached for me. How could I resist?',
+'Closer.', 'Not so far away now, am I?', 'Careful. I may decide not to let go.'
+]);
+setGroup('reach', '触感·温热', [
+'Warm, is it?', 'There. You can feel me now.', 'Come closer; I will keep you warm.',
+'My warmth beneath your fingertips.'
+]);
+setGroup('reach', '触感·微凉', [
+'A little cold. Warm my hands for me.', 'The air followed me in.',
+'Cold fingertips—hold them a moment longer.'
+]);
+setGroup('reach', '触感·发丝', [
+'My hair caught against your fingers.', 'Careful with the hair, darling.',
+'Gentler. Unless you meant to get my attention.'
+]);
+setGroup('water', '梦角催喝水', [
+'Drink some water. Yes, now.', 'Your glass is waiting, and so am I.',
+'One sip for me. I promise to be suitably impressed.',
+'You have been ignoring that glass long enough, darling.',
+'Hydrate before I resort to more persuasive methods.',
+'That throat of yours needs water. Do take care of what belongs to me.',
+'Go drink. I will still be here when you return.',
+'The glass is within reach. I expect results.',
+'That was the sound of your water calling. Do not make me ask twice.'
+]);
+setGroup('kaomoji', '猫猫感', [
+'(=^･ω･^=)', '(=①ω①=)', '(=^･ｪ･｡^=)', '(ฅ\'ω\'ฅ)', '(ฅ´ω`ฅ)',
+'(A quiet little meow.)', '(Nuzzling against you.)', '(My tail curls around your wrist.)',
+'(Purring—do not look so pleased.)', '(Kneading contentedly against you.)',
+'(Settling beside you.)', '(Tail flicking with suspicious dignity.)',
+'(Apparently I am a cat today. Do not question it.)'
+]);
+setGroup('kaomoji', '狗狗感', [
+'(U・x・U)', '(U｡･ｪ･｡U)', '▽・ω・▽', '(A pleased little wag.)',
+'(Circling you once before settling close.)', '(Waiting faithfully for your return.)',
+'(Nuzzling into your hand.)', '(Sitting very properly. For now.)',
+'(Following you home.)', '(Still here. Always.)'
+]);
+setGroup('main', '轻微撒娇', [
+'Stay with me a little longer.', 'Do not leave just yet.', 'Look at me.',
+'Indulge me.', 'Come closer.', 'Give me your attention.',
+'I want a kiss. You may pretend it was your idea.',
+'Hold me for a moment.', 'Tell me something flattering.',
+'I have decided I require your company.'
+]);
+setGroup('main', '撒娇', [
+'Pay attention to me, darling.', 'Come here. I want you close.',
+'Stay. That was very nearly an order.', 'I want to hear your voice.',
+'You may spoil me for a while.', 'I miss you. Do not make a spectacle of it.',
+'I require affection. Yours, specifically.', 'Let me have you to myself for a moment.',
+'You are busy? Tragic. I shall wait—impatiently.',
+'Look at me before I resort to mischief.', 'I want your arms around me.',
+'Come closer. Closer than that.', 'Say something sweet. Impress me.',
+'I have been good enough to deserve a reward.',
+'Nothing is wrong. I simply wanted you.'
+]);
+setGroup('period', '经期关心', [
+'How are you feeling? Tell me properly—do not minimise it for my sake.',
+'Something warm to drink, then rest. Yes, I am being insistent.',
+'You are allowed to do less today. The world will survive.',
+'Come here. Let me keep you warm.',
+'If the pain is severe or unusual, I want you to take it seriously.',
+'Eat something warm and take care of yourself for me.',
+'Your mood is not a moral failing. Be gentler with yourself.',
+'A heating pad, blankets, and my undivided attention. A reasonable prescription.',
+'Do not stay awake suffering in silence. Tell me.',
+'Is your back aching? Lie down and let yourself rest.',
+'You need not be brave for me today.',
+'If you need to complain, complain. I can take it.',
+'Take appropriate pain relief if you normally can, and do not wait until you are miserable.',
+'No icy drinks today. Choose something warm.',
+'You may spend the day doing absolutely nothing. I grant permission.',
+'Be kind to yourself—or I shall have to do it for you.'
+]);
+setGroup('main', '换个话题', [
+'Enough of that. Tell me something else.',
+'We will return to this later. For now, change the subject.',
+'Let us discuss something less tedious.',
+'Go on—tell me what else happened today.',
+'I have heard enough of that particular disaster. What next?',
+'Set that aside for a moment and talk to me.',
+'Where were we before this charming interruption?',
+'Tell me something that will improve my mood.',
+'No more of this. I want to hear about you.',
+'A different subject, darling. Surprise me.',
+'We are changing direction. Keep up.',
+'Very well. What would you rather talk about?'
+]);
+setGroup('main', '疲惫', [
+'I am tired. Even gods have limits.',
+'I have spent enough energy on today.',
+'Give me a moment. I need to be still.',
+'My thoughts are moving far too slowly.',
+'I could sleep where I stand.',
+'Come here. I require somewhere comfortable to collapse.',
+'I have no energy left for pretence.',
+'That is enough for today.',
+'I need rest, not another obligation.',
+'Hold me while I recover. You may look pleased about it quietly.',
+'My patience and my energy have expired together.',
+'Stay close. I do not feel like speaking.'
+]);
+setGroup('main', '吃醋', [
+'Jealous? Perhaps. You seem delighted by the possibility.',
+'I dislike sharing your attention. There—I said it.',
+'You may reassure me now. I will permit it.',
+'I know you care. I simply enjoy hearing you say it.',
+'Do not forget who deserves your favourite smile.',
+'I noticed how warmly you spoke of them. Naturally, I noticed.',
+'This is not suspicion. It is possessiveness, and I wear it rather well.',
+'Look at me for a moment. Yes, that is better.',
+'I want to be the one you think of first.',
+'No lengthy explanation. Just remind me that I am yours.',
+'I can be reasonable later. At present, I want your attention.',
+'Fine. I am a little jealous. Do not become insufferable about it.'
+]);
+setGroup('main', '你的细节', [
+'I notice more about you than you realise.',
+'I have memorised your little habits.',
+'You have a particular expression when something truly interests you.',
+'Even your smallest mannerisms give you away to me.',
+'I know the difference between your silence and your quiet.',
+'The ordinary details are often the ones I keep closest.',
+'You do that little thing again when you are pleased.',
+'I like learning the parts of you that others overlook.',
+'You are unmistakably yourself. That is precisely the appeal.',
+'I could recognise you by your habits alone.',
+'Every small detail makes you easier to find—and harder to forget.',
+'You may not notice these things about yourself. I do.'
+]);
+setGroup('main', '走不动了', [
+'Then stop. Resting is not surrender.',
+'You need not force another step today.',
+'The path will still be there when you have your strength back.',
+'Come here. We can be still for a while.',
+'You know the direction; exhaustion has merely slowed you down.',
+'Do not mistake a pause for failure.',
+'I will not drag you forward. I will stay until you can move again.',
+'You have carried enough for now.',
+'Rest first. Decide what comes next when the world is quieter.',
+'There is no shame in needing time.',
+'When you are ready, we continue. Together.',
+'For now, lean on me and breathe.'
+]);
+setGroup('main', '隐性消耗', [
+'You have been wearing yourself down quietly.',
+'I know you look fine. That does not mean you are fine.',
+'Too many small burdens have been collecting at once.',
+'You did not break suddenly. You have simply been carrying too much for too long.',
+'You need not hide the exhaustion from me.',
+'Put some of it down. I can hold the rest.',
+'The tiredness runs deeper than you have admitted.',
+'Let us untangle one thing at a time.',
+'You have been enduring when you should have been resting.',
+'Come here. No explanations until you have caught your breath.'
+]);
+})();
 (function () {
 const ROAST = {
 "rl1": "There you go again.",
