@@ -874,3 +874,106 @@
   setTimeout(run, 500);
   setTimeout(run, 2000);
 })();
+
+// ===== 2026-09-02 iOS PWA readability + safe-top + midnight check-in refresh =====
+(function () {
+  // 1) Chat action/system notices: use the same high-contrast white text treatment
+  // requested for the chat area (poke, coin request, song switching, etc.).
+  function installUiPolish() {
+    if (document.getElementById('loki-ui-polish-20260902')) return;
+    const style = document.createElement('style');
+    style.id = 'loki-ui-polish-20260902';
+    style.textContent = `
+      /* Small system/action notices inside chat */
+      #page-chat .msg-poke,
+      #page-chat .msg-poke > span,
+      #page-chat .msg-center-card {
+        color: #fff !important;
+        text-shadow: 0 1px 3px rgba(0,0,0,.88) !important;
+      }
+      #page-chat .msg-poke svg,
+      #page-chat .msg-center-card svg {
+        color: #fff !important;
+        filter: drop-shadow(0 1px 2px rgba(0,0,0,.88));
+      }
+
+      /*
+       * iPhone home-screen PWA:
+       * keep the bottom toolbar where it already is, but reserve a real top
+       * notch/status-bar zone for the rest of the phone UI.
+       * Existing project rule only gave .phone 10px top padding in standalone,
+       * which can visually overlap iOS's own status bar when env(safe-area-inset-top)
+       * reports 0 or is unreliable.
+       */
+      @media (max-width: 900px) {
+        html.ios-pwa-standalone .phone:not(.no-statusbar) {
+          padding-top: max(54px, calc(env(safe-area-inset-top, 0px) + 8px)) !important;
+          padding-bottom: 0 !important;
+        }
+        html.ios-pwa-standalone .phone:not(.no-statusbar) > .statusbar {
+          padding-top: 4px !important;
+          padding-bottom: 10px !important;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  // 2) Daily check-in: refresh at the device's LOCAL midnight, not after 24h.
+  // The underlying check-in already stores YYYY-MM-DD from new Date(); this
+  // patch makes the visible button update immediately when the date rolls over.
+  let midnightTimer = null;
+
+  function localDayKey() {
+    const d = new Date();
+    const p = n => String(n).padStart(2, '0');
+    return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+  }
+
+  function syncDailyCheckinUi() {
+    try {
+      const store = window.activeStore && window.activeStore();
+      const btn = document.querySelector('.checkin .ck-btn');
+      if (!store || !btn) return;
+      const doneToday = store.get('checkin') === localDayKey();
+      btn.textContent = doneToday ? '✓ 已打卡' : '打卡';
+      btn.classList.toggle('done', doneToday);
+    } catch (e) {}
+  }
+
+  function armLocalMidnightRefresh() {
+    try {
+      if (midnightTimer) clearTimeout(midnightTimer);
+      const now = new Date();
+      const next = new Date(
+        now.getFullYear(), now.getMonth(), now.getDate() + 1,
+        0, 0, 0, 350
+      );
+      midnightTimer = setTimeout(function () {
+        syncDailyCheckinUi();
+        armLocalMidnightRefresh();
+      }, Math.max(1000, next.getTime() - Date.now()));
+    } catch (e) {}
+  }
+
+  installUiPolish();
+  syncDailyCheckinUi();
+  armLocalMidnightRefresh();
+
+  // iOS may suspend timers while the PWA is backgrounded. Re-check immediately
+  // whenever the app becomes visible again so crossing midnight in background
+  // still resets the button without a reload.
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) {
+      syncDailyCheckinUi();
+      armLocalMidnightRefresh();
+    }
+  });
+  window.addEventListener('focus', function () {
+    syncDailyCheckinUi();
+    armLocalMidnightRefresh();
+  });
+  document.addEventListener('contact-switched', function () {
+    setTimeout(syncDailyCheckinUi, 0);
+  });
+})();
