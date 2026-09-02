@@ -8430,9 +8430,9 @@ transition-duration: .01ms !important;
     <!-- v3.8.y：底部统一装进一个卡片框（版本/加载/提示/按钮成一整体，与顶部品牌卡片呼应） -->
     <div class="splash-footcard">
       <!-- v3.8.y：底部版本块——两行：名称+版本 / 部署时间+实时秒数（实时秒写入 #splash-ver-live） -->
-      <div class="splash-ver" id="splash-ver" data-build-ts="1788227827392">
-        <span class="sv-app">Mochi 字卡传讯 <b>v3.26.387</b></span>
-        <span class="sv-deploy">部署于 2026-09-01 01:57<span id="splash-ver-live"></span></span>
+      <div class="splash-ver" id="splash-ver" data-build-ts="1788369843285">
+        <span class="sv-app">Mochi 字卡传讯 <b>v3.26.390</b></span>
+        <span class="sv-deploy">部署于 2026-09-02 17:24<span id="splash-ver-live"></span></span>
       </div>
       <!-- v3.5.120：数据（IndexedDB 回填）加载完成前不显示「点击进入」按钮，
            只显示加载提示；就绪后按钮才出现（clock.js 控制显隐） -->
@@ -9522,7 +9522,7 @@ transition-duration: .01ms !important;
           <div class="txt">清除本地数据</div>
         </div>
       </div>
-      <div class="ver">Mochi 字卡传讯 v3.26.387</div>
+      <div class="ver">Mochi 字卡传讯 v3.26.390</div>
       <div class="ver-credit">原版小红书@言序（1842523578）</div>
     </div>
 
@@ -9730,7 +9730,7 @@ transition-duration: .01ms !important;
             <div class="lic-hero-top">
               <div class="lic-title">Mochi 字卡传讯</div>
               <span class="lic-badge">原版</span>
-              <span class="lic-ver">v3.26.387</span>
+              <span class="lic-ver">v3.26.390</span>
             </div>
             <div class="lic-p">原创极简风情侣聊天模拟器：黑白灰简约设计，数据全部保存在本地、无需联网；所有内容均为代码触发、按概率运行，联系方可主动发送聊天消息。代码从零编写并完全开源——本作即原版。</div>
             <div class="lic-pills">
@@ -35021,6 +35021,92 @@ if (Array.isArray(msgs)) clean(msgs);
 run();
 setTimeout(run, 500);
 setTimeout(run, 2000);
+})();
+(function () {
+function installUiPolish() {
+if (document.getElementById('loki-ui-polish-20260902')) return;
+const style = document.createElement('style');
+style.id = 'loki-ui-polish-20260902';
+style.textContent = `
+/* Small system/action notices inside chat */
+#page-chat .msg-poke,
+#page-chat .msg-poke > span,
+#page-chat .msg-center-card {
+color: #fff !important;
+text-shadow: 0 1px 3px rgba(0,0,0,.88) !important;
+}
+#page-chat .msg-poke svg,
+#page-chat .msg-center-card svg {
+color: #fff !important;
+filter: drop-shadow(0 1px 2px rgba(0,0,0,.88));
+}
+/*
+* iPhone home-screen PWA:
+* keep the bottom toolbar where it already is, but reserve a real top
+* notch/status-bar zone for the rest of the phone UI.
+* Existing project rule only gave .phone 10px top padding in standalone,
+* which can visually overlap iOS's own status bar when env(safe-area-inset-top)
+* reports 0 or is unreliable.
+*/
+@media (max-width: 900px) {
+html.ios-pwa-standalone .phone:not(.no-statusbar) {
+padding-top: max(54px, calc(env(safe-area-inset-top, 0px) + 8px)) !important;
+padding-bottom: 0 !important;
+}
+html.ios-pwa-standalone .phone:not(.no-statusbar) > .statusbar {
+padding-top: 4px !important;
+padding-bottom: 10px !important;
+}
+}
+`;
+document.head.appendChild(style);
+}
+let midnightTimer = null;
+function localDayKey() {
+const d = new Date();
+const p = n => String(n).padStart(2, '0');
+return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+}
+function syncDailyCheckinUi() {
+try {
+const store = window.activeStore && window.activeStore();
+const btn = document.querySelector('.checkin .ck-btn');
+if (!store || !btn) return;
+const doneToday = store.get('checkin') === localDayKey();
+btn.textContent = doneToday ? '✓ 已打卡' : '打卡';
+btn.classList.toggle('done', doneToday);
+} catch (e) {}
+}
+function armLocalMidnightRefresh() {
+try {
+if (midnightTimer) clearTimeout(midnightTimer);
+const now = new Date();
+const next = new Date(
+now.getFullYear(), now.getMonth(), now.getDate() + 1,
+0, 0, 0, 350
+);
+midnightTimer = setTimeout(function () {
+syncDailyCheckinUi();
+armLocalMidnightRefresh();
+}, Math.max(1000, next.getTime() - Date.now()));
+} catch (e) {}
+}
+installUiPolish();
+syncDailyCheckinUi();
+armLocalMidnightRefresh();
+document.addEventListener('visibilitychange', function () {
+if (!document.hidden) {
+syncDailyCheckinUi();
+armLocalMidnightRefresh();
+}
+});
+window.addEventListener('focus', function () {
+syncDailyCheckinUi();
+armLocalMidnightRefresh();
+});
+document.addEventListener('contact-switched', function () {
+setTimeout(syncDailyCheckinUi, 0);
+});
 })();
 } catch (__e) { try { console.error("[JS] loki-card-polish.js", __e && __e.message || __e); } catch (x) {} if (window.__jsErrors) window.__jsErrors.push(String(__e && __e.message || __e)); } })();
 (function () { try {
