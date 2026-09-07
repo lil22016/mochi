@@ -8430,9 +8430,9 @@ transition-duration: .01ms !important;
     <!-- v3.8.y：底部统一装进一个卡片框（版本/加载/提示/按钮成一整体，与顶部品牌卡片呼应） -->
     <div class="splash-footcard">
       <!-- v3.8.y：底部版本块——两行：名称+版本 / 部署时间+实时秒数（实时秒写入 #splash-ver-live） -->
-      <div class="splash-ver" id="splash-ver" data-build-ts="1788369843285">
-        <span class="sv-app">Mochi 字卡传讯 <b>v3.26.390</b></span>
-        <span class="sv-deploy">部署于 2026-09-02 17:24<span id="splash-ver-live"></span></span>
+      <div class="splash-ver" id="splash-ver" data-build-ts="1788807169304">
+        <span class="sv-app">Mochi 字卡传讯 <b>v3.26.392</b></span>
+        <span class="sv-deploy">部署于 2026-09-07 18:52<span id="splash-ver-live"></span></span>
       </div>
       <!-- v3.5.120：数据（IndexedDB 回填）加载完成前不显示「点击进入」按钮，
            只显示加载提示；就绪后按钮才出现（clock.js 控制显隐） -->
@@ -9522,7 +9522,7 @@ transition-duration: .01ms !important;
           <div class="txt">清除本地数据</div>
         </div>
       </div>
-      <div class="ver">Mochi 字卡传讯 v3.26.390</div>
+      <div class="ver">Mochi 字卡传讯 v3.26.392</div>
       <div class="ver-credit">原版小红书@言序（1842523578）</div>
     </div>
 
@@ -9730,7 +9730,7 @@ transition-duration: .01ms !important;
             <div class="lic-hero-top">
               <div class="lic-title">Mochi 字卡传讯</div>
               <span class="lic-badge">原版</span>
-              <span class="lic-ver">v3.26.390</span>
+              <span class="lic-ver">v3.26.392</span>
             </div>
             <div class="lic-p">原创极简风情侣聊天模拟器：黑白灰简约设计，数据全部保存在本地、无需联网；所有内容均为代码触发、按概率运行，联系方可主动发送聊天消息。代码从零编写并完全开源——本作即原版。</div>
             <div class="lic-pills">
@@ -35108,6 +35108,107 @@ document.addEventListener('contact-switched', function () {
 setTimeout(syncDailyCheckinUi, 0);
 });
 })();
+(function () {
+const rewrites = {
+'想和你一起做': [
+'An afternoon with you and absolutely no obligations. Tempting.',
+'Time spent with you is time well spent. Even when we do nothing at all.',
+'Choose a film. I reserve the right to criticise it.',
+'Come for a walk with me. No particular destination required.',
+'Dinner with you. That is my proposal.',
+'We could cook together. Try not to look surprised that I can.',
+'I want to see somewhere new with you.',
+'Come and look at the stars. You may look at me afterwards.',
+'We could spend the day being wonderfully idle.',
+'Even running errands sounds appealing when you are coming.',
+'Show me your favourite little shop.',
+'Let us go somewhere neither of us has been.',
+'I would like more evenings like this one.',
+'Tell me about the small, unremarkable parts of your day.',
+'I am still learning your habits. A fascinating occupation.',
+'We need not make an occasion of it. Come sit beside me.',
+'You make an ordinary afternoon rather difficult to leave.',
+'I have plans for us. Some of them are even sensible.',
+'Tea, your company, and no interruptions. That will do nicely.',
+'Sometimes all I want is another hour with you.',
+'If this is wasting time, darling, I intend to be very wasteful.'
+],
+'不放心你': [
+'I am a little worried about you. Humour me.',
+'I trust you. I can still worry.',
+'Have you been taking care of yourself?',
+'You sound exhausted. Take a break.',
+'Let someone help. Preferably me.',
+'You say you are fine. Are you?',
+'I am asking because I want to know how you are.',
+'Send word when you get home.',
+'Yes, I have considered everything that could go wrong. A habit.',
+'You need not face this on your own.',
+'A little less severity towards yourself, please.',
+'You did remember to eat, I hope?',
+'Your work can spare you for a few minutes.',
+'Tell me how you have been sleeping.',
+'It is your decision. I would still like to hear it.',
+'Come back safely. I am rather attached to you.',
+'Your health matters more to me than your finished errands.',
+'Of course I care. Must I spell it out?'
+],
+'想照顾你': [
+'Let me spoil you a little today.',
+'Did you manage to get some rest?',
+'Give me something to help with.',
+'You can admit you are tired. I will survive the revelation.',
+'You need not handle all of this alone.',
+'I would like to make your day a little easier.',
+'There is that smile. I was hoping to see it.',
+'Come here. Let me look after you for a moment.',
+'You have my attention, darling.',
+'Tell me what happened. I am listening.',
+'You need not be composed for my benefit.'
+],
+'回忆与留下': [
+'Do you remember that day?',
+'I still think about what happened then.',
+'I kept a few things from those days.',
+'Keep that message. I meant it.',
+'We have quite a history already, you and I.',
+'Old does not mean worthless.',
+'It still matters to me.',
+'I remember the tea going cold while we talked.',
+'Some memories are rather difficult to put aside.',
+'I can move forward and still remember.',
+'I have no wish to forget that.'
+],
+'啃着呢': [
+'Something has been bothering me.',
+'Nothing disastrous. Merely persistent.',
+'It is a small irritation that refuses to leave.',
+'Ignoring it has proved remarkably ineffective.',
+'Yes, it is still on my mind.',
+'I have been hiding it rather well, apparently.',
+'It is wearing on my patience.',
+'This will not defeat me. It may make me unpleasant company.',
+'One tires of the same irritation after a while.',
+'It hardly hurts. It simply will not stop.',
+'I keep finding myself thinking about it.',
+'You noticed something was wrong, did you?',
+'I said I was fine a little too quickly.',
+'I have not quite worked it out yet.',
+'I can tell you about it, if you have a moment.',
+'Give me a moment to find the words.',
+'It is manageable. Annoying, but manageable.',
+'My thoughts are refusing to be quiet.',
+'I am working through it.',
+'Stay close for a while, would you?',
+'I will tell you when I understand it better.'
+]
+};
+const data = window.DEFAULT_CARD_DATA;
+if (!data || !Array.isArray(data.main)) return;
+data.main.forEach(group => {
+if (group && rewrites[group[0]]) group[1] = rewrites[group[0]].slice();
+});
+})();
 } catch (__e) { try { console.error("[JS] loki-card-polish.js", __e && __e.message || __e); } catch (x) {} if (window.__jsErrors) window.__jsErrors.push(String(__e && __e.message || __e)); } })();
 (function () { try {
 (function () {
@@ -59576,7 +59677,18 @@ if (!place.length && !action.length && !msg.length) {
 place = places; action = actions; msg = msgs;
 }
 if (place.length) out.place = place[Math.floor(Math.random() * place.length)].t;
-if (action.length) out.action = action[Math.floor(Math.random() * action.length)].t;
+const activityPlaces = {
+'Putting the room in order': ['At home', 'In my study'],
+'Doing laundry': ['At home'],
+'Cooking': ['At home'],
+'Making tea': ['At home', 'In my study', 'At the TVA'],
+'Waiting for a delivery': ['At home', 'At the TVA'],
+'Taking a walk': ['In the park', 'By the river', 'On my way somewhere interesting'],
+'Watching a film': ['At home', 'At the cinema', 'On the train'],
+'Watching something terribly undignified': ['At home', 'At the cinema', 'On the train']
+};
+const compatible = action.filter(a => !activityPlaces[a.t] || !out.place || activityPlaces[a.t].includes(out.place));
+if (compatible.length) out.action = compatible[Math.floor(Math.random() * compatible.length)].t;
 if (msg.length) out.msg = msg[Math.floor(Math.random() * msg.length)].t;
 return out;
 }
