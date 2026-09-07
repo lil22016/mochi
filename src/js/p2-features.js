@@ -559,7 +559,20 @@ function genCheckin() {
     place = places; action = actions; msg = msgs;
   }
   if (place.length) out.place = place[Math.floor(Math.random() * place.length)].t;
-  if (action.length) out.action = action[Math.floor(Math.random() * action.length)].t;
+  // Keep built-in activities compatible with their location; custom cards retain
+  // their author's meaning. Do not invent a replacement if every option is off.
+  const activityPlaces = {
+    'Putting the room in order': ['At home', 'In my study'],
+    'Doing laundry': ['At home'],
+    'Cooking': ['At home'],
+    'Making tea': ['At home', 'In my study', 'At the TVA'],
+    'Waiting for a delivery': ['At home', 'At the TVA'],
+    'Taking a walk': ['In the park', 'By the river', 'On my way somewhere interesting'],
+    'Watching a film': ['At home', 'At the cinema', 'On the train'],
+    'Watching something terribly undignified': ['At home', 'At the cinema', 'On the train']
+  };
+  const compatible = action.filter(a => !activityPlaces[a.t] || !out.place || activityPlaces[a.t].includes(out.place));
+  if (compatible.length) out.action = compatible[Math.floor(Math.random() * compatible.length)].t;
   if (msg.length) out.msg = msg[Math.floor(Math.random() * msg.length)].t;
   return out;
 }

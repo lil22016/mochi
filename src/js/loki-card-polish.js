@@ -977,3 +977,106 @@
     setTimeout(syncDailyCheckinUi, 0);
   });
 })();
+
+// September 7: complete cards, never fragments of a translated paragraph.
+(function () {
+  const rewrites = {
+    '想和你一起做': [
+      'An afternoon with you and absolutely no obligations. Tempting.',
+      'Time spent with you is time well spent. Even when we do nothing at all.',
+      'Choose a film. I reserve the right to criticise it.',
+      'Come for a walk with me. No particular destination required.',
+      'Dinner with you. That is my proposal.',
+      'We could cook together. Try not to look surprised that I can.',
+      'I want to see somewhere new with you.',
+      'Come and look at the stars. You may look at me afterwards.',
+      'We could spend the day being wonderfully idle.',
+      'Even running errands sounds appealing when you are coming.',
+      'Show me your favourite little shop.',
+      'Let us go somewhere neither of us has been.',
+      'I would like more evenings like this one.',
+      'Tell me about the small, unremarkable parts of your day.',
+      'I am still learning your habits. A fascinating occupation.',
+      'We need not make an occasion of it. Come sit beside me.',
+      'You make an ordinary afternoon rather difficult to leave.',
+      'I have plans for us. Some of them are even sensible.',
+      'Tea, your company, and no interruptions. That will do nicely.',
+      'Sometimes all I want is another hour with you.',
+      'If this is wasting time, darling, I intend to be very wasteful.'
+    ],
+    '不放心你': [
+      'I am a little worried about you. Humour me.',
+      'I trust you. I can still worry.',
+      'Have you been taking care of yourself?',
+      'You sound exhausted. Take a break.',
+      'Let someone help. Preferably me.',
+      'You say you are fine. Are you?',
+      'I am asking because I want to know how you are.',
+      'Send word when you get home.',
+      'Yes, I have considered everything that could go wrong. A habit.',
+      'You need not face this on your own.',
+      'A little less severity towards yourself, please.',
+      'You did remember to eat, I hope?',
+      'Your work can spare you for a few minutes.',
+      'Tell me how you have been sleeping.',
+      'It is your decision. I would still like to hear it.',
+      'Come back safely. I am rather attached to you.',
+      'Your health matters more to me than your finished errands.',
+      'Of course I care. Must I spell it out?'
+    ],
+    '想照顾你': [
+      'Let me spoil you a little today.',
+      'Did you manage to get some rest?',
+      'Give me something to help with.',
+      'You can admit you are tired. I will survive the revelation.',
+      'You need not handle all of this alone.',
+      'I would like to make your day a little easier.',
+      'There is that smile. I was hoping to see it.',
+      'Come here. Let me look after you for a moment.',
+      'You have my attention, darling.',
+      'Tell me what happened. I am listening.',
+      'You need not be composed for my benefit.'
+    ],
+    '回忆与留下': [
+      'Do you remember that day?',
+      'I still think about what happened then.',
+      'I kept a few things from those days.',
+      'Keep that message. I meant it.',
+      'We have quite a history already, you and I.',
+      'Old does not mean worthless.',
+      'It still matters to me.',
+      'I remember the tea going cold while we talked.',
+      'Some memories are rather difficult to put aside.',
+      'I can move forward and still remember.',
+      'I have no wish to forget that.'
+    ],
+    '啃着呢': [
+      'Something has been bothering me.',
+      'Nothing disastrous. Merely persistent.',
+      'It is a small irritation that refuses to leave.',
+      'Ignoring it has proved remarkably ineffective.',
+      'Yes, it is still on my mind.',
+      'I have been hiding it rather well, apparently.',
+      'It is wearing on my patience.',
+      'This will not defeat me. It may make me unpleasant company.',
+      'One tires of the same irritation after a while.',
+      'It hardly hurts. It simply will not stop.',
+      'I keep finding myself thinking about it.',
+      'You noticed something was wrong, did you?',
+      'I said I was fine a little too quickly.',
+      'I have not quite worked it out yet.',
+      'I can tell you about it, if you have a moment.',
+      'Give me a moment to find the words.',
+      'It is manageable. Annoying, but manageable.',
+      'My thoughts are refusing to be quiet.',
+      'I am working through it.',
+      'Stay close for a while, would you?',
+      'I will tell you when I understand it better.'
+    ]
+  };
+  const data = window.DEFAULT_CARD_DATA;
+  if (!data || !Array.isArray(data.main)) return;
+  data.main.forEach(group => {
+    if (group && rewrites[group[0]]) group[1] = rewrites[group[0]].slice();
+  });
+})();
