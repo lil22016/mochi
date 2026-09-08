@@ -1389,11 +1389,13 @@ function waterAll() {
     if (waterLvl(plot) > 0.5) continue;
     plot.watered = Math.floor(Date.now() / 1000);
     plot.planted = Math.max(0, plot.planted - 14400);
+    // Count each actually watered plant, just like individual watering.
+    updSt("w", true);
+    updDaily("w");
     cnt++;
   }
   if (cnt > 0) {
     addLog("\u6211", "\u4E00\u952E\u6D47\u4E86 " + cnt + " \u68F5\u690D\u7269");
-    updSt("w", true);
     if (Math.random() < 0.08) { var pn3 = pn(); addLog(pn3, "\u770B\u5230\u4F60\u5728\u6D47\u6C34\uFF0C\u4E5F\u6765\u5E2E\u5FD9\u4E86~"); partnerAct(true); }
     save(data); renderAll();
   }

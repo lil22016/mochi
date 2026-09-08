@@ -307,26 +307,12 @@
     stopTimers();
     currentCall.connectedTime = Date.now();
     updateDur(); // v3.13.x：接通立即刷新显示，避免接通瞬间仍停留「00:00」卡一下
-    let checkCount = 0;
     durationTimer = setInterval(() => {
       updateDur();
       syncCallAv();
       syncCallName();
-      // 对方挂断概率：接通 3 分钟保护期后，每 60 秒检查一次
-      // v3.6.x：放宽——原实现 10 秒保护后每 30 秒掷一次，默认 5% 实际效果远超设置字面值
-      //（约 3 分钟累计 ~23% 被挂断、10 分钟内累计 ~62%），用户反馈「3 分钟左右自动挂断、
-      // 没一通超过 10 分钟」；改 3 分钟保护 + 60 秒周期后，挂断概率才接近设置的字面含义
-      if (currentCall && currentCall.status === 'connected') {
-        if (Date.now() - currentCall.connectedTime >= 180000) {
-          checkCount++;
-          if (checkCount >= 60) {
-            checkCount = 0;
-            if (Math.random() * 100 < callCfg().hangup) {
-              endCall('对方挂断了电话');
-            }
-          }
-        }
-      }
+      // User preference: no automatic partner hangup, including saved probabilities.
+      // Incoming calls and the user's hangup controls retain their normal paths.
     }, 1000);
   }
   // 通话结束信息写入归属桌面（v3.6.x 修复跨桌面挂断显示成当前联系人）：
