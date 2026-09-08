@@ -8430,9 +8430,9 @@ transition-duration: .01ms !important;
     <!-- v3.8.y：底部统一装进一个卡片框（版本/加载/提示/按钮成一整体，与顶部品牌卡片呼应） -->
     <div class="splash-footcard">
       <!-- v3.8.y：底部版本块——两行：名称+版本 / 部署时间+实时秒数（实时秒写入 #splash-ver-live） -->
-      <div class="splash-ver" id="splash-ver" data-build-ts="1788807169304">
-        <span class="sv-app">Mochi 字卡传讯 <b>v3.26.392</b></span>
-        <span class="sv-deploy">部署于 2026-09-07 18:52<span id="splash-ver-live"></span></span>
+      <div class="splash-ver" id="splash-ver" data-build-ts="1788836464902">
+        <span class="sv-app">Mochi 字卡传讯 <b>v3.26.1</b></span>
+        <span class="sv-deploy">部署于 2026-09-08 10:01<span id="splash-ver-live"></span></span>
       </div>
       <!-- v3.5.120：数据（IndexedDB 回填）加载完成前不显示「点击进入」按钮，
            只显示加载提示；就绪后按钮才出现（clock.js 控制显隐） -->
@@ -9522,7 +9522,7 @@ transition-duration: .01ms !important;
           <div class="txt">清除本地数据</div>
         </div>
       </div>
-      <div class="ver">Mochi 字卡传讯 v3.26.392</div>
+      <div class="ver">Mochi 字卡传讯 v3.26.1</div>
       <div class="ver-credit">原版小红书@言序（1842523578）</div>
     </div>
 
@@ -9730,7 +9730,7 @@ transition-duration: .01ms !important;
             <div class="lic-hero-top">
               <div class="lic-title">Mochi 字卡传讯</div>
               <span class="lic-badge">原版</span>
-              <span class="lic-ver">v3.26.392</span>
+              <span class="lic-ver">v3.26.1</span>
             </div>
             <div class="lic-p">原创极简风情侣聊天模拟器：黑白灰简约设计，数据全部保存在本地、无需联网；所有内容均为代码触发、按概率运行，联系方可主动发送聊天消息。代码从零编写并完全开源——本作即原版。</div>
             <div class="lic-pills">
@@ -55466,22 +55466,10 @@ function startCallDuration() {
 stopTimers();
 currentCall.connectedTime = Date.now();
 updateDur(); // v3.13.x：接通立即刷新显示，避免接通瞬间仍停留「00:00」卡一下
-let checkCount = 0;
 durationTimer = setInterval(() => {
 updateDur();
 syncCallAv();
 syncCallName();
-if (currentCall && currentCall.status === 'connected') {
-if (Date.now() - currentCall.connectedTime >= 180000) {
-checkCount++;
-if (checkCount >= 60) {
-checkCount = 0;
-if (Math.random() * 100 < callCfg().hangup) {
-endCall('对方挂断了电话');
-}
-}
-}
-}
 }, 1000);
 }
 function notifyCallEnd(cid, sysHtml, recType, recText) {
@@ -69411,11 +69399,12 @@ if (!plot) continue;
 if (waterLvl(plot) > 0.5) continue;
 plot.watered = Math.floor(Date.now() / 1000);
 plot.planted = Math.max(0, plot.planted - 14400);
+updSt("w", true);
+updDaily("w");
 cnt++;
 }
 if (cnt > 0) {
 addLog("\u6211", "\u4E00\u952E\u6D47\u4E86 " + cnt + " \u68F5\u690D\u7269");
-updSt("w", true);
 if (Math.random() < 0.08) { var pn3 = pn(); addLog(pn3, "\u770B\u5230\u4F60\u5728\u6D47\u6C34\uFF0C\u4E5F\u6765\u5E2E\u5FD9\u4E86~"); partnerAct(true); }
 save(data); renderAll();
 }
