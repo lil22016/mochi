@@ -697,6 +697,7 @@ function partnerAct(silent, used) {
     data.p[idx].planted = Math.max(0, data.p[idx].planted - 7200);
     addLog(pName, "\u7ED9 " + (si ? si.name : "\u690D\u7269") + " \u6D47\u4E86\u6C34");
     updSt("w", false);
+    updDaily("w");
     acted = true;
   } else if (actType === "waterall" && dryPlots.length > 0) {
     var wcnt = 0;
@@ -704,10 +705,12 @@ function partnerAct(silent, used) {
       if (data.p[pi] && waterLvl(data.p[pi]) < 0.3) {
         data.p[pi].watered = Math.floor(Date.now() / 1000);
         data.p[pi].planted = Math.max(0, data.p[pi].planted - 7200);
+        updSt("w", false);
+        updDaily("w");
         wcnt++;
       }
     }
-    if (wcnt > 0) { addLog(pName, "\u4E00\u952E\u6D47\u4E86 " + wcnt + " \u68F5\u690D\u7269"); updSt("w", false); acted = true; }
+    if (wcnt > 0) { addLog(pName, "\u4E00\u952E\u6D47\u4E86 " + wcnt + " \u68F5\u690D\u7269"); acted = true; }
   } else if (actType === "harvest" && bloomedPlots.length > 0) {
     var idx = pick(bloomedPlots);
     var si = stageInfo(data.p[idx]);
@@ -720,7 +723,7 @@ function partnerAct(silent, used) {
     data.p[idx] = null;
     var xpg = Math.round((tp ? tp.xp : 10) * (1 + decorBuffs().xp) * (wilted ? 0.5 : 1) * qualMul(pq));
     data.exp = (data.exp || 0) + xpg;
-    updDex(type, "h"); updSt("h", false);
+    updDex(type, "h"); updSt("h", false); updDaily("h");
     if (Math.random() < 0.3) {
       addLog(pName, "\u9001\u4F60\u4E00\u6735 " + name + qualLabel(pq) + (wilted ? "\uFF08\u5E72\u82B1\uFF09" : "") + " \uD83D\uDC95");
       var gmsg = wilted ? "\u8FD9\u6735" + name + "\u5FEB\u51CB\u4E86\uFF0C\u8D76\u7D27\u9001\u4F60~" : "\u521A\u6458\u7684" + name + "\u9001\u7ED9\u4F60\uFF0C\u6536\u597D\u54E6~";
@@ -753,7 +756,7 @@ function partnerAct(silent, used) {
       var xpg2 = Math.round((tp2 ? tp2.xp : 10) * (1 + decorBuffs().xp) * (wilted2 ? 0.5 : 1) * qualMul(pq2));
       data.exp = (data.exp || 0) + xpg2;
       addInvQual(tpk, pq2);
-      updDex(tpk, "h"); updSt("h", false);
+      updDex(tpk, "h"); updSt("h", false); updDaily("h");
       hcnt++;
     }
     if (hcnt > 0) { addLog(pName, "\u4E00\u952E\u6536\u83B7 " + hcnt + " \u6735\u82B1"); acted = true; }
@@ -771,7 +774,7 @@ function partnerAct(silent, used) {
     var si = stageInfo(data.p[idx]);
     data.p[idx].planted = Math.max(0, data.p[idx].planted - 21600);
     addLog(pName, "\u7ED9 " + (si ? si.name : "\u690D\u7269") + " \u65BD\u4E86\u80A5");
-    updSt("f", false);
+    updSt("f", false); updDaily("f");
     acted = true;
   }
   if (acted && Math.random() < 0.4) {
@@ -1386,7 +1389,7 @@ function waterAll() {
   for (var i = 0; i < data.p.length; i++) {
     var plot = data.p[i];
     if (!plot) continue;
-    if (waterLvl(plot) > 0.5) continue;
+    if (plot.watered && Math.floor(Date.now() / 1000) - plot.watered < 3600) continue;
     plot.watered = Math.floor(Date.now() / 1000);
     plot.planted = Math.max(0, plot.planted - 14400);
     // Count each actually watered plant, just like individual watering.
@@ -1395,10 +1398,13 @@ function waterAll() {
     cnt++;
   }
   if (cnt > 0) {
+    updWaterStreak();
+    toast('已浇水 ' + cnt + ' 盆，每日任务已计入 ' + cnt + ' 次');
     addLog("\u6211", "\u4E00\u952E\u6D47\u4E86 " + cnt + " \u68F5\u690D\u7269");
     if (Math.random() < 0.08) { var pn3 = pn(); addLog(pn3, "\u770B\u5230\u4F60\u5728\u6D47\u6C34\uFF0C\u4E5F\u6765\u5E2E\u5FD9\u4E86~"); partnerAct(true); }
     save(data); renderAll();
   }
+  else toast(data.p.some(function (p) { return !!p; }) ? '植物仍在浇水冷却中，距上次浇水满一小时后可再浇' : '还没有种植植物');
 }
 
 function harvestAll() {

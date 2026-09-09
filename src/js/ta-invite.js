@@ -91,70 +91,70 @@
     "id": "iv_c1",
     "cat": "cuddle",
     "kind": "cuddle",
-    "text": "I want to post something, can you come over here?",
+    "text": "Come here. I have decided I want your company.",
     "enabled": true
   },
   {
     "id": "iv_c2",
     "cat": "cuddle",
     "kind": "cuddle",
-    "text": "Just give me a hug before I do anything else.",
+    "text": "An embrace first. Your other obligations can wait a moment.",
     "enabled": true
   },
   {
     "id": "iv_c3",
     "cat": "cuddle",
     "kind": "cuddle",
-    "text": "Hand over, I want to hold it for a while.",
+    "text": "You are entirely too far away. Shall we remedy that?",
     "enabled": true
   },
   {
     "id": "iv_c4",
     "cat": "cuddle",
     "kind": "cuddle",
-    "text": "Just sit next to you for a while and do nothing.",
+    "text": "Sit beside me. You needn't entertain me; your presence will do.",
     "enabled": true
   },
   {
     "id": "iv_c5",
     "cat": "cuddle",
     "kind": "cuddle",
-    "text": "I want to put my head on your shoulder, please lend me five minutes.",
+    "text": "Lend me your shoulder. And spare me that triumphant smile.",
     "enabled": true
   },
   {
     "id": "iv_c6",
     "cat": "cuddle",
     "kind": "cuddle",
-    "text": "I think I touched your hand just now? Do it again, this time hold on tight.",
+    "text": "Was that your hand brushing mine? Be a little bolder, darling.",
     "enabled": true
   },
   {
     "id": "iv_c7",
     "cat": "cuddle",
     "kind": "cuddle",
-    "text": "I want to touch you even though I am across the world. If you feel it, don’t hide.",
+    "text": "If I were there, I would already have pulled you closer.",
     "enabled": true
   },
   {
     "id": "iv_c8",
     "cat": "cuddle",
     "kind": "cuddle",
-    "text": "I miss you very much today, and I want to nuzzle you when I think about it.",
+    "text": "I have missed you today. Come here before I say something even more embarrassing.",
     "enabled": true
   },
   {
     "id": "iv_c9",
     "cat": "cuddle",
     "kind": "cuddle",
-    "text": "Go to bed early at night and I will hold you to sleep.",
+    "text": "Come to bed, darling. There is room beside me.",
     "enabled": true
   },
   {
     "id": "iv_c10",
     "cat": "cuddle",
     "kind": "cuddle",
-    "text": "I'm in a good mood, and this is the best time to kiss.",
+    "text": "I am in a generous mood. You may kiss me.",
     "enabled": true
   }
 ];
@@ -215,6 +215,16 @@
     } else {
       if (tiMerge(d)) { try { store.set(KEY, JSON.stringify(d)); } catch (e) {} }
     }
+    // Refresh only unchanged built-in cuddle text; preserve custom cards and edits.
+    let refreshed = false;
+    const oldCuddle = {"iv_c1": "I want to post something, can you come over here?", "iv_c2": "Just give me a hug before I do anything else.", "iv_c3": "Hand over, I want to hold it for a while.", "iv_c4": "Just sit next to you for a while and do nothing.", "iv_c5": "I want to put my head on your shoulder, please lend me five minutes.", "iv_c6": "I think I touched your hand just now? Do it again, this time hold on tight.", "iv_c7": "I want to touch you even though I am across the world. If you feel it, don\u2019t hide.", "iv_c8": "I miss you very much today, and I want to nuzzle you when I think about it.", "iv_c9": "Go to bed early at night and I will hold you to sleep.", "iv_c10": "I'm in a good mood, and this is the best time to kiss."};
+    d.questions.forEach(q => {
+      const replacement = DEFAULT_QUESTIONS.find(x => x.id === q.id && x.kind === 'cuddle');
+      if (replacement && q.isPreset && oldCuddle[q.id] === q.text && q.text !== replacement.text) {
+        q.text = replacement.text; refreshed = true;
+      }
+    });
+    if (refreshed) tiSave(d);
     if (!Array.isArray(d.groups)) d.groups = [];
     return d;
   }

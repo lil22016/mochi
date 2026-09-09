@@ -3023,25 +3023,25 @@ document.addEventListener('contact-switched', function () {
 try { if (window.replyCfg) scheduleAutoSend(); } catch (e) {}
 });
 const INVITE_DECLINE = [
-  "Next time, I don’t really want to play now~",
-  "Can you play with me later?",
-  "Don’t play now, we’ll talk about it later.",
-  "No status now, will do it next time"
+  "Not just now. Ask me again later.",
+  "Rain check?",
+  "I'm not in the mood for a game right now.",
+  "Let's play another time."
 ];
 // v3.14.x：贴贴邀请（cuddle）——正常情侣贴贴互动（贴/抱/牵手/靠着），没有游戏半框：
 // 同意后轻震动一下（体感反馈），TA 稍后回应一句贴贴的话；婉拒用专属文案
 const CUDDLE_DECLINE = [
-  "I will post this next time, remember this first~",
-  "I’ll replenish you later, keep your word",
-  "I owe it first, save it and pay it back together in the evening~",
-  "I want to stay by myself for a while today, and I will pay you back twice as much tomorrow."
+  "Later? I need a little space right now.",
+  "Save that hug for me.",
+  "I'd like some time to myself. Come find me later.",
+  "Not right now, love. Another time."
 ];
 const CUDDLE_REPLIES = [
-  "Hmm.. I got it. It's warm, I like it very much.",
-  "Then I will post it for a long time, and you are not allowed to run away secretly.",
-  "The hand was held and stayed like this for a while.",
-  "I feel it, you are next to me. Very reassuring.",
-  "TieTie is charging..Okay, it's full."
+  "There you are. I was beginning to take your absence personally.",
+  "Comfortable? Good. I intend to keep you here a while.",
+  "You took my hand rather quickly. How revealing.",
+  "Stay a little longer. Yes, that was me asking.",
+  "One embrace and you look insufferably pleased with yourself."
 ];
 function openInviteConfirm(title, staticText, onAccept, declinePool) {
 const mask = document.getElementById('modal-mask');
@@ -3060,7 +3060,7 @@ staticText: staticText
 function openInvitePanelFor(kind, name) {
 if (kind === 'cuddle') {
 try { if (navigator.vibrate) navigator.vibrate([30, 60, 90]); } catch (e) {}
-setTimeout(() => { try { addIn(name + ' ' + pick(CUDDLE_REPLIES), { initiative: true }); } catch (e) {} }, randInt(600, 1200));
+setTimeout(() => { try { addIn(pick(CUDDLE_REPLIES), { initiative: true }); } catch (e) {} }, randInt(600, 1200));
 return;
 }
 if (kind === 'rps') { if (window.openRpsPanel) window.openRpsPanel(); return; }
@@ -3082,7 +3082,7 @@ cuddle: { title: '贴贴邀请' }
 function sendTaInvite(inv, name) {
 const meta = INVITE_KIND_META[inv && inv.kind] || INVITE_KIND_META.rps;
 // v3.16.x：邀请消息带 gInv 游戏类型字段（渲染仍走 poke），供聊天统计「小游戏记录」识别 TA 主动邀请
-addIn(name + ' ' + (inv.text || ''), { special: 'poke', initiative: true, gInv: inv.kind });
+addIn(inv.kind === 'cuddle' ? (inv.text || '') : name + ' ' + (inv.text || ''), { special: inv.kind === 'cuddle' ? undefined : 'poke', initiative: true, gInv: inv.kind });
 showTyping();
 setTimeout(() => {
 hideTyping();

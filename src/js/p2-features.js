@@ -3117,47 +3117,47 @@ if (ckRefresh) {
   // 话术池与字卡库【系统预设字卡 → 吃什么】tab 同源（DEFAULT_CARD_DATA.eat，
   // 分组「提醒吃饭/追问关心」），逐张开关（dc-off-eat:*）经 libPool 过滤后参与抽取。
   const DEF_EAT_REMIND = [
-  "It’s dinner time, let’s go eat",
-  "It’s time to eat, don’t be hungry",
-  "How about eating {d} today? That's it",
-  "{d} Very good, go and eat this",
-  "Remember to eat hot food, don’t just take a bite",
-  "Go and eat. After you finish, tell me what you ate.",
-  "Don’t forget to eat when you are busy, your stomach is your own",
-  "I'm watching, go and eat quickly",
-  "Put down what you are doing and eat first, okay?",
-  "I have to eat on time so that I can rest assured",
-  "Those who eat well will not have bad luck.",
-  "Make something to eat when you are hungry, don’t hold on"
+  "Dinner first, darling. Then you may resume being fascinating.",
+  "Have you eaten? I would prefer you fed and argumentative.",
+  "How does {d} sound? A sensible choice, for once.",
+  "{d}, perhaps? Unless you have a more inspired suggestion.",
+  "Get yourself a proper meal. A stolen bite hardly counts.",
+  "Go and eat. You can tell me all about it afterward.",
+  "Even your busiest day has room for lunch.",
+  "Your meal is waiting. Must I escort you to it?",
+  "Put that aside a moment. Eat with me.",
+  "Have something to eat, darling. Humour me.",
+  "You may conquer the world after lunch.",
+  "Hungry? Then let's do something about it."
 ];
   const DEF_EAT_REMIND_CARE = [
-  "What did you eat? Tell me",
-  "Are you full? If you're not full, add some more",
-  "Does the food suit your appetite?",
-  "Eat slowly, don’t rush",
-  "Remember to have some soup, soup, water",
-  "Have a rest after eating."
+  "What did you choose? I am curious.",
+  "Still hungry? Have a little more.",
+  "Was it good? I expect an honest review.",
+  "Slowly, darling. Nobody is stealing your plate.",
+  "Something to drink with that? You do get distracted.",
+  "Finished? Good. Come sit with me a moment."
 ];
   // v3.26.x：夜宵窗口（21:30–23:30）专属话术——与字卡库【吃什么】tab「夜宵提醒/夜宵关心」
   // 分组同源（default-cards-data.js），深夜不再复用「按时吃饭」文案；仍可逐张开关（dc-off-eat:*）
   const DEF_EAT_REMIND_NIGHT = [
-  "It’s late at night, are you hungry? Want some late night snack?",
-  "I’m still awake at this point. Would you like some midnight snacks?",
-  "It’s not good to go to bed hungry. Go get something to eat.",
-  "Don’t eat too much at night, leave some room for dreams",
-  "I want to ask secretly, do you want to have a late-night snack tonight?",
-  "Go and make a bowl of hot noodles, I will eat with you",
-  "The stomach in the middle of the night should be treated well",
-  "Don’t just nibble on biscuits, eat snacks carefully as well",
-  "Those who eat late night snacks will have sweet dreams tonight",
-  "Do you want me to leave a light for you while you go look for food?"
+  "Still awake? Shall we raid the kitchen?",
+  "A midnight snack? Now that is a plan I can support.",
+  "If hunger is keeping you awake, have something to eat.",
+  "Something small before bed, perhaps?",
+  "Tell me, darling. What are we stealing from the kitchen?",
+  "Hot noodles? Make room; I am joining you.",
+  "A late supper sounds rather civilised.",
+  "Surely we can find something better than those crumbs.",
+  "Well, this is a delicious little detour.",
+  "Go on. I will keep you company while you find something."
 ];
   const DEF_EAT_REMIND_NIGHT_CARE = [
-  "What are you having for midnight snack? Tell me",
-  "Go to bed as soon as you are full and don’t stay up too late",
-  "After your late night snack, remember to brush your teeth before going to bed.",
-  "Don’t eat anything too spicy if it’s too late, it will hurt your stomach.",
-  "After you finish your supper, just lie down, I'll watch over you"
+  "What did you find in the kitchen?",
+  "Satisfied? Then come to bed, darling.",
+  "Teeth first. Then you may curl up beside me.",
+  "Choose something you know agrees with you.",
+  "Finished your little feast? I have saved your place."
 ];
   // 饭点窗口（分钟）：早 06:30–09:30 / 午 11:00–13:30 / 晚 17:00–19:30 / 夜宵 21:30–23:30
   const EAT_REMIND_WINDOWS = [['breakfast', 390, 570], ['lunch', 660, 810], ['dinner', 1020, 1170], ['nightcap', 1290, 1410]];
