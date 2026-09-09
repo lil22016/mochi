@@ -1,3 +1,8 @@
+# 本次构建者：本会话（2026-09-09，将 ZY Loki Companion 移植到 Mochi，保留现有番茄钟图标）
+- 跨域改动：p2-features.js、build.mjs、template/README/FIX-REGRESSION；理由：替换现有陪伴入口并接入新功能。
+- 实现：新增 src/js/loki-companion.js；保留番茄钟图标与按钮外观，点击改开 ZY 同款 Study/Stay 双模式；存储改接 Mochi xyStore/IDB。
+- 验证：node --check 通过；verify-loki-companion 14/14；构建哨兵 89/89。通用 verify 因本环境无 Chrome 未运行。
+
 # 本次构建者：本会话（2026-08-29 22:54 收口构建+推送。本次上线内容=①本会话图标回填并行修复 ②AI-B 22:30 通知点击修复 ③divination.js 占卜对象选择移除；music-player.js 的 BUGFIX_REPRO_TRACE 探针经 stash 隔离未上线，stash pop 已恢复原状待该会话继续）
 
 ### 2026-08-29 22:54（修复：红米K80 更新后首启「桌面图标上传的图片消失数秒，刷新才回来」——personalize.js 图标 IDB 回填串行改并行）
