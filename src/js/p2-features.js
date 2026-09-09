@@ -3949,6 +3949,8 @@ if (ckRefresh) {
   let pmpRec = null;
   try { pmpRec = JSON.parse((pomoStore() && pomoStore().get('pomo-companion')) || 'null'); } catch (e) { pmpRec = null; }
   if (!pmpRec || typeof pmpRec !== 'object') pmpRec = null;
+  // The ZY-style Loki Companion replaces the legacy companion session UI.
+  if (window.LokiCompanionApp) pmpRec = null;
   const chatPageEl = document.getElementById('page-chat');
   const pmpBar = document.createElement('div');
   pmpBar.className = 'pmp-bar'; pmpBar.id = 'pmp-bar'; pmpBar.hidden = true;
@@ -4186,6 +4188,7 @@ if (ckRefresh) {
   const pmpGoBtn = document.getElementById('pomo-companion');
   if (pmpGoBtn) pmpGoBtn.addEventListener('click', () => {
     if (editingNow()) return;
+    if (window.LokiCompanionApp) { window.LokiCompanionApp.show(); return; }
     if (pmpActive()) { openPage(pmpCPage); pmpCRender(); return; }
     if (pomoMode !== 'focus') { pomoRunning = false; pomoRemainMs = 0; pomoStopTick(); pomoMode = 'focus'; }
     if (!pomoRunning) {
