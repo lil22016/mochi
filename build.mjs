@@ -160,6 +160,8 @@ console.log('已复制 PWA 文件 → ' + pwaFiles.join(', ') + '（sw 缓存版
 // （防止并行会话/旧缓冲把已移除的代码改回来）。
 // 维护：新增关键修复时在此登记一行 { name, file, needle }（needle 为产物中的特征串）。
 const FIX_SENTINELS = [
+  { name: '角色批量浇水逐盆计入共同任务', file: 'src/js/garden.js', needle: 'updSt("w", false);\nupdDaily("w");\nwcnt++;' },
+  { name: '批量浇水一小时冷却', file: 'src/js/garden.js', needle: 'plot.watered && Math.floor(Date.now() / 1000) - plot.watered < 3600' },
   { name: '批量浇水逐盆计入任务', file: 'src/js/garden.js', needle: 'updSt("w", true);\nupdDaily("w");\ncnt++;' },
   { name: '关闭角色自动挂断', needle: "endCall('对方挂断了电话')", absent: true },
   { name: 'iOS PWA 导航触底+页面下移（清除 phone 18px 与 tabbar safe-area 的双重底部留白）', file: 'css/base.css', needle: 'padding-top:10px;\npadding-bottom:0;\n}\nhtml.ios-pwa-standalone .tabbar { margin-bottom:0; }' },
