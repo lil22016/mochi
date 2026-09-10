@@ -164,7 +164,7 @@ const FIX_SENTINELS = [
   { name: '角色批量浇水逐盆计入共同任务', file: 'src/js/garden.js', needle: 'updSt("w", false);\nupdDaily("w");\nwcnt++;' },
   { name: '批量浇水一小时冷却', file: 'src/js/garden.js', needle: 'plot.watered && Math.floor(Date.now() / 1000) - plot.watered < 3600' },
   { name: '批量浇水逐盆计入任务', file: 'src/js/garden.js', needle: 'updSt("w", true);\nupdDaily("w");\ncnt++;' },
-  { name: '关闭角色自动挂断', needle: "endCall('对方挂断了电话')", absent: true },
+  { name: '角色挂断须获得允许', needle: 'if (!partnerMayHangup()) { checkCount = 0; return; }' },
   { name: 'iOS PWA 导航触底+页面下移（清除 phone 18px 与 tabbar safe-area 的双重底部留白）', file: 'css/base.css', needle: 'padding-top:10px;\npadding-bottom:0;\n}\nhtml.ios-pwa-standalone .tabbar { margin-bottom:0; }' },
   { name: 'iOS PWA 底部死区（fixed+top/left+100vh，禁用受 WebKit safe-area bug 影响的 inset）', file: 'css/base.css', needle: 'position:fixed;\ninset:auto;\ntop:0;\nleft:0;' },
   { name: 'iOS 15 拆 script 块（产物多块，防单块超 600KB 触发 WebKit 解析崩溃/白屏）', file: 'index.html', needle: '</script>\n<script>' },

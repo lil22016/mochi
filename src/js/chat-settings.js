@@ -1296,6 +1296,17 @@
   // （call-mini-enabled，每桌面独立，默认显示小框）。本开关语义反转：勾选=隐藏。
   // 优先走 window.getCallMiniEnabled/setCallMiniEnabled 钩子（call.js 暴露）；
   // 钩子未就绪时退化为直读写 store（call-mini-enabled !== '0' 即显示）。
+  const csAllowHangup = document.getElementById('cs-allow-hangup');
+  if (csAllowHangup) {
+    const syncAllowHangup = () => { csAllowHangup.checked = store.get('call-allow-hangup') === '1'; };
+    syncAllowHangup();
+    csAllowHangup.addEventListener('change', () => {
+      store.set('call-allow-hangup', csAllowHangup.checked ? '1' : '0');
+      toast(csAllowHangup.checked ? '已允许 TA 主动挂断电话' : 'TA 不会主动挂断电话');
+    });
+    csAddSync(syncAllowHangup);
+    document.addEventListener('contact-switched', syncAllowHangup);
+  }
   const csCmh = document.getElementById('cs-call-mini-hide');
   if (csCmh) {
     const cmhGet = () => {

@@ -8430,9 +8430,9 @@ transition-duration: .01ms !important;
     <!-- v3.8.y：底部统一装进一个卡片框（版本/加载/提示/按钮成一整体，与顶部品牌卡片呼应） -->
     <div class="splash-footcard">
       <!-- v3.8.y：底部版本块——两行：名称+版本 / 部署时间+实时秒数（实时秒写入 #splash-ver-live） -->
-      <div class="splash-ver" id="splash-ver" data-build-ts="1788920266929">
-        <span class="sv-app">Mochi 字卡传讯 <b>v3.26.1</b></span>
-        <span class="sv-deploy">部署于 2026-09-08 19:17<span id="splash-ver-live"></span></span>
+      <div class="splash-ver" id="splash-ver" data-build-ts="1789007555506">
+        <span class="sv-app">Mochi 字卡传讯 <b>v3.26.2</b></span>
+        <span class="sv-deploy">部署于 2026-09-09 21:32<span id="splash-ver-live"></span></span>
       </div>
       <!-- v3.5.120：数据（IndexedDB 回填）加载完成前不显示「点击进入」按钮，
            只显示加载提示；就绪后按钮才出现（clock.js 控制显隐） -->
@@ -9522,7 +9522,7 @@ transition-duration: .01ms !important;
           <div class="txt">清除本地数据</div>
         </div>
       </div>
-      <div class="ver">Mochi 字卡传讯 v3.26.1</div>
+      <div class="ver">Mochi 字卡传讯 v3.26.2</div>
       <div class="ver-credit">原版小红书@言序（1842523578）</div>
     </div>
 
@@ -9730,7 +9730,7 @@ transition-duration: .01ms !important;
             <div class="lic-hero-top">
               <div class="lic-title">Mochi 字卡传讯</div>
               <span class="lic-badge">原版</span>
-              <span class="lic-ver">v3.26.1</span>
+              <span class="lic-ver">v3.26.2</span>
             </div>
             <div class="lic-p">原创极简风情侣聊天模拟器：黑白灰简约设计，数据全部保存在本地、无需联网；所有内容均为代码触发、按概率运行，联系方可主动发送聊天消息。代码从零编写并完全开源——本作即原版。</div>
             <div class="lic-pills">
@@ -9998,7 +9998,7 @@ transition-duration: .01ms !important;
           <div class="lic-li">【喝水】今日杯数进度环 + 近 7 天柱状图，目标杯数 / 杯量自定义；TA 定时催喝水、达标夸奖，战报可发到聊天</div>
           <div class="lic-li">【吃什么】随机抽菜或转盘抽取，多菜单管理与批量编辑，「问 TA」把菜名发到聊天征求意见；饭点有吃饭提醒（概率可调）</div>
           <div class="lic-li">【存钱罐】存取 + 多个小心愿目标（可请 TA 当监督人），25% / 50% / 75% 进度里程碑庆祝，TA 碎碎念回应与偷偷塞硬币彩蛋</div>
-          <div class="lic-li">【番茄钟】保留原计时；【陪伴模式】进入 Loki Companion，可切换 Study with Loki / Stay with Loki，上传透明立绘、点击互动、调整立绘与专注时长、保持屏幕唤醒</div>
+          <div class="lic-li">【Stay with Loki】点击原番茄钟图标直接进入 Loki Companion，可切换 Study with Loki / Stay with Loki，上传透明立绘、点击互动、调整立绘与专注时长、保持屏幕唤醒</div>
           <div class="lic-li">【记账】支出收入与自定义分类、月 / 周 / 年视角切换、月度预算进度条、收支柱状图、分类占比环形图与 TOP 排行、流水搜索过滤</div>
             </div>
           </details>
@@ -12886,6 +12886,10 @@ transition-duration: .01ms !important;
           <label class="toggle"><input type="checkbox" id="cs-music-float"><span class="tk"></span></label>
         </div>
         <!-- v3.7.x：隐藏通话小框开关（同源 call-mini-enabled，每桌面独立；勾选=接通后不弹出悬浮小框，保持通话大面板常驻） -->
+        <div class="set-row" id="cs-allow-hangup-row">
+          <div class="txt">允许 TA 挂断电话<span class="sub">开启后按通话挂断概率运行；关闭后仅由你挂断</span></div>
+          <label class="toggle"><input type="checkbox" id="cs-allow-hangup"><span class="tk"></span></label>
+        </div>
         <div class="set-row" id="cs-call-mini-hide-row">
           <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></div>
           <div class="txt">隐藏通话小框</div>
@@ -32564,6 +32568,17 @@ toast(csMf.checked ? '音乐悬浮小窗已隐藏：播放时不再显示右上�
 });
 csAddSync(syncCsMf);
 document.addEventListener('contact-switched', syncCsMf);
+}
+const csAllowHangup = document.getElementById('cs-allow-hangup');
+if (csAllowHangup) {
+const syncAllowHangup = () => { csAllowHangup.checked = store.get('call-allow-hangup') === '1'; };
+syncAllowHangup();
+csAllowHangup.addEventListener('change', () => {
+store.set('call-allow-hangup', csAllowHangup.checked ? '1' : '0');
+toast(csAllowHangup.checked ? '已允许 TA 主动挂断电话' : 'TA 不会主动挂断电话');
+});
+csAddSync(syncAllowHangup);
+document.addEventListener('contact-switched', syncAllowHangup);
 }
 const csCmh = document.getElementById('cs-call-mini-hide');
 if (csCmh) {
@@ -55229,6 +55244,13 @@ reject: c['call-reject'] !== undefined ? c['call-reject'] : CALL.reject,
 hangup: c['call-hangup'] !== undefined ? c['call-hangup'] : CALL.hangup
 };
 }
+function partnerMayHangup() {
+try {
+const owner = currentCall && currentCall.cid;
+const ownerStore = owner && window.storeFor ? window.storeFor(owner) : store;
+return ownerStore.get('call-allow-hangup') === '1';
+} catch (e) { return false; }
+}
 const CALL_BG_KEY = 'call-bg';
 function applyCallBg() {
 const bg = store.get(CALL_BG_KEY) || '';
@@ -55475,10 +55497,19 @@ function startCallDuration() {
 stopTimers();
 currentCall.connectedTime = Date.now();
 updateDur(); // v3.13.x：接通立即刷新显示，避免接通瞬间仍停留「00:00」卡一下
+let checkCount = 0;
 durationTimer = setInterval(() => {
 updateDur();
 syncCallAv();
 syncCallName();
+if (!partnerMayHangup()) { checkCount = 0; return; }
+if (currentCall && currentCall.status === 'connected' && Date.now() - currentCall.connectedTime >= 180000) {
+checkCount++;
+if (checkCount >= 60) {
+checkCount = 0;
+if (Math.random() * 100 < callCfg().hangup) endCall('对方挂断了电话');
+}
+}
 }, 1000);
 }
 function notifyCallEnd(cid, sysHtml, recType, recText) {
@@ -61301,7 +61332,7 @@ const ssApp = makeApp('shenshou', '伸手', '<svg viewBox="0 0 24 24" fill="none
 const waterApp = makeApp('water', '喝水', '<svg viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5C8 7 5.5 11 5.5 14.5a6.5 6.5 0 0013 0C18.5 11 16 7 12 2.5z"/></svg>');
 const eatApp = makeApp('eat', '吃什么', '<svg viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2.5v7c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2v-7"/><path d="M5.7 2.5v8.3"/><path d="M8.3 2.5v8.3"/><path d="M7 11.5v10"/><path d="M21 15V2.5a5 5 0 00-5 5v5.5c0 1.1.9 2 2 2h3z"/><path d="M21 15v6.5"/></svg>');
 const piggyApp = makeApp('piggy', '存钱罐', '<svg viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7h6"/><path d="M5 13.5C5 10.4 8.1 8 12 8s7 2.4 7 5.5c0 1.6-.9 3.1-2.3 4.1V20h-2.4l-.4-1.2a9.3 9.3 0 01-3.8 0L9.7 20H7.3v-2.4C5.9 16.6 5 15.1 5 13.5z"/><circle cx="9.3" cy="12.7" r=".55" fill="#111111" stroke="none"/><path d="M18.8 12.3l1.7-.9"/></svg>');
-const pomoApp = makeApp('pomo', '番茄钟', '<svg viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13.8" r="7.2"/><path d="M12 6.6V4.6"/><path d="M12 6.6C10.6 5.4 9 5.3 7.8 6.1"/><path d="M12 6.6c1.4-1.2 3-1.3 4.2-.5"/></svg>');
+const pomoApp = makeApp('pomo', 'Stay with Loki', '<svg viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13.8" r="7.2"/><path d="M12 6.6V4.6"/><path d="M12 6.6C10.6 5.4 9 5.3 7.8 6.1"/><path d="M12 6.6c1.4-1.2 3-1.3 4.2-.5"/></svg>');
 const pagesBox = document.getElementById('desktop-pages');
 const st0 = curStore();
 let layArr = null;
@@ -62385,7 +62416,7 @@ pomoIdleAt('focus');
 pomoShowMsg('休息好了，来下一个番茄吧');
 }
 }
-if (pomoApp) pomoApp.addEventListener('click', () => { if (editingNow()) return; openPage(pomoPage); pomoRender(); });
+if (pomoApp) pomoApp.addEventListener('click', () => { if (editingNow()) return; window.LokiCompanionApp.show(); });
 document.getElementById('pomo-back').addEventListener('click', () => backHome(pomoPage));
 document.getElementById('pomo-start').addEventListener('click', () => {
 if (editingNow()) return;

@@ -20,6 +20,13 @@
     };
   }
 
+  function partnerMayHangup() {
+    try {
+      const owner = currentCall && currentCall.cid;
+      const ownerStore = owner && window.storeFor ? window.storeFor(owner) : store;
+      return ownerStore.get('call-allow-hangup') === '1';
+    } catch (e) { return false; }
+  }
   // 通话背景（v3.5.50）：设置页上传图片 → 应用到大面板 + 通话小框
   const CALL_BG_KEY = 'call-bg';
   function applyCallBg() {
@@ -307,12 +314,19 @@
     stopTimers();
     currentCall.connectedTime = Date.now();
     updateDur(); // v3.13.x：接通立即刷新显示，避免接通瞬间仍停留「00:00」卡一下
+    let checkCount = 0;
     durationTimer = setInterval(() => {
       updateDur();
       syncCallAv();
       syncCallName();
-      // User preference: no automatic partner hangup, including saved probabilities.
-      // Incoming calls and the user's hangup controls retain their normal paths.
+      if (!partnerMayHangup()) { checkCount = 0; return; }
+      if (currentCall && currentCall.status === 'connected' && Date.now() - currentCall.connectedTime >= 180000) {
+        checkCount++;
+        if (checkCount >= 60) {
+          checkCount = 0;
+          if (Math.random() * 100 < callCfg().hangup) endCall('对方挂断了电话');
+        }
+      }
     }, 1000);
   }
   // 通话结束信息写入归属桌面（v3.6.x 修复跨桌面挂断显示成当前联系人）：
