@@ -8430,9 +8430,9 @@ transition-duration: .01ms !important;
     <!-- v3.8.y：底部统一装进一个卡片框（版本/加载/提示/按钮成一整体，与顶部品牌卡片呼应） -->
     <div class="splash-footcard">
       <!-- v3.8.y：底部版本块——两行：名称+版本 / 部署时间+实时秒数（实时秒写入 #splash-ver-live） -->
-      <div class="splash-ver" id="splash-ver" data-build-ts="1789007555506">
-        <span class="sv-app">Mochi 字卡传讯 <b>v3.26.2</b></span>
-        <span class="sv-deploy">部署于 2026-09-09 21:32<span id="splash-ver-live"></span></span>
+      <div class="splash-ver" id="splash-ver" data-build-ts="1789185360992">
+        <span class="sv-app">Mochi 字卡传讯 <b>v3.26.1</b></span>
+        <span class="sv-deploy">部署于 2026-09-11 22:56<span id="splash-ver-live"></span></span>
       </div>
       <!-- v3.5.120：数据（IndexedDB 回填）加载完成前不显示「点击进入」按钮，
            只显示加载提示；就绪后按钮才出现（clock.js 控制显隐） -->
@@ -9522,7 +9522,7 @@ transition-duration: .01ms !important;
           <div class="txt">清除本地数据</div>
         </div>
       </div>
-      <div class="ver">Mochi 字卡传讯 v3.26.2</div>
+      <div class="ver">Mochi 字卡传讯 v3.26.1</div>
       <div class="ver-credit">原版小红书@言序（1842523578）</div>
     </div>
 
@@ -9730,7 +9730,7 @@ transition-duration: .01ms !important;
             <div class="lic-hero-top">
               <div class="lic-title">Mochi 字卡传讯</div>
               <span class="lic-badge">原版</span>
-              <span class="lic-ver">v3.26.2</span>
+              <span class="lic-ver">v3.26.1</span>
             </div>
             <div class="lic-p">原创极简风情侣聊天模拟器：黑白灰简约设计，数据全部保存在本地、无需联网；所有内容均为代码触发、按概率运行，联系方可主动发送聊天消息。代码从零编写并完全开源——本作即原版。</div>
             <div class="lic-pills">
@@ -22316,7 +22316,11 @@ m.innerHTML = rec.side === 'out'
 const av = m.querySelector('.msg-av');
 const b = m.querySelector('.msg-bubble');
 if (rec.special === 'read') {
-b.innerHTML = '<span style="opacity:.5;font-size:12px">已读不回</span>';
+b.dataset.noReply = '1';
+const readStatus = document.createElement('span');
+readStatus.style.fontSize = '12px';
+readStatus.textContent = rec.text || 'Read. No reply.';
+b.appendChild(readStatus);
 } else if (rec.retracted) {
 b.dataset.orig = rec.orig || rec.text;
 b.innerHTML = '<span style="opacity:.6;font-size:12px;cursor:pointer">' + (rec.side === 'out' ? '我' : '对方') + '撤回了一条消息</span>';
@@ -22745,7 +22749,28 @@ deskMsgToggle.addEventListener('change', () => {
 try { store.set('desk-msg-en', deskMsgToggle.checked ? '1' : '0'); } catch (e) {}
 });
 }
+function pickLokiNoReplyStatus() {
+const roll = Math.random();
+const busy = [
+"Loki is busy untangling a TVA mess.",
+"Loki is occupied. Apparently, even gods have paperwork.",
+"Loki is in a meeting he would rather escape.",
+"Loki is following a lead. Your message will have to wait.",
+"Loki is working. For once, that is not an excuse."
+];
+const cool = [
+"Loki is playing it cool. Suspiciously cool.",
+"Loki is making you wait. He does enjoy an entrance.",
+"Loki has a reply ready. His pride is editing it.",
+"Loki is pretending he has not been waiting for your message.",
+"Loki is choosing a suitably devastating reply."
+];
+if (roll >= 0.90) return 'Read. No reply.';
+const pool = roll < 0.45 ? busy : cool;
+return pool[Math.floor(Math.random() * pool.length)];
+}
 function addRec(rec) {
+if (rec.special === 'read' && !rec.text) rec.text = pickLokiNoReplyStatus();
 if (!rec.ts) rec.ts = Date.now();
 const len = msgs.length;
 for (let i = len - 1; i >= Math.max(0, len - 5); i--) {
@@ -25710,7 +25735,7 @@ let msgHoldFired = false;
 let msgSuppressClickUntil = 0;
 function msgActionEligible(t) {
 const b = t.closest('.msg-bubble');
-if (!b) return null;
+if (!b || b.dataset.noReply === '1') return null;
 if (t.closest('.msg-quote')) return null;
 const item = b.closest('.msg');
 if (!item || item.classList.contains('msg-poke')) return null;

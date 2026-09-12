@@ -1830,7 +1830,11 @@ m.innerHTML = rec.side === 'out'
 const av = m.querySelector('.msg-av');
 const b = m.querySelector('.msg-bubble');
 if (rec.special === 'read') {
-b.innerHTML = '<span style="opacity:.5;font-size:12px">已读不回</span>';
+b.dataset.noReply = '1';
+const readStatus = document.createElement('span');
+readStatus.style.fontSize = '12px';
+readStatus.textContent = rec.text || 'Read. No reply.';
+b.appendChild(readStatus);
 } else if (rec.retracted) {
 // v3.16.x：撤回分支必须先于 sticker/image/voice/parts 类型分支——
 // 否则表情包/图片/语音被撤回后任何全量重渲染（renderWindow/loadMsgs/切会话）
@@ -2267,7 +2271,28 @@ deskMsgToggle.addEventListener('change', () => {
 try { store.set('desk-msg-en', deskMsgToggle.checked ? '1' : '0'); } catch (e) {}
 });
 }
+function pickLokiNoReplyStatus() {
+const roll = Math.random();
+const busy = [
+"Loki is busy untangling a TVA mess.",
+"Loki is occupied. Apparently, even gods have paperwork.",
+"Loki is in a meeting he would rather escape.",
+"Loki is following a lead. Your message will have to wait.",
+"Loki is working. For once, that is not an excuse."
+];
+const cool = [
+"Loki is playing it cool. Suspiciously cool.",
+"Loki is making you wait. He does enjoy an entrance.",
+"Loki has a reply ready. His pride is editing it.",
+"Loki is pretending he has not been waiting for your message.",
+"Loki is choosing a suitably devastating reply."
+];
+if (roll >= 0.90) return 'Read. No reply.';
+const pool = roll < 0.45 ? busy : cool;
+return pool[Math.floor(Math.random() * pool.length)];
+}
 function addRec(rec) {
+if (rec.special === 'read' && !rec.text) rec.text = pickLokiNoReplyStatus();
 if (!rec.ts) rec.ts = Date.now();
 const len = msgs.length;
 for (let i = len - 1; i >= Math.max(0, len - 5); i--) {
@@ -5348,7 +5373,7 @@ let msgSuppressClickUntil = 0;
 function msgActionEligible(t) {
 // 沿用原「点气泡弹菜单」的判定规则：可弹返回 {item, b}，不可弹返回 null（引用气泡/拍一拍/撤回/已读不回等）
 const b = t.closest('.msg-bubble');
-if (!b) return null;
+if (!b || b.dataset.noReply === '1') return null;
 if (t.closest('.msg-quote')) return null;
 const item = b.closest('.msg');
 if (!item || item.classList.contains('msg-poke')) return null;

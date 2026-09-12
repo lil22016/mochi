@@ -160,6 +160,7 @@ console.log('已复制 PWA 文件 → ' + pwaFiles.join(', ') + '（sw 缓存版
 // （防止并行会话/旧缓冲把已移除的代码改回来）。
 // 维护：新增关键修复时在此登记一行 { name, file, needle }（needle 为产物中的特征串）。
 const FIX_SENTINELS = [
+  { name: 'Loki 不回复状态分配', needle: 'function pickLokiNoReplyStatus()' },
   { name: 'ZY Loki Companion 已接入', file: 'src/js/loki-companion.js', needle: 'window.LokiCompanionApp={show:show,hide:hide}' },
   { name: '角色批量浇水逐盆计入共同任务', file: 'src/js/garden.js', needle: 'updSt("w", false);\nupdDaily("w");\nwcnt++;' },
   { name: '批量浇水一小时冷却', file: 'src/js/garden.js', needle: 'plot.watered && Math.floor(Date.now() / 1000) - plot.watered < 3600' },
